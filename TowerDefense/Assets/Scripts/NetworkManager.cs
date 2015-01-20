@@ -6,9 +6,8 @@ public class NetworkManager : MonoBehaviour
 {
     //Gui
     public GameObject serverList;
-    public Text gui_input;
+    public Text serverName;
 
-    public Text buttonText;
     public Button button;
 
     //Network
@@ -33,29 +32,37 @@ public class NetworkManager : MonoBehaviour
         Network.natFacilitatorPort = 24466;
 
         Network.InitializeServer(_nbPlayers, _listenPort, !Network.HavePublicAddress());
-        _gameName = gui_input.text.ToString();
-        MasterServer.RegisterHost(_typeName, gui_input.text);
-        
-		Debug.Log("Server initialized with: " + _nbPlayers + "\nNom: " + gui_input.text);
+        MasterServer.RegisterHost(_typeName, serverName.text);
 	}
     public void RefreshHostList()
     {
+        int i = 0;
+        for (i = 0; i < serverList.transform.childCount; i++)
+           Destroy(serverList.transform.GetChild(i).gameObject);
         MasterServer.RequestHostList(_typeName);
+    }
+
+    public void Update()
+    {
         if (_hostList != null)
         {
+            Debug.Log("Nb Host:" + _hostList.Length);
             for (int i = 0; i < _hostList.Length; i++)
             {
                 Button b_object;
-                b_object = Instantiate(button, new Vector3(0, i * 20, 0), Quaternion.identity) as Button;
+                b_object = Instantiate(button, new Vector3(0, i * 30, 0), Quaternion.identity) as Button;
                 b_object.transform.parent = serverList.transform;
 
-                buttonText.text = _gameName;
-				Debug.Log(b_object.transform.localPosition);
-            }
-        }
-        MasterServer.ClearHostList();
-    }
+                Vector3 positionButton = b_object.transform.position;
+                Vector3 positionParent = serverList.transform.position;
+                b_object.transform.position = new Vector3(0 + positionParent.x, positionButton.y + positionParent.y, 0);
 
+                b_object.GetComponentInChildren<Text>().text = _hostList[i].gameName;
+            }
+            _hostList = null;
+        }
+        // MasterServer.ClearHostList();
+    }
     public void TestConnect()
     {
         MasterServer.RequestHostList(_typeName);
@@ -83,7 +90,10 @@ public class NetworkManager : MonoBehaviour
     private void OnMasterServerEvent(MasterServerEvent msEvent)
     {
         if (msEvent == MasterServerEvent.HostListReceived)
+        {
             _hostList = MasterServer.PollHostList();
+            
+        }
         Debug.Log(msEvent.ToString());
     }
 
@@ -93,7 +103,7 @@ public class NetworkManager : MonoBehaviour
         Application.LoadLevel("MainScene");
     }
 
-    /*private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
+    private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
         Debug.Log("Could not connect to master server: " + error);
     }
@@ -108,5 +118,5 @@ public class NetworkManager : MonoBehaviour
 	{
 		Debug.Log("Connecté !");
 
-	}*/
+	}
 }

@@ -42,8 +42,6 @@ public class CameraController : MonoBehaviour
 	{
 		if(Input.GetKey(KeyCode.Mouse1))
 		{
-			Debug.Log("Right Click");
-
 			_x = Input.GetAxis("Mouse X") * cameraSpeed;
 			_y = -Input.GetAxis("Mouse Y")* cameraSpeed;
 			
