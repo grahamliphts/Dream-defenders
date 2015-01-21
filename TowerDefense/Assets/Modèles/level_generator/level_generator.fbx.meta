@@ -53,6 +53,11 @@ ModelImporter:
     100094: Sun
     100096: Sun.001
     100098: Sun.002
+    100100: Lamp
+    100102: Point
+    100104: Point.001
+    100106: Point.002
+    100108: Point.003
     400000: Camera
     400002: Cube
     400004: Cube.001
@@ -103,6 +108,11 @@ ModelImporter:
     400094: Sun
     400096: Sun.001
     400098: Sun.002
+    400100: Lamp
+    400102: Point
+    400104: Point.001
+    400106: Point.002
+    400108: Point.003
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002
