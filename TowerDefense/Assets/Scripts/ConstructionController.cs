@@ -45,6 +45,7 @@ public class ConstructionController : MonoBehaviour
         {
             transform.gameObject.renderer.material.color = Color.red;
             _hitCounter++;
+            Debug.Log(other.tag);
         }
 
         Debug.Log(_hitCounter);
@@ -60,9 +61,5 @@ public class ConstructionController : MonoBehaviour
            
         }
         Debug.Log("trigger exit" + _hitCounter);
-    }
-    void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other);
     }
 }

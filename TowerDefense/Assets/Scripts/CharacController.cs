@@ -5,8 +5,6 @@ public class CharacController : MonoBehaviour
 {
 	public float movementSpeed = 4.0f;
 	public float jumpSpeed = 4.0f;
-    public Object item;
-    private GameObject _tower;
 
 	private bool _wantToJump = false;
 	private Rigidbody _rigidbody;

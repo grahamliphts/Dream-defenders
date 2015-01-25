@@ -27,11 +27,9 @@ public class CameraController : MonoBehaviour
 		Vector3 dir = transform.position - target.position;
         
 		dir.Normalize ();
-        Debug.Log(dir);
         Debug.DrawRay(target.position, dir * -distCamera, Color.red, 5);
         if (Physics.Raycast(target.position, dir, out hit, -distCamera))
         {
-            Debug.Log("Raycast");
            if( hit.transform.tag != "player")
                 _offset.z = -hit.distance;
         }
