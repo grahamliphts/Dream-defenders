@@ -15,6 +15,7 @@ public class CharacController : MonoBehaviour
 	void Start()
 	{
 		_rigidbody = this.GetComponent<Rigidbody>();
+        transform.tag = "player";
 	}
 	void Update()
 	{

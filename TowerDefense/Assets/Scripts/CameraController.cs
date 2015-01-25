@@ -3,10 +3,8 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour 
 {
-	
-
 	public Transform target;
-    public Vector3 distCamera;
+    public float distCamera;
     public Rigidbody targetRigidbody;
     public float cameraSpeed = 1f;
 
@@ -20,33 +18,35 @@ public class CameraController : MonoBehaviour
 
 	void Start() 
 	{
-		_offset = distCamera;
+        _offset = new Vector3(transform.localPosition.x, transform.localPosition.y, distCamera);
 	}
-
-
 
 	void AdjustCamera()
 	{
 		RaycastHit hit;
 		Vector3 dir = transform.position - target.position;
+        
 		dir.Normalize ();
-        Debug.DrawRay(target.position, dir * -distCamera.z);
-        if (Physics.Raycast(target.position, dir, out hit, -distCamera.z)) 
-			_offset.z = -hit.distance;
-		else
-            _offset.z = distCamera.z;
+        Debug.Log(dir);
+        Debug.DrawRay(target.position, dir * -distCamera, Color.red, 5);
+        if (Physics.Raycast(target.position, dir, out hit, -distCamera))
+        {
+            Debug.Log("Raycast");
+           if( hit.transform.tag != "player")
+                _offset.z = -hit.distance;
+        }
+        else
+            _offset.z = distCamera;
 	}
 
 	void LateUpdate () 
 	{
-		/*if(Input.GetKey(KeyCode.Mouse1))
-		{*/
-			_x = Input.GetAxis("Mouse X") * cameraSpeed;
-			_y = -Input.GetAxis("Mouse Y")* cameraSpeed;
+       
+		_x = Input.GetAxis("Mouse X") * cameraSpeed;
+		_y = -Input.GetAxis("Mouse Y")* cameraSpeed;
 			
-			this.RotateCamera(_x,_y);
-			this.RotateCharacter(_x);
-		//}
+		this.RotateCamera(_x,_y);
+		this.RotateCharacter(_x);
 		AdjustCamera ();
 	}
 
