@@ -6,8 +6,7 @@ public class CameraController : MonoBehaviour
 	
 
 	public Transform target;
-	public float distCamera = -3.0f;
-
+    public Vector3 distCamera;
     public Rigidbody targetRigidbody;
     public float cameraSpeed = 1f;
 
@@ -21,7 +20,7 @@ public class CameraController : MonoBehaviour
 
 	void Start() 
 	{
-		_offset = new Vector3 (0.0f,0.0f, distCamera);
+		_offset = distCamera;
 	}
 
 
@@ -31,23 +30,23 @@ public class CameraController : MonoBehaviour
 		RaycastHit hit;
 		Vector3 dir = transform.position - target.position;
 		dir.Normalize ();
-		Debug.DrawRay (target.position, dir * -distCamera);
-		if (Physics.Raycast (target.position, dir, out hit, -distCamera)) 
+        Debug.DrawRay(target.position, dir * -distCamera.z);
+        if (Physics.Raycast(target.position, dir, out hit, -distCamera.z)) 
 			_offset.z = -hit.distance;
 		else
-			_offset.z = distCamera;
+            _offset.z = distCamera.z;
 	}
 
 	void LateUpdate () 
 	{
-		if(Input.GetKey(KeyCode.Mouse1))
-		{
+		/*if(Input.GetKey(KeyCode.Mouse1))
+		{*/
 			_x = Input.GetAxis("Mouse X") * cameraSpeed;
 			_y = -Input.GetAxis("Mouse Y")* cameraSpeed;
 			
 			this.RotateCamera(_x,_y);
 			this.RotateCharacter(_x);
-		}
+		//}
 		AdjustCamera ();
 	}
 
