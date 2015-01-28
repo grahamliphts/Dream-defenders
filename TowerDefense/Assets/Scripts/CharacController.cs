@@ -25,9 +25,9 @@ public class CharacController : MonoBehaviour
 	{
 		Vector3 direction = Vector3.zero; 
 		if (Input.GetKey ("z"))
-				direction += transform.forward;
+			direction += transform.forward;
 		if (Input.GetKey ("s"))
-				direction -= transform.forward;
+			direction -= transform.forward;
 		if (Input.GetKey ("a"))
 			direction -= transform.right;
 		if (Input.GetKey ("e")) 
@@ -48,11 +48,14 @@ public class CharacController : MonoBehaviour
 		direction *= movementSpeed;
 
 		Vector3 groundDir = -Vector3.up;
-		float groundDist = 0.51f;
+		float groundDist = 0.2f;
 		RaycastHit hit;
-        //Debug.DrawRay(transform.position, groundDir * groundDist, Color.red);
-        if (Physics.Raycast(transform.position, groundDir, out hit, groundDist))
+        Debug.DrawRay(transform.position + new Vector3(0, 0.2f, 0) , groundDir * groundDist, Color.red);
+        int layerMask = 1 << 8;
+        layerMask = ~layerMask;
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), groundDir, out hit, groundDist))
 		{
+            Debug.Log(hit.transform.tag);
 			if (_wantToJump)
 			{
                 Debug.Log("jump");

@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     public float distCamera;
     public Rigidbody targetRigidbody;
     public float cameraSpeed = 1f;
+    public float smoothTime = 0.3f;
 
 	private Vector3 _offset;
 
@@ -16,8 +17,12 @@ public class CameraController : MonoBehaviour
     private int _yMinLimit = 0;
     private int _yMaxLimit = 70;
 
+    private Vector3 _smoothTarget;
+    private Vector3 _currentVelocity;
+
 	void Start() 
 	{
+        _currentVelocity = Vector3.zero;
         _offset = new Vector3(transform.localPosition.x, transform.localPosition.y, distCamera);
 	}
 
@@ -25,16 +30,16 @@ public class CameraController : MonoBehaviour
 	{
 		RaycastHit hit;
 		Vector3 dir = transform.position - target.position;
-        
 		dir.Normalize ();
-        Debug.DrawRay(target.position, dir * -distCamera, Color.red, 5);
-        if (Physics.Raycast(target.position, dir, out hit, -distCamera))
-        {
-           if( hit.transform.tag != "player")
-                _offset.z = -hit.distance;
-        }
+        Debug.DrawRay(target.position, dir * -distCamera, Color.red);
+
+        int layerMask = 1 << 8;
+        layerMask = ~layerMask;
+        if (Physics.Raycast(target.position, dir, out hit, -distCamera, layerMask))
+            _offset.z = -hit.distance;
         else
             _offset.z = distCamera;
+            
 	}
 
 	void LateUpdate () 
@@ -46,6 +51,8 @@ public class CameraController : MonoBehaviour
 		this.RotateCamera(_x,_y);
 		this.RotateCharacter(_x);
 		AdjustCamera ();
+
+       
 	}
 
 	void RotateCharacter(float x)
@@ -62,12 +69,11 @@ public class CameraController : MonoBehaviour
 		actualEuler.x += y;
 		actualEuler.y += x;
 		actualEuler.x = ClampAngle(actualEuler.x, _yMinLimit, _yMaxLimit);
-
 		Quaternion rotation = Quaternion.Euler(actualEuler);
-		Vector3 position = rotation * _offset + target.position;
-		
-		transform.rotation = rotation;
-		transform.position = position;
+        transform.rotation = rotation;
+
+        Vector3 position = transform.forward * _offset.z + target.position;
+        transform.position = position;
 	}
 	
 	static float ClampAngle (float angle, float min, float max) 
