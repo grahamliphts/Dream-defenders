@@ -59,7 +59,10 @@ ModelImporter:
     400050: Bone.019_end
     400052: //RootNode
     400054: Teddy_Bear.001
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: Teddy_Bear.001
+    6400000: //RootNode
     7400000: Armature.000|Action
     7400002: Armature.000|Action.001
     7400004: Armature.000|Action.002
