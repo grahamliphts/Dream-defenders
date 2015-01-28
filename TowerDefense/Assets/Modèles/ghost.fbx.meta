@@ -1,0 +1,110 @@
+fileFormatVersion: 2
+guid: b79a7977cbb91964b84c91f754825621
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Camera
+    100002: //RootNode
+    100004: Point
+    100006: robe
+    100008: Sphere
+    100010: Sphere.001
+    100012: Sphere.002
+    400000: Camera
+    400002: //RootNode
+    400004: Point
+    400006: robe
+    400008: Sphere
+    400010: Sphere.001
+    400012: Sphere.002
+    2300000: robe
+    2300002: Sphere
+    2300004: Sphere.001
+    2300006: Sphere.002
+    3300000: robe
+    3300002: Sphere
+    3300004: Sphere.001
+    3300006: Sphere.002
+    4300000: Sphere
+    4300002: Sphere.001
+    4300004: robe
+    4300006: Sphere.002
+    7400000: Point|robeAction
+    7400002: Point|SphereAction
+    7400004: Point|SphereAction.001
+    7400006: Point|SphereAction.002
+    7400008: Camera|robeAction
+    7400010: Camera|SphereAction
+    7400012: Camera|SphereAction.001
+    7400014: Camera|SphereAction.002
+    7400016: Sphere|robeAction
+    7400018: Sphere|SphereAction
+    7400020: Sphere|SphereAction.001
+    7400022: Sphere|SphereAction.002
+    7400024: Sphere.001|robeAction
+    7400026: Sphere.001|SphereAction
+    7400028: Sphere.001|SphereAction.001
+    7400030: Sphere.001|SphereAction.002
+    7400032: robe|robeAction
+    7400034: robe|SphereAction
+    7400036: robe|SphereAction.001
+    7400038: robe|SphereAction.002
+    7400040: Sphere.002|robeAction
+    7400042: Sphere.002|SphereAction
+    7400044: Sphere.002|SphereAction.001
+    7400046: Sphere.002|SphereAction.002
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .300000012
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
