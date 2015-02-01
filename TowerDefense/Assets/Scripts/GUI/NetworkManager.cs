@@ -7,12 +7,14 @@ public class NetworkManager : MonoBehaviour
     //Gui
     public GameObject serverList;
     public Text serverName;
-
+    public Text nbPlayers;
+    public Canvas canvas;
+    public Menu LobbyMenu;
     public Button createButton;
     public Button modelButton;
 
     //Network
-    private int _nbPlayers = 2;
+   
 	private int _listenPort = 4242; //le port d'écoute du serveur
     private const string _typeName = "TowerDefenseGameRavonyx";
     private string _gameName;
@@ -29,7 +31,6 @@ public class NetworkManager : MonoBehaviour
         Network.natFacilitatorPort = 24466;
 	}
 
-
     public void ShutDownServer()
     {
         MasterServer.UnregisterHost();
@@ -37,10 +38,11 @@ public class NetworkManager : MonoBehaviour
 
 	public void StartServer () 
 	{
-        Network.InitializeServer(_nbPlayers, _listenPort, !Network.HavePublicAddress());
-         
-        if (serverName.text != "")
+        if (serverName.text != "" && nbPlayers.text != "")
+        {
+            Network.InitializeServer(int.Parse(nbPlayers.text) - 1, _listenPort, !Network.HavePublicAddress());
             MasterServer.RegisterHost(_typeName, serverName.text);
+        }
 	}
 
     public void RefreshHostList()
@@ -55,29 +57,30 @@ public class NetworkManager : MonoBehaviour
     {
         if (_hostList != null)
         {
-            float anchorMinX = 0.1f;
-            float anchorMaxX = 0.8f;
             Debug.Log("Nb Host:" + _hostList.Length);
             for (int i = 0; i < _hostList.Length; i++)
             {
+                RectTransform rectTransform;
+                float anchorMinX = 0.1f;
+                float anchorMaxX = 0.8f;
+
                 Button b_object;
                 b_object = Instantiate(modelButton) as Button;
                 b_object.transform.parent = serverList.transform;
-
-                RectTransform rectTransform = b_object.GetComponent<RectTransform>();
+                rectTransform = b_object.GetComponent<RectTransform>();
                 rectTransform.anchorMax = new Vector2(anchorMaxX,  1.0f - 0.1f*(i + 1));
                 rectTransform.anchorMin = new Vector2(anchorMinX, 1.0f - 0.1f*(i + 2));
                 rectTransform.sizeDelta = new Vector2(130, 50);
                 rectTransform.offsetMin = new Vector2(0, 0);
                 rectTransform.offsetMax = new Vector2(0, 0);
+                b_object.GetComponentInChildren<Text>().text = _hostList[i].gameName + "-" + _hostList[i].connectedPlayers.ToString() + "/" + _hostList[i].playerLimit.ToString();
 
-                
-
-                Vector3 positionButton = b_object.transform.position;
-                Vector3 positionParent = serverList.transform.position;
-               // b_object.transform.position = new Vector3(0 + positionParent.x, positionButton.y + positionParent.y, 0);
-
-                b_object.GetComponentInChildren<Text>().text = _hostList[i].gameName;
+                b_object.onClick.RemoveAllListeners();
+                b_object.onClick.AddListener( () => 
+                {
+                    MenuManager menuManager = canvas.GetComponent<MenuManager>();
+                    menuManager.ShowMenu(LobbyMenu);
+                });
             }
             _hostList = null;
         }
@@ -89,7 +92,11 @@ public class NetworkManager : MonoBehaviour
         if (_hostList != null)
         {
             foreach (HostData host in _hostList)
-                JoinServer(host);
+            {
+               // if (host.gameName)
+                    JoinServer(host);
+            }
+                
         }
     }
 
