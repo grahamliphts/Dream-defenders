@@ -12,6 +12,7 @@ public class ConstructionController : MonoBehaviour
     void Start()
     {
         _hitCounter = 0;
+        transform.gameObject.renderer.material.color = Color.green;
     }
 
     void Update()
