@@ -13,6 +13,7 @@ public class PointManager : MonoBehaviour
         {
             point_list[i].AddComponent<SphereCollider>();
             SphereCollider collider = point_list[i].GetComponent<SphereCollider>();
+			//collider.radius = 3f;
             collider.isTrigger = true;
             point_list[i].AddComponent<Teleport>();
             Teleport teleport = point_list[i].GetComponent<Teleport>();
