@@ -6,9 +6,17 @@ ModelImporter:
     100000: Cone
     100002: Sphere
     100004: //RootNode
+    100006: Camera
+    100008: Camera.001
+    100010: Lamp
+    100012: Sun
     400000: Cone
     400002: Sphere
     400004: //RootNode
+    400006: Camera
+    400008: Camera.001
+    400010: Lamp
+    400012: Sun
     2300000: Cone
     2300002: Sphere
     2300004: //RootNode
@@ -20,6 +28,18 @@ ModelImporter:
     6400000: Cone
     6400002: Sphere
     6400004: //RootNode
+    7400000: Sun|ConeAction
+    7400002: Sun|SphereAction
+    7400004: Sphere|ConeAction
+    7400006: Sphere|SphereAction
+    7400008: Camera.001|ConeAction
+    7400010: Camera.001|SphereAction
+    7400012: Cone|ConeAction
+    7400014: Cone|SphereAction
+    7400016: Lamp|ConeAction
+    7400018: Lamp|SphereAction
+    7400020: Camera|ConeAction
+    7400022: Camera|SphereAction
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -36,7 +56,39 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Cone|ConeAction
+      takeName: Cone|ConeAction
+      firstFrame: 0
+      lastFrame: 76
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cone
+        weight: 1
+      - path: Sphere
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -57,7 +109,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

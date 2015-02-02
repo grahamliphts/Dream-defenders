@@ -1,0 +1,653 @@
+fileFormatVersion: 2
+guid: eca7505abdf0b1345977c4feb5b3b1ca
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Armature.001
+    100004: Bone
+    100006: Bone 1
+    100008: Bone.001
+    100010: Bone.001 1
+    100012: Bone.002
+    100014: Bone.002 1
+    100016: Bone.003
+    100018: Bone.003 1
+    100020: Bone.004
+    100022: Bone.004 1
+    100024: Bone.005
+    100026: Bone.005 1
+    100028: Bone.005_end
+    100030: Bone.005_end 1
+    100032: Cylinder.001
+    100034: Cylinder.003
+    100036: //RootNode
+    100038: Sphere
+    100040: Sphere.001
+    100042: Sphere.002
+    400000: Armature
+    400002: Armature.001
+    400004: Bone
+    400006: Bone 1
+    400008: Bone.001
+    400010: Bone.001 1
+    400012: Bone.002
+    400014: Bone.002 1
+    400016: Bone.003
+    400018: Bone.003 1
+    400020: Bone.004
+    400022: Bone.004 1
+    400024: Bone.005
+    400026: Bone.005 1
+    400028: Bone.005_end
+    400030: Bone.005_end 1
+    400032: Cylinder.001
+    400034: Cylinder.003
+    400036: //RootNode
+    400038: Sphere
+    400040: Sphere.001
+    400042: Sphere.002
+    2300000: Sphere
+    2300002: Sphere.001
+    2300004: Sphere.002
+    3300000: Sphere
+    3300002: Sphere.001
+    3300004: Sphere.002
+    4300000: Cylinder.001
+    4300002: Sphere.001
+    4300004: Sphere
+    4300006: Sphere.002
+    4300008: Cylinder.003
+    7400000: Armature|ArmatureAction
+    7400002: Armature|Cylinder.001Action
+    7400004: Armature|Cylinder.003Action
+    7400006: Armature|Sphere.001Action
+    7400008: Armature|Sphere.002Action
+    7400010: Armature|SphereAction
+    7400012: Armature|Standard_anim
+    7400014: Cylinder.001|Cylinder.001Action
+    7400016: Cylinder.001|Cylinder.003Action
+    7400018: Cylinder.001|Sphere.001Action
+    7400020: Cylinder.001|Sphere.002Action
+    7400022: Cylinder.001|SphereAction
+    7400024: Sphere.001|Cylinder.001Action
+    7400026: Sphere.001|Cylinder.003Action
+    7400028: Sphere.001|Sphere.001Action
+    7400030: Sphere.001|Sphere.002Action
+    7400032: Sphere.001|SphereAction
+    7400034: Sphere|Cylinder.001Action
+    7400036: Sphere|Cylinder.003Action
+    7400038: Sphere|Sphere.001Action
+    7400040: Sphere|Sphere.002Action
+    7400042: Sphere|SphereAction
+    7400044: Sphere.002|Cylinder.001Action
+    7400046: Sphere.002|Cylinder.003Action
+    7400048: Sphere.002|Sphere.001Action
+    7400050: Sphere.002|Sphere.002Action
+    7400052: Sphere.002|SphereAction
+    7400054: Armature.001|ArmatureAction
+    7400056: Armature.001|Cylinder.001Action
+    7400058: Armature.001|Cylinder.003Action
+    7400060: Armature.001|Sphere.001Action
+    7400062: Armature.001|Sphere.002Action
+    7400064: Armature.001|SphereAction
+    7400066: Armature.001|Standard_anim
+    7400068: Cylinder.003|Cylinder.001Action
+    7400070: Cylinder.003|Cylinder.003Action
+    7400072: Cylinder.003|Sphere.001Action
+    7400074: Cylinder.003|Sphere.002Action
+    7400076: Cylinder.003|SphereAction
+    9500000: //RootNode
+    13700000: Cylinder.001
+    13700002: Cylinder.003
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|Standard_anim
+      takeName: Armature|Standard_anim
+      firstFrame: 0
+      lastFrame: 103
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sphere.001|Sphere.001Action
+      takeName: Sphere.001|Sphere.001Action
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sphere.001|Sphere.002Action
+      takeName: Sphere.001|Sphere.002Action
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sphere|Sphere.001Action
+      takeName: Sphere|Sphere.001Action
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sphere|Sphere.002Action
+      takeName: Sphere|Sphere.002Action
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sphere|SphereAction
+      takeName: Sphere|SphereAction
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Cylinder.003|SphereAction
+      takeName: Cylinder.003|SphereAction
+      firstFrame: 0
+      lastFrame: 52
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Bone
+        weight: 1
+      - path: Armature/Bone/Bone.001 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1
+        weight: 1
+      - path: Armature/Bone/Bone.001 1/Bone.002 1/Bone.003 1/Bone.004 1/Bone.005 1/Bone.005_end
+          1
+        weight: 1
+      - path: Armature.001
+        weight: 1
+      - path: Armature.001/Bone 1
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005
+        weight: 1
+      - path: Armature.001/Bone 1/Bone.001/Bone.002/Bone.003/Bone.004/Bone.005/Bone.005_end
+        weight: 1
+      - path: Cylinder.001
+        weight: 1
+      - path: Cylinder.003
+        weight: 1
+      - path: Sphere
+        weight: 1
+      - path: Sphere.001
+        weight: 1
+      - path: Sphere.002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .300000012
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
