@@ -23,9 +23,12 @@ public class CharacController : MonoBehaviour
 
 	void FixedUpdate () 
 	{
-		Vector3 direction = Vector3.zero; 
-		if (Input.GetKey ("z"))
-			direction += transform.forward;
+		Vector3 direction = Vector3.zero;
+        if (Input.GetKey("z"))
+        {
+            direction += transform.forward;
+            //animation.Play("walk");
+        }
 		if (Input.GetKey ("s"))
 			direction -= transform.forward;
 		if (Input.GetKey ("a"))

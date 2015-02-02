@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
 		dir.Normalize ();
         Debug.DrawRay(target.position, dir * -distCamera, Color.red);
 
-        int layerMask = 1 << 8;
+        int layerMask = ((1 << 8) | (1 << 9));
         layerMask = ~layerMask;
         if (Physics.Raycast(target.position, dir, out hit, -distCamera, layerMask))
             _offset.z = -hit.distance;

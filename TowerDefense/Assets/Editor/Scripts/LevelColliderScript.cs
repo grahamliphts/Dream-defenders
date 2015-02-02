@@ -7,8 +7,6 @@ public class LevelColliderScript : MonoBehaviour
     [MenuItem("Window/LevelCollider")]
     static void Init()
     {
-        // Get existing open window or if none, make a new one:
-        //MyWindow window = (MyWindow)EditorWindow.GetWindow(typeof(MyWindow));
         GameObject level = GameObject.Find("level_generator");
         
         if (level != null)
