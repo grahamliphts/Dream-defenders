@@ -3,8 +3,36 @@ using System.Collections;
 
 public class SpellScript : MonoBehaviour 
 {
-    void OnCollisionEnter(Collision other)
+    public Transform transform;
+    public Rigidbody rigidbody;
+
+    public Transform Transform
     {
-         Destroy(transform.gameObject);
+        get
+        {
+            return transform;
+        }
+        set
+        {
+            transform = value;
+        }
+    }
+    public Rigidbody Rigidbody
+    {
+        get
+        {
+            return rigidbody;
+        }
+        set
+        {
+            rigidbody = value;
+        }
+    }
+
+    void OnTriggerEnter()
+    {
+        transform.gameObject.SetActive(false);
+        rigidbody.velocity = new Vector3(0, 0, 0);
+        transform.transform.position = new Vector3(1000, 1000, 1000);
     }
 }
