@@ -29,10 +29,9 @@ public class CharacController : MonoBehaviour
 	        if (Input.GetKey ("z")) {
 						
 						direction += -transform.forward; //inverted axis change in progress
-
-								animation.Play ("Armature.000|run");
-								Debug.Log ("start walking");
-
+						animation["Armature.000|run"].speed = 2f;
+						animation.Play ("Armature.000|run",PlayMode.StopAll);
+						Debug.Log ("start walking");
 						isWalking = true;
 				} 
 		else if(isWalking) {

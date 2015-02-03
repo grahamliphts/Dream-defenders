@@ -58,6 +58,7 @@ ModelImporter:
     7400002: Teddy_Bear.001|Run Action.002
     7400004: Armature.000|run
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Teddy_Bear.001
   materials:
     importMaterials: 1
@@ -84,7 +85,7 @@ ModelImporter:
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
-      loop: 0
+      loop: 1
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
@@ -172,6 +173,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 0
   userData: 
