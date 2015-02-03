@@ -10,6 +10,8 @@ public class CharacController : MonoBehaviour
 	private Rigidbody _rigidbody;
 	private Vector3 _eulerAngleVelocity = new Vector3(0, 100, 0);
     private float _distance = 3.0f;
+
+	private bool isWalking = false;
 	void Start()
 	{
 		_rigidbody = this.GetComponent<Rigidbody>();
@@ -24,16 +26,21 @@ public class CharacController : MonoBehaviour
 	void FixedUpdate () 
 	{
 		Vector3 direction = Vector3.zero;
-        if (Input.GetKey("z"))
-        {
-            direction += -transform.forward; //inverted axis change in progress
+	        if (Input.GetKey ("z")) {
+						
+						direction += -transform.forward; //inverted axis change in progress
 
-			//animation.CrossFade("Armature.000|Run Action 001");
-			animation.Play("Armature.000|Run Action.001");
-			//animation.Play("nours_rebirth");
-			//animation.
-            //animation.Play("walk");
-        }
+								animation.Play ("Armature.000|run");
+								Debug.Log ("start walking");
+
+						isWalking = true;
+				} 
+		else if(isWalking) {
+			animation.Stop ("Armature.000|run");
+			animation.Rewind("Armature.000|run");
+			Debug.Log ("stop walking");
+			isWalking = false;
+		}
 		if (Input.GetKey ("s"))
 			direction = transform.forward; //inverted axis change in progress
 		if (Input.GetKey ("a"))
@@ -63,7 +70,7 @@ public class CharacController : MonoBehaviour
         layerMask = ~layerMask;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), groundDir, out hit, groundDist))
 		{
-            Debug.Log(hit.transform.tag);
+            //Debug.Log(hit.transform.tag);
 			if (_wantToJump)
 			{
                 Debug.Log("jump");
