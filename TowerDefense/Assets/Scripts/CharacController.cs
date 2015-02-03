@@ -26,15 +26,20 @@ public class CharacController : MonoBehaviour
 		Vector3 direction = Vector3.zero;
         if (Input.GetKey("z"))
         {
-            direction += transform.forward;
+            direction += -transform.forward; //inverted axis change in progress
+
+			//animation.CrossFade("Armature.000|Run Action 001");
+			animation.Play("Armature.000|Run Action.001");
+			//animation.Play("nours_rebirth");
+			//animation.
             //animation.Play("walk");
         }
 		if (Input.GetKey ("s"))
-			direction -= transform.forward;
+			direction = transform.forward; //inverted axis change in progress
 		if (Input.GetKey ("a"))
-			direction -= transform.right;
+			direction += transform.right; //inverted axis change in progress
 		if (Input.GetKey ("e")) 
-			direction += transform.right;
+			direction -= transform.right; //inverted axis change in progress
 
 		if (Input.GetKey ("q")) 
 		{

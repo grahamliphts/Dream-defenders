@@ -18,7 +18,7 @@ public class SpellController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GameObject fireballShoot = Instantiate(Fireball, SpawnPoint.transform.position, Quaternion.identity) as GameObject;
-            fireballShoot.rigidbody.AddForce(transform.forward * 1500);
+            fireballShoot.rigidbody.AddForce(-transform.forward * 1500);
         }
 
     }
