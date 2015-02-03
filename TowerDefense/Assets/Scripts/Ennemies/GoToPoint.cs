@@ -15,6 +15,6 @@ public class GoToPoint : MonoBehaviour {
 		
 		void Update ()
 		{
-			_agent.SetDestination(Target.position);
+			//_agent.SetDestination(Target.position);
 		}
 }

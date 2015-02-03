@@ -3,48 +3,63 @@ using System.Collections;
 
 public class IAEnnemy : MonoBehaviour 
 {
-     public Transform Target;    
-     public Transform Projectile;
- 
-     public float MaximumLookDistance = 15;
-     public float MaximumAttackDistance = 10;
-     public float FollowSpeed = 5;
-     public float MinimumDistanceFromPlayer = 2;
- 
-     public float RotationDamping = 6;
- 
-     void Update()  
-     {
- 
-         var distance = Vector3.Distance(Target.position, transform.position);
- 
-         if(distance <= MaximumLookDistance) {
-             LookAtTarget ();
- 
-             if(distance <= MaximumAttackDistance)
-                 AttackAndFollowTarget (distance);
-         }   
-         else
-             renderer.material.color = Color.green; 
-     }
- 
- 
-     void LookAtTarget () 
-     {
-         renderer.material.color = Color.yellow;
-         var dir = Target.position - transform.position;
-         var rotation = Quaternion.LookRotation(dir);
-         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * RotationDamping);
-     }
- 
- 
-     void AttackAndFollowTarget (float distance) 
-{
-         renderer.material.color = Color.red;
-         if(distance > MinimumDistanceFromPlayer)
-         
-             transform.Translate((Target.position - transform.position).normalized * FollowSpeed * Time.deltaTime);
-         Debug.Log((Target.position - transform.position).normalized * FollowSpeed * Time.deltaTime);
-        // Instantiate(Projectile, transform.position + (Target.position - transform.position).normalized, Quaternion.LookRotation(Target.position - transform.position));
-     }
+	// This is the object to follow
+	public Transform leader;  
+	//var leader : Transform;
+	
+	// This is the object which follows
+	//public Transform follower;  
+	//var follower : Transform;
+
+	//this is the arrival point
+	public Transform ArrivalP;  
+
+	private NavMeshAgent _agent;
+
+	// This is the speed with which the follower will pursue
+	float speed = 2f;
+	
+	// This is the range at which to pursue
+	float chaseRange = 5f;
+	
+	// This is used to store the distance between the two objects.
+	private float range;
+
+	// fireball
+	//public GameObject Fireball;
+	//public Transform SpawnPoint;
+
+	void Start()
+	{
+		_agent = GetComponent<NavMeshAgent>();
+		_agent.SetDestination(ArrivalP.position);
+	}
+	
+	void Update(){
+		
+		// Calculate the distance between the follower and the leader.
+		range = Vector3.Distance( transform.position,leader.position );
+		
+		if ( range <= chaseRange ){
+			
+			// If the follower is close enough to the leader, then chase!
+			//Debug.Log(message:"in range");
+			_agent.Stop();
+			transform.LookAt(leader);
+			transform.Translate( speed * Vector3.forward * Time.deltaTime);
+
+			// launch fireball
+			//GameObject fireballShoot = Instantiate(Fireball, SpawnPoint.transform.position, Quaternion.identity) as GameObject;
+			//fireballShoot.rigidbody.AddForce(transform.forward * 1500);
+			
+		} // End if (range <= chaseRange)
+		
+		else {
+			_agent.Resume();
+			// The follower is out of range. Do nothing.
+			return;
+			
+		} // End else (if ( range <= chaseRange ))
+		
+	} // End function Update()
 }

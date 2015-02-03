@@ -53,7 +53,11 @@ public class ConstructionController : MonoBehaviour
 
                      //add box collider to tower
                     BoxCollider boxCollider = towerInstance.AddComponent<BoxCollider>();
+					boxCollider.isTrigger = true;
                     boxCollider.size = new Vector3(RangeTower, RangeTower, boxCollider.size.z);
+
+					//add box collider to tower
+					BoxCollider boxCollider2 = towerInstance.AddComponent<BoxCollider>();
                 }
             }
         }
