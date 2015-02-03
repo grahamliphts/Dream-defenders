@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f8bdd24051dd811428a24e244c0ddc36
+guid: 04f48fe42900b1547b41b6ba57f794d0
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -31,7 +31,6 @@ ModelImporter:
     100050: Bone.019_end
     100052: //RootNode
     100054: Teddy_Bear.001
-    100056: Lamp
     400000: Armature.000
     400002: Bone
     400004: Bone.001
@@ -60,23 +59,11 @@ ModelImporter:
     400050: Bone.019_end
     400052: //RootNode
     400054: Teddy_Bear.001
-    400056: Lamp
-    2300000: //RootNode
-    3300000: //RootNode
     4300000: Teddy_Bear.001
-    6400000: //RootNode
-    7400000: Armature.000|Action
-    7400002: Armature.000|Action.001
-    7400004: Armature.000|Action.002
-    7400006: Armature.000|LampAction
-    7400008: Armature.000|Run
-    7400010: Armature.000|Run Action.001
-    7400012: Armature.000|Run.001
-    7400014: Armature.000|Run.002
-    7400016: Teddy_Bear.001|Action
-    7400018: Teddy_Bear.001|Action.001
-    7400020: Teddy_Bear.001|Action.002
-    7400022: Teddy_Bear.001|LampAction
+    7400000: Armature.000|LampAction
+    7400002: Armature.000|Run Action
+    7400004: Teddy_Bear.001|LampAction
+    7400006: Teddy_Bear.001|Run Action
     9500000: //RootNode
     13700000: Teddy_Bear.001
   materials:
@@ -96,16 +83,16 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature.000|Run
-      takeName: Armature.000|Run
+      name: Armature.000|Run Action
+      takeName: Armature.000|Run Action
       firstFrame: 0
-      lastFrame: 80
+      lastFrame: 82
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -182,7 +169,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: .300000012
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -197,7 +184,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
