@@ -23,7 +23,6 @@ public class IAEnnemy : MonoBehaviour
 	// This is used to store the distance between the two objects.
 	private float range;
 
-
 	// fireball
 	//public GameObject Fireball;
 	//public Transform SpawnPoint;
@@ -64,4 +63,21 @@ public class IAEnnemy : MonoBehaviour
         } // End else (if ( range <= chaseRange ))
 		
 	} // End function Update()
+
+    void OnTriggerExit(Collider target)
+    {
+        if (target.tag == "tp")
+        {
+            Debug.Log("je quitte le tp");
+        }
+    }
+
+    void OnTriggerEnter(Collider target)
+    {
+       if(target.tag == "tp")
+       {
+           Debug.Log("j'entre dans le tp");
+       }
+    }
 }
+
