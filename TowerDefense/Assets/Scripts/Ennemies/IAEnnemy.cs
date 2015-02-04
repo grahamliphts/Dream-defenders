@@ -5,11 +5,6 @@ public class IAEnnemy : MonoBehaviour
 {
 	// This is the object to follow
 	public Transform leader;  
-	//var leader : Transform;
-	
-	// This is the object which follows
-	//public Transform follower;  
-	//var follower : Transform;
 
 	//this is the arrival point
 	public Transform ArrivalP;  
@@ -17,13 +12,17 @@ public class IAEnnemy : MonoBehaviour
 	private NavMeshAgent _agent;
 
 	// This is the speed with which the follower will pursue
-	float speed = 2f;
+	public float speed = 4f;
 	
 	// This is the range at which to pursue
-	float chaseRange = 5f;
-	
+	public float chaseRange = 8f;
+
+    public float minRange = 3f;
+
+    public float backrange = 2f;
 	// This is used to store the distance between the two objects.
 	private float range;
+
 
 	// fireball
 	//public GameObject Fireball;
@@ -39,27 +38,30 @@ public class IAEnnemy : MonoBehaviour
 		
 		// Calculate the distance between the follower and the leader.
 		range = Vector3.Distance( transform.position,leader.position );
-		
-		if ( range <= chaseRange ){
+        if(range < backrange)
+        {
+            _agent.Stop();
+            transform.LookAt(leader);
+            transform.Translate(-((speed+2) * Vector3.forward * Time.deltaTime));
+        }
+        else if(range < minRange )
+        {
+            _agent.Stop();
+            transform.LookAt(leader);
+        }
+		else if ( range <= chaseRange ){
 			
-			// If the follower is close enough to the leader, then chase!
-			//Debug.Log(message:"in range");
 			_agent.Stop();
 			transform.LookAt(leader);
 			transform.Translate( speed * Vector3.forward * Time.deltaTime);
 
-			// launch fireball
-			//GameObject fireballShoot = Instantiate(Fireball, SpawnPoint.transform.position, Quaternion.identity) as GameObject;
-			//fireballShoot.rigidbody.AddForce(transform.forward * 1500);
-			
 		} // End if (range <= chaseRange)
-		
-		else {
-			_agent.Resume();
-			// The follower is out of range. Do nothing.
-			return;
-			
-		} // End else (if ( range <= chaseRange ))
+        else
+        {
+            _agent.Resume();
+            return;
+
+        } // End else (if ( range <= chaseRange ))
 		
 	} // End function Update()
 }
