@@ -57,6 +57,11 @@ ModelImporter:
     7400000: Armature.000|Run Action.001
     7400002: Teddy_Bear.001|Run Action.002
     7400004: Armature.000|run
+    7400006: Armature.000|Idle
+    7400008: Armature.000|left
+    7400010: Armature.000|right
+    7400012: Armature.000|jump
+    7400014: Armature.000|idle
     9500000: //RootNode
     11100000: //RootNode
     13700000: Teddy_Bear.001
@@ -77,16 +82,16 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature.000|run
-      takeName: Armature.000|run
+      name: Armature.000|left
+      takeName: Armature.000|left
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 34
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
-      loop: 1
-      loopTime: 1
+      loop: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -110,11 +115,15 @@ ModelImporter:
         weight: 1
       - path: Armature.000/Bone/Bone.001/Bone.002
         weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
       - path: Armature.000/Bone/Bone.001/Bone.008
         weight: 1
       - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
         weight: 1
       - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
         weight: 1
       - path: Armature.000/Bone/Bone.001/Bone.009
         weight: 1
@@ -122,17 +131,331 @@ ModelImporter:
         weight: 1
       - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
         weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
       - path: Armature.000/Bone.014
         weight: 1
       - path: Armature.000/Bone.014/Bone.016
         weight: 1
       - path: Armature.000/Bone.014/Bone.016/Bone.019
         weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
       - path: Armature.000/Bone.015
         weight: 1
       - path: Armature.000/Bone.015/Bone.017
         weight: 1
       - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|run
+      takeName: Armature.000|run
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|right
+      takeName: Armature.000|right
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|jump
+      takeName: Armature.000|jump
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|idle
+      takeName: Armature.000|idle
+      firstFrame: 0
+      lastFrame: 46
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
         weight: 1
       - path: Teddy_Bear.001
         weight: 1
