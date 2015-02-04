@@ -24,8 +24,8 @@ public class SpellController : MonoBehaviour
         var spell = _spellPoolManager.GetSpell();
         spell.gameObject.SetActive(true);
         spell.Transform.position = transform.position;
-        Debug.Log("Spell velocity " + spell.rigidbody.velocity);
-        Debug.Log("Spell position " + spell.Transform.position);
+       // Debug.Log("Spell velocity " + spell.rigidbody.velocity);
+        //Debug.Log("Spell position " + spell.Transform.position);
         spell.Rigidbody.AddForce(transform.forward * 1500);
     }
 }
