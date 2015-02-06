@@ -99,10 +99,8 @@ public class CharacController : MonoBehaviour
         layerMask = ~layerMask;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), groundDir, out hit, groundDist))
         {
-            //Debug.Log(hit.transform.tag);
             if (_wantToJump)
             {
-               
                 Debug.Log("jump");
                 _wantToJump = false;
                 direction += transform.up * jumpSpeed;

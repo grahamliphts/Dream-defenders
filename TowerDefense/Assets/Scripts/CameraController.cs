@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     public float cameraSpeed = 1f;
     public float smoothTime = 0.3f;
 
-	private Vector3 _offset;
+	public Vector3 _offset;
 
 	private float _x = 0.0f;
 	private float _y = 0.0f;
@@ -23,7 +23,6 @@ public class CameraController : MonoBehaviour
 	void Start() 
 	{
         _currentVelocity = Vector3.zero;
-        _offset = new Vector3(transform.localPosition.x, transform.localPosition.y, distCamera);
 	}
 
 	void AdjustCamera()
@@ -31,8 +30,8 @@ public class CameraController : MonoBehaviour
 		RaycastHit hit;
 		Vector3 dir = transform.position - target.position;
 		dir.Normalize ();
-        Debug.DrawRay(target.position, dir * -distCamera, Color.red);
-
+        //Debug.DrawRay(target.position, dir * -distCamera, Color.red);
+        Debug.Log(transform.localPosition);
         int layerMask = ((1 << 8) | (1 << 9));
         layerMask = ~layerMask;
         if (Physics.Raycast(target.position, dir, out hit, -distCamera, layerMask))
@@ -44,21 +43,17 @@ public class CameraController : MonoBehaviour
 
 	void LateUpdate () 
 	{
-       
 		_x = Input.GetAxis("Mouse X") * cameraSpeed;
 		_y = -Input.GetAxis("Mouse Y")* cameraSpeed;
-			
+
 		this.RotateCamera(_x,_y);
 		this.RotateCharacter(_x);
 		AdjustCamera ();
-
-       
 	}
 
 	void RotateCharacter(float x)
 	{
 		Vector3 actualEuler = target.rotation.eulerAngles;
-		actualEuler.y += x;
 		Quaternion rotation = Quaternion.Euler(actualEuler);
 		target.rotation = rotation;
 	}
@@ -73,6 +68,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = rotation;
 
         Vector3 position = transform.forward * _offset.z + target.position;
+        position.y += _offset.y;
         transform.position = position;
 	}
 	
