@@ -3,66 +3,56 @@ using System.Collections;
 
 public class GuiInGameManager : MonoBehaviour 
 {
-    public GameObject FireTower;
-    public GameObject FrozenTower;
-    public GameObject NeutralTower;
-    public GameObject ElectricTower;
+    public ModelTowerPoolManager ModelTowerPoolManager;
+    private TowerConstructionScript _target;
+    private TowerConstructionScript _newTarget;
 
-    private GameObject target;
 	void Start () 
     {
-        target = NeutralTower;
+        _target = ModelTowerPoolManager.GetFrozenTower();
+        _target.gameObject.SetActive(true);
+        _target.ConstructionController.enabled = true;
 	}
 	
 	void Update () 
     {
         if (Input.GetKey("1"))
         {
-            if (target != NeutralTower)
+            if (_target != ModelTowerPoolManager.GetFrozenTower())
             {
-                SetTower(target, NeutralTower);
-                target = NeutralTower;
+                _newTarget = ModelTowerPoolManager.GetFrozenTower();
+                SetTower(_target, _newTarget);
+                _target = _newTarget;
             }
         }
         if (Input.GetKey("2"))
         {
-            if (target != FrozenTower)
+            if (_target != ModelTowerPoolManager.GetFireTower())
             {
-                SetTower(target, FrozenTower);
-                target = FrozenTower;
+                 _newTarget = ModelTowerPoolManager.GetFireTower();
+                SetTower(_target, _newTarget);
+                _target = _newTarget;
             }
         }
         if (Input.GetKey("3"))
         {
-            if (target != ElectricTower)
+            if (_target != ModelTowerPoolManager.GetElectricTower().gameObject)
             {
-                SetTower(target, ElectricTower);
-                target = ElectricTower;
+                _newTarget = ModelTowerPoolManager.GetElectricTower();
+                SetTower(_target, _newTarget);
+                _target = _newTarget;
             }
         }
-        if (Input.GetKey("4"))
-        {
-            if (target != FireTower)
-            {
-                SetTower(target, FireTower);
-                target = FireTower;
-            }
-        }
-       /* if (Input.GetKey("5"))
-            SetTower(target, FireTower);
-        if (Input.GetKey("6"))
-            SetTower(target, FireTower);*/
 	}
 
-    void SetTower(GameObject previousTower, GameObject tower)
+    void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)
     {
-        ConstructionController constructionController;
-        constructionController = previousTower.GetComponent<ConstructionController>();
-        Destroy(constructionController);
-        previousTower.transform.position = new Vector3(1000, 1000, 1000);
-        
-        constructionController = tower.AddComponent<ConstructionController>();
-        constructionController.item = tower;
-        constructionController.SetConstruction(true);
+        previousTower.ConstructionController.enabled = false;
+        previousTower.Transform.position = new Vector3(1000, 1000, 1000);
+        previousTower.gameObject.SetActive(false);
+
+        tower.gameObject.SetActive(true);
+        tower.ConstructionController.enabled = true;
+        tower.ConstructionController.SetConstruction(true);
     }
 }

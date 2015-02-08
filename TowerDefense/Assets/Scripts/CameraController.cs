@@ -31,7 +31,6 @@ public class CameraController : MonoBehaviour
 		Vector3 dir = transform.position - target.position;
 		dir.Normalize ();
         //Debug.DrawRay(target.position, dir * -distCamera, Color.red);
-        Debug.Log(transform.localPosition);
         int layerMask = ((1 << 8) | (1 << 9));
         layerMask = ~layerMask;
         if (Physics.Raycast(target.position, dir, out hit, -distCamera, layerMask))

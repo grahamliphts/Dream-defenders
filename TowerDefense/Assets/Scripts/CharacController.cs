@@ -101,7 +101,6 @@ public class CharacController : MonoBehaviour
         {
             if (_wantToJump)
             {
-                Debug.Log("jump");
                 _wantToJump = false;
                 direction += transform.up * jumpSpeed;
             }

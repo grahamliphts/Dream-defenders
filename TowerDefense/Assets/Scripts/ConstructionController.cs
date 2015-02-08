@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ConstructionController : MonoBehaviour
 {
-    public Object item;
+    //public Object Item;
+    public TowerPoolManager TowerPoolManager;
     public int RangeTower = 6;
     private uint _hitCounter;
     private float _distance = 3.0f;
@@ -11,21 +12,22 @@ public class ConstructionController : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start");
         _hitCounter = 0;
         transform.gameObject.renderer.material.color = Color.green;
     }
-
-    void FixedUpdate()
-    {
-
-    }
     void Update()
     {
+        Debug.Log(_construction);
         if (Input.GetKeyDown("t"))
         {
             Debug.Log(_construction);
             if (_construction == false)
+            {
                 _construction = true;
+                transform.gameObject.SetActive(true);
+            }
+
             else
             {
                 transform.position = new Vector3(1000, 1000, 1000);
@@ -36,28 +38,24 @@ public class ConstructionController : MonoBehaviour
         if (_construction == true)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 5);
             RaycastHit hitTower;
             transform.position = new Vector3(1000, 1000, 1000);
+
             if (Physics.Raycast(ray, out hitTower, 100))
             {
                 transform.position = hitTower.point;
                  if(Input.GetMouseButtonDown(0) && _hitCounter == 0)
                 {
-                    GameObject towerInstance = Instantiate(item) as GameObject;
-                    ConstructionController constructionController = towerInstance.GetComponent<ConstructionController>();
-                    Destroy(constructionController);
-                    towerInstance.transform.position = transform.position;
-                    towerInstance.gameObject.renderer.material.color = Color.black;
-                    Destroy(towerInstance.gameObject.collider);
+                    var tower = TowerPoolManager.GetFrozenTower();
+                    tower.gameObject.SetActive(true);
+                    tower.Transform.position = transform.position;
 
-                     //add box collider to tower
-                    BoxCollider boxCollider = towerInstance.AddComponent<BoxCollider>();
-					boxCollider.isTrigger = true;
-                    boxCollider.size = new Vector3(RangeTower, RangeTower, boxCollider.size.z);
+                     //add box collider for shoot range
+                    tower.RangeCollider.enabled = true;
+					tower.RangeCollider.isTrigger = true;
 
-					//add box collider to tower
-					BoxCollider boxCollider2 = towerInstance.AddComponent<BoxCollider>();
+                    //add box collider to tower
+                    tower.Collider.enabled = true;
                 }
             }
         }
@@ -65,7 +63,6 @@ public class ConstructionController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag != "ground")
         {
             transform.gameObject.renderer.material.color = Color.red;
