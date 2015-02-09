@@ -12,13 +12,11 @@ public class ConstructionController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         _hitCounter = 0;
         transform.gameObject.renderer.material.color = Color.green;
     }
     void Update()
     {
-        Debug.Log(_construction);
         if (Input.GetKeyDown("t"))
         {
             Debug.Log(_construction);
@@ -49,13 +47,12 @@ public class ConstructionController : MonoBehaviour
                     var tower = TowerPoolManager.GetFrozenTower();
                     tower.gameObject.SetActive(true);
                     tower.Transform.position = transform.position;
-
+                    Debug.Log(transform.position);
                      //add box collider for shoot range
                     tower.RangeCollider.enabled = true;
 					tower.RangeCollider.isTrigger = true;
-
                     //add box collider to tower
-                    tower.Collider.enabled = true;
+                    tower.OwnCollider.enabled = true;
                 }
             }
         }

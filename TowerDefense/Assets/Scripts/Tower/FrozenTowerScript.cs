@@ -7,8 +7,8 @@ public class FrozenTowerScript : MonoBehaviour
     public Rigidbody rigidbody;
     public Collider collider;
     public Collider rangeCollider;
-     public Transform Transform
-     {
+    public Transform Transform
+    {
         get
         {
             return transform;
@@ -29,7 +29,7 @@ public class FrozenTowerScript : MonoBehaviour
              rangeCollider = value;
          }
      }
-    public Collider Collider
+    public Collider OwnCollider
      {
          get
          {
