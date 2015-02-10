@@ -36,7 +36,7 @@ public class GuiInGameManager : MonoBehaviour
         }
         if (Input.GetKey("3"))
         {
-            if (_target != ModelTowerPoolManager.GetElectricTower().gameObject)
+            if (_target != ModelTowerPoolManager.GetElectricTower())
             {
                 _newTarget = ModelTowerPoolManager.GetElectricTower();
                 SetTower(_target, _newTarget);

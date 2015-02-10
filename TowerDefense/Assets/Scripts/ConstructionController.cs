@@ -39,7 +39,9 @@ public class ConstructionController : MonoBehaviour
             RaycastHit hitTower;
             transform.position = new Vector3(1000, 1000, 1000);
 
-            if (Physics.Raycast(ray, out hitTower, 100))
+            int layerMask = 1 << 9;
+            layerMask = ~layerMask;
+            if (Physics.Raycast(ray, out hitTower, 100, layerMask))
             {
                 transform.position = hitTower.point;
                  if(Input.GetMouseButtonDown(0) && _hitCounter == 0)
@@ -53,6 +55,8 @@ public class ConstructionController : MonoBehaviour
 					tower.RangeCollider.isTrigger = true;
                     //add box collider to tower
                     tower.OwnCollider.enabled = true;
+
+                    Physics.IgnoreCollision(transform.collider, tower.RangeCollider);
                 }
             }
         }
@@ -62,8 +66,10 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
+           
             transform.gameObject.renderer.material.color = Color.red;
             _hitCounter++;
+            Debug.Log("Trigger Enter" + transform.gameObject + " " + _hitCounter);
         }
     }
 
@@ -71,7 +77,9 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
+           
              _hitCounter--;
+             Debug.Log("Trigger exit" + transform.gameObject + " " + _hitCounter);
             if(_hitCounter == 0)
                 transform.gameObject.renderer.material.color = Color.green;
            

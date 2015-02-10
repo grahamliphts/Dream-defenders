@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
 		Vector3 dir = transform.position - target.position;
 		dir.Normalize ();
         //Debug.DrawRay(target.position, dir * -distCamera, Color.red);
-        int layerMask = ((1 << 8) | (1 << 9));
+        int layerMask = ((1 << 8) | (1 << 9) | (1 << 10));
         layerMask = ~layerMask;
         if (Physics.Raycast(target.position, dir, out hit, -distCamera, layerMask))
             _offset.z = -hit.distance;
