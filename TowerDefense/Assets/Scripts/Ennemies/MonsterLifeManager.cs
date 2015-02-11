@@ -8,17 +8,6 @@ public class MonsterLifeManager : MonoBehaviour {
     public int[] _damage;
     public Rigidbody _body;
     
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-        
-	
-	}
     void OnTriggerEnter(Collider target)
     {
         int count = 0;
@@ -34,7 +23,10 @@ public class MonsterLifeManager : MonoBehaviour {
         if(life <= 0)
         {
             Debug.Log("Monster died");
-            Destroy(this.gameObject);
+            //TODO:POOL ENNEMY
+            transform.position = new Vector3(1000,1000, 1000);
+           // transform.gameObject.SetActive(false);
+            
         }
        // Debug.Log(target.tag);
        // Debug.Log("trigger enter");

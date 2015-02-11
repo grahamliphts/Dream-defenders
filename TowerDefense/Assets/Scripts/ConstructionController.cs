@@ -19,7 +19,7 @@ public class ConstructionController : MonoBehaviour
     {
         if (Input.GetKeyDown("t"))
         {
-            Debug.Log(_construction);
+            //Debug.Log(_construction);
             if (_construction == false)
             {
                 _construction = true;
@@ -49,7 +49,7 @@ public class ConstructionController : MonoBehaviour
                     var tower = TowerPoolManager.GetFrozenTower();
                     tower.gameObject.SetActive(true);
                     tower.Transform.position = transform.position;
-                    Debug.Log(transform.position);
+
                      //add box collider for shoot range
                     tower.RangeCollider.enabled = true;
 					tower.RangeCollider.isTrigger = true;
@@ -69,7 +69,7 @@ public class ConstructionController : MonoBehaviour
            
             transform.gameObject.renderer.material.color = Color.red;
             _hitCounter++;
-            Debug.Log("Trigger Enter" + transform.gameObject + " " + _hitCounter);
+         //   Debug.Log("Trigger Enter" + transform.gameObject + " " + _hitCounter);
         }
     }
 
@@ -79,7 +79,7 @@ public class ConstructionController : MonoBehaviour
         {
            
              _hitCounter--;
-             Debug.Log("Trigger exit" + transform.gameObject + " " + _hitCounter);
+        //     Debug.Log("Trigger exit" + transform.gameObject + " " + _hitCounter);
             if(_hitCounter == 0)
                 transform.gameObject.renderer.material.color = Color.green;
            

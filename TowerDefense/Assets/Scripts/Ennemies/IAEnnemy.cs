@@ -62,7 +62,7 @@ public class IAEnnemy : MonoBehaviour
 
         } // End else (if ( range <= chaseRange ))
 		
-	} // End function Update()
+	} 
 
     void OnTriggerExit(Collider target)
     {

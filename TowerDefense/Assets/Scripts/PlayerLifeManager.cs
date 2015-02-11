@@ -3,24 +3,10 @@ using System.Collections;
 
 public class PlayerLifeManager : MonoBehaviour
 {
-
-
     public int life;
     public string[] _tag;
     public int[] _damage;
-    // Use this for initialization
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-
-    }
     void OnTriggerStay(Collider target)
     {
         int count = 0;

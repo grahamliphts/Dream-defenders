@@ -29,11 +29,10 @@ public class SpellScript : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter()
+    void OnCollisionEnter(Collision col)
     {
-        
-        rigidbody.velocity = new Vector3(0, 0, 0);
-        transform.transform.position = new Vector3(1000, 1000, 1000);
-        transform.gameObject.SetActive(false);
+            rigidbody.velocity = new Vector3(0, 0, 0);
+            transform.transform.position = new Vector3(1000, 1000, 1000);
+            transform.gameObject.SetActive(false);
     }
 }
