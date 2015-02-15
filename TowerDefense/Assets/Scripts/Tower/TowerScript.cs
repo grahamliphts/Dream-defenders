@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FrozenTowerScript : MonoBehaviour 
+public class TowerScript : MonoBehaviour 
 {
     public Transform transform;
     public Rigidbody rigidbody;

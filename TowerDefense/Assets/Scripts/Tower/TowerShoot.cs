@@ -8,7 +8,6 @@ public class TowerShoot : MonoBehaviour
     public Transform SpawnPoint;
     public float _projectileSpeed;
     public float _shootDelay;
-
     private List<Transform> _enemiesTransform;
 
     void Start()
@@ -20,7 +19,7 @@ public class TowerShoot : MonoBehaviour
     {
         if (col.gameObject.tag == "ennemy")
         {
-            Debug.Log(col.gameObject.name);
+            Debug.Log("Object in range collider " + col.gameObject.name);
             _enemiesTransform.Add(col.transform);
             if (_enemiesTransform.Count == 1)
                 StartCoroutine("TryToShoot");
@@ -29,7 +28,7 @@ public class TowerShoot : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        Debug.Log(col.gameObject);
+        //Debug.Log(col.gameObject);
         if (col.gameObject.tag == "ennemy")
         {
             _enemiesTransform.Remove(col.transform);
@@ -48,8 +47,9 @@ public class TowerShoot : MonoBehaviour
 
             ps.gameObject.SetActive(true);
             ps.Transform.position = SpawnPoint.position;
-            //ps.Rigidbody.AddForce(transform.forward * 1500);
-            ps.Rigidbody.velocity = (_enemiesTransform[0].position - transform.position).normalized * _projectileSpeed;
+            Physics.IgnoreCollision(ps.collider, transform.collider);
+            ps.Rigidbody.AddForce((_enemiesTransform[0].position - transform.position).normalized * _projectileSpeed);
+            //ps.Rigidbody.velocity = (
             yield return new WaitForSeconds(_shootDelay);
         }
     }

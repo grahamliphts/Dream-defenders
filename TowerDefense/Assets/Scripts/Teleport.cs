@@ -19,13 +19,9 @@ public class Teleport : MonoBehaviour
         }
         else
         {
-            Debug.Log("un fantôme sa barre !!!");
             other.gameObject.SetActive(false);   
             if (nextPoint != null)
-               other.transform.position = new Vector3(nextPoint.transform.position.x - 2, nextPoint.transform.position.y, nextPoint.transform.position.z - 2);
-
-            if (prevPoint != null)
-                other.transform.position = new Vector3(prevPoint.transform.position.x - 2,prevPoint.transform.position.y,prevPoint.transform.position.z - 2 )    ;
+               other.transform.position = new Vector3(nextPoint.transform.position.x , nextPoint.transform.position.y, nextPoint.transform.position.z);
             other.gameObject.SetActive(true);
         }
     }

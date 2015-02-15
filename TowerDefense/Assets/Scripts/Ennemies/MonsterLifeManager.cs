@@ -6,7 +6,6 @@ public class MonsterLifeManager : MonoBehaviour {
     public int life;
     public string[] _tag;
     public int[] _damage;
-    public Rigidbody _body;
     
     void OnTriggerEnter(Collider target)
     {
@@ -26,10 +25,6 @@ public class MonsterLifeManager : MonoBehaviour {
             //TODO:POOL ENNEMY
             transform.position = new Vector3(1000,1000, 1000);
            // transform.gameObject.SetActive(false);
-            
         }
-       // Debug.Log(target.tag);
-       // Debug.Log("trigger enter");
     }
-
 }

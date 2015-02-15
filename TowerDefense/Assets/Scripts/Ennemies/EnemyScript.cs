@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellScript : MonoBehaviour 
+public class EnemyScript : MonoBehaviour
 {
     public Transform transform;
     public Rigidbody rigidbody;
@@ -27,12 +27,5 @@ public class SpellScript : MonoBehaviour
         {
             rigidbody = value;
         }
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        rigidbody.velocity = new Vector3(0, 0, 0);
-        transform.transform.position = new Vector3(1000, 1000, 1000);
-        transform.gameObject.SetActive(false);
     }
 }

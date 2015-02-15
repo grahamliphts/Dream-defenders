@@ -39,6 +39,7 @@ public class ConstructionController : MonoBehaviour
             RaycastHit hitTower;
             transform.position = new Vector3(1000, 1000, 1000);
 
+            //TODO: collider only with own collider of towers already places
             int layerMask = 1 << 9;
             layerMask = ~layerMask;
             if (Physics.Raycast(ray, out hitTower, 100, layerMask))
@@ -46,7 +47,7 @@ public class ConstructionController : MonoBehaviour
                 transform.position = hitTower.point;
                  if(Input.GetMouseButtonDown(0) && _hitCounter == 0)
                 {
-                    var tower = TowerPoolManager.GetFrozenTower();
+                    var tower = TowerPoolManager.GetTower();
                     tower.gameObject.SetActive(true);
                     tower.Transform.position = transform.position;
 

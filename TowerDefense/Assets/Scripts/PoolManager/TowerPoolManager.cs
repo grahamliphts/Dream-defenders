@@ -4,11 +4,11 @@ using System.Collections;
 public class TowerPoolManager : MonoBehaviour 
 {
 
-    public FrozenTowerScript[] FrozenTowers;
+    public TowerScript[] Towers;
     int _index = 0;
-    public FrozenTowerScript GetFrozenTower()
+    public TowerScript GetTower()
     {
-        var tower = FrozenTowers[_index];
+        var tower = Towers[_index];
         _index++;
         return tower;
     }

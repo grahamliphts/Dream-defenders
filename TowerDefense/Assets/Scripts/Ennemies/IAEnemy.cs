@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IAEnnemy : MonoBehaviour 
+public class IAEnemy : MonoBehaviour 
 {
 	// This is the object to follow
 	public Transform leader;  
@@ -63,21 +63,5 @@ public class IAEnnemy : MonoBehaviour
         } // End else (if ( range <= chaseRange ))
 		
 	} 
-
-    void OnTriggerExit(Collider target)
-    {
-        if (target.tag == "tp")
-        {
-            Debug.Log("je quitte le tp");
-        }
-    }
-
-    void OnTriggerEnter(Collider target)
-    {
-       if(target.tag == "tp")
-       {
-           Debug.Log("j'entre dans le tp");
-       }
-    }
 }
 
