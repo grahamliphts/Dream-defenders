@@ -28,40 +28,60 @@ public class IAEnemy : MonoBehaviour
 	//public Transform SpawnPoint;
 
 	void Start()
-	{
-		_agent = GetComponent<NavMeshAgent>();
-		_agent.SetDestination(ArrivalP.position);
-	}
-	
-	void Update(){
-		
+    {
+        _agent.SetDestination(ArrivalP.position);
+        NavMeshPath path = new NavMeshPath();
+        _agent.CalculatePath(ArrivalP.position, path);
+        if (path.status == NavMeshPathStatus.PathPartial)
+        {
+            Debug.Log("fail");
+        }
+        else
+            Debug.Log("reachable");
+    }
+	void Update()
+    {
+       // Debug.Log(_agent.pathStatus);
 		// Calculate the distance between the follower and the leader.
+        if(_agent == null)
+            return;
+        if (_agent.pathStatus == NavMeshPathStatus.PathComplete)
+            _agent.SetDestination(ArrivalP.position + new Vector3(1, 0, 0));
+
 		range = Vector3.Distance( transform.position,leader.position );
         if(range < backrange)
         {
+            Debug.Log("Stop");
             _agent.Stop();
             transform.LookAt(leader);
             transform.Translate(-((speed+2) * Vector3.forward * Time.deltaTime));
         }
         else if(range < minRange )
         {
+            Debug.Log("Stop");
             _agent.Stop();
             transform.LookAt(leader);
         }
-		else if ( range <= chaseRange ){
-			
-			_agent.Stop();
+		else if ( range <= chaseRange )
+        {
+            Debug.Log("Stop");
+            _agent.Stop();
 			transform.LookAt(leader);
 			transform.Translate( speed * Vector3.forward * Time.deltaTime);
 
-		} // End if (range <= chaseRange)
-        else
-        {
-            _agent.Resume();
-            return;
+		}
+        /*else
+          {
+              Debug.Log("Resume");
+              _agent.Resume();
+              return;
+          } */
 
-        } // End else (if ( range <= chaseRange ))
-		
-	} 
+    } 
+
+    public void SetAgent(NavMeshAgent agent)
+    {
+        _agent = agent;
+    }
 }
 

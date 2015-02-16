@@ -11,9 +11,13 @@ public class PointManager : MonoBehaviour
     {
         for(int i = 0; i < point_list.Count; i++)
         {
-            point_list[i].AddComponent<SphereCollider>();
-            SphereCollider collider = point_list[i].GetComponent<SphereCollider>();
-            collider.isTrigger = true;
+            if (i != 0)
+            {
+                point_list[i].AddComponent<SphereCollider>();
+                SphereCollider collider = point_list[i].GetComponent<SphereCollider>();
+                collider.isTrigger = true;
+                collider.radius = 1;
+            }
             point_list[i].AddComponent<Teleport>();
             Teleport teleport = point_list[i].GetComponent<Teleport>();
             Instantiate(TpParticle, point_list[i].transform.position, Quaternion.identity);

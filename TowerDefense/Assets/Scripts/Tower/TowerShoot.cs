@@ -19,7 +19,6 @@ public class TowerShoot : MonoBehaviour
     {
         if (col.gameObject.tag == "ennemy")
         {
-            Debug.Log("Object in range collider " + col.gameObject.name);
             _enemiesTransform.Add(col.transform);
             if (_enemiesTransform.Count == 1)
                 StartCoroutine("TryToShoot");
