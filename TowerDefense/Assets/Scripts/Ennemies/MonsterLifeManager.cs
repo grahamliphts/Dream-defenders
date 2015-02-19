@@ -9,6 +9,8 @@ public class MonsterLifeManager : MonoBehaviour {
     
     void OnTriggerEnter(Collider target)
     {
+       // Debug.Log("collide with");
+        //Debug.Log(target.tag);
         int count = 0;
         foreach (string element in _tag)
         {

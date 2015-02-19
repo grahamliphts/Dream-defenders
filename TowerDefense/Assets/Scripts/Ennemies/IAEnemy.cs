@@ -34,10 +34,12 @@ public class IAEnemy : MonoBehaviour
         _agent.CalculatePath(ArrivalP.position, path);
         if (path.status == NavMeshPathStatus.PathPartial)
         {
-            Debug.Log("fail");
+           // Debug.Log("fail");
         }
         else
-            Debug.Log("reachable");
+        {
+         //   Debug.Log("reachable");
+        }
     }
 	void Update()
     {
@@ -51,20 +53,20 @@ public class IAEnemy : MonoBehaviour
 		range = Vector3.Distance( transform.position,leader.position );
         if(range < backrange)
         {
-            Debug.Log("Stop");
+           // Debug.Log("Stop");
             _agent.Stop();
             transform.LookAt(leader);
             transform.Translate(-((speed+2) * Vector3.forward * Time.deltaTime));
         }
         else if(range < minRange )
         {
-            Debug.Log("Stop");
+           // Debug.Log("Stop");
             _agent.Stop();
             transform.LookAt(leader);
         }
 		else if ( range <= chaseRange )
         {
-            Debug.Log("Stop");
+          //  Debug.Log("Stop");
             _agent.Stop();
 			transform.LookAt(leader);
 			transform.Translate( speed * Vector3.forward * Time.deltaTime);
