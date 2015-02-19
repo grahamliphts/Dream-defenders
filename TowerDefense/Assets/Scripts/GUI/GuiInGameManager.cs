@@ -9,7 +9,7 @@ public class GuiInGameManager : MonoBehaviour
 
 	void Start () 
     {
-        _target = ModelTowerPoolManager.GetFrozenTower();
+        _target = ModelTowerPoolManager.GetFireTower();
         _target.gameObject.SetActive(true);
         _target.ConstructionController.enabled = true;
 	}
@@ -18,23 +18,14 @@ public class GuiInGameManager : MonoBehaviour
     {
         if (Input.GetKey("1"))
         {
-            if (_target != ModelTowerPoolManager.GetFrozenTower())
+            if (_target != ModelTowerPoolManager.GetFireTower())
             {
-                _newTarget = ModelTowerPoolManager.GetFrozenTower();
+                _newTarget = ModelTowerPoolManager.GetFireTower();
                 SetTower(_target, _newTarget);
                 _target = _newTarget;
             }
         }
         if (Input.GetKey("2"))
-        {
-            if (_target != ModelTowerPoolManager.GetFireTower())
-            {
-                 _newTarget = ModelTowerPoolManager.GetFireTower();
-                SetTower(_target, _newTarget);
-                _target = _newTarget;
-            }
-        }
-        if (Input.GetKey("3"))
         {
             if (_target != ModelTowerPoolManager.GetElectricTower())
             {
@@ -43,13 +34,23 @@ public class GuiInGameManager : MonoBehaviour
                 _target = _newTarget;
             }
         }
+       /* if (Input.GetKey("3"))
+        {
+            if (_target != ModelTowerPoolManager.GetElectricTower())
+            {
+                _newTarget = ModelTowerPoolManager.GetElectricTower();
+                SetTower(_target, _newTarget);
+                _target = _newTarget;
+            }
+        }*/
 	}
 
     void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)
     {
+        previousTower.gameObject.SetActive(false);
         previousTower.ConstructionController.enabled = false;
         previousTower.Transform.position = new Vector3(1000, 1000, 1000);
-        previousTower.gameObject.SetActive(false);
+        
 
         tower.gameObject.SetActive(true);
         tower.ConstructionController.enabled = true;

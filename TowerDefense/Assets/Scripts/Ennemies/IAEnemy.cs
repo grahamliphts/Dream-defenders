@@ -3,87 +3,105 @@ using System.Collections;
 
 public class IAEnemy : MonoBehaviour 
 {
-	// This is the object to follow
 	public Transform leader;  
+	public Transform ArrivalP;
+    public Transform SpawnPoint;
+    public SpellPoolManager ProjectilePool;
 
-	//this is the arrival point
-	public Transform ArrivalP;  
-
+    [SerializeField]
+    private float _projectileSpeed;
+    [SerializeField]
+    private float _shootDelay;
+    private float _shootTimer;
+    private bool _recharging;
 	private NavMeshAgent _agent;
 
 	// This is the speed with which the follower will pursue
-	public float speed = 4f;
-	
+    [SerializeField]
+	private float _speed = 4f;
+    private float _backSpeed = -6f;
+
 	// This is the range at which to pursue
-	public float chaseRange = 8f;
-
-    public float minRange = 3f;
-
-    public float backrange = 2f;
+	public float chaseRange;
+    public float minRange;
+    public float backrange;
 	// This is used to store the distance between the two objects.
 	private float range;
-
-	// fireball
-	//public GameObject Fireball;
-	//public Transform SpawnPoint;
+    private bool bShoot;
 
 	void Start()
     {
-        _agent.SetDestination(ArrivalP.position);
+        _agent.SetDestination(ArrivalP.position + new Vector3(1, 0, 0));
         NavMeshPath path = new NavMeshPath();
-        _agent.CalculatePath(ArrivalP.position, path);
-        if (path.status == NavMeshPathStatus.PathPartial)
-        {
-           // Debug.Log("fail");
-        }
-        else
-        {
-         //   Debug.Log("reachable");
-        }
+        bShoot = false;
+        _recharging = false;
     }
 	void Update()
     {
-       // Debug.Log(_agent.pathStatus);
-		// Calculate the distance between the follower and the leader.
         if(_agent == null)
             return;
-        if (_agent.pathStatus == NavMeshPathStatus.PathComplete)
-            _agent.SetDestination(ArrivalP.position + new Vector3(1, 0, 0));
-
+        // Calculate the distance between the follower and the leader.
 		range = Vector3.Distance( transform.position,leader.position );
-        if(range < backrange)
+        if (range < backrange)
         {
-           // Debug.Log("Stop");
             _agent.Stop();
             transform.LookAt(leader);
-            transform.Translate(-((speed+2) * Vector3.forward * Time.deltaTime));
+            bShoot = true;
+            transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
         }
-        else if(range < minRange )
+        else if (range < minRange)
         {
-           // Debug.Log("Stop");
             _agent.Stop();
+            bShoot = true;
             transform.LookAt(leader);
         }
-		else if ( range <= chaseRange )
+        else if (range <= chaseRange)
         {
-          //  Debug.Log("Stop");
             _agent.Stop();
-			transform.LookAt(leader);
-			transform.Translate( speed * Vector3.forward * Time.deltaTime);
+            bShoot = false;
+            transform.LookAt(leader);
+            transform.Translate(_speed * Vector3.forward * Time.deltaTime);
 
-		}
-        /*else
-          {
-              Debug.Log("Resume");
-              _agent.Resume();
-              return;
-          } */
+        }
+        else
+        {
+            bShoot = false;
+            _agent.Resume();
+        }
+        if (bShoot)
+        {
 
+            if (!_recharging)
+            {
+                TryToShoot();
+                _recharging = true;
+                _shootTimer = _shootDelay;
+            }
+            else
+            {
+                _shootTimer -= Time.deltaTime;
+                if (_shootTimer <= 0.0f)
+                    _recharging = false;
+            }
+        }
+        else
+        {
+            bShoot = false;
+         
+        }
     } 
 
     public void SetAgent(NavMeshAgent agent)
     {
         _agent = agent;
+    }
+
+    void TryToShoot()
+    {
+        var ps = ProjectilePool.GetSpell();
+        ps.gameObject.SetActive(true);
+        ps.Transform.position = SpawnPoint.position;
+        ps.Rigidbody.AddForce((leader.position - transform.position).normalized * _projectileSpeed);
     }
 }
 

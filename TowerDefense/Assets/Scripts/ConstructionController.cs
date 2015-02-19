@@ -13,13 +13,15 @@ public class ConstructionController : MonoBehaviour
     void Start()
     {
         _hitCounter = 0;
-        transform.gameObject.renderer.material.color = Color.green;
+        //transform.gameObject.renderer.material.color = Color.green;
+        foreach (var it in transform.gameObject.renderer.materials)
+            it.color = Color.green;
     }
     void Update()
     {
         if (Input.GetKeyDown("t"))
         {
-            //Debug.Log(_construction);
+            
             if (_construction == false)
             {
                 _construction = true;
@@ -32,15 +34,14 @@ public class ConstructionController : MonoBehaviour
                 _construction = false;
             }
         }
-
         if (_construction == true)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitTower;
             transform.position = new Vector3(1000, 1000, 1000);
 
-            //TODO: collider only with own collider of towers already places
-            int layerMask = 1 << 9;
+          
+            int layerMask = (1 << 8 | 1 << 9 | 1 << 10);
             layerMask = ~layerMask;
             if (Physics.Raycast(ray, out hitTower, 100, layerMask))
             {
@@ -63,14 +64,14 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    //TODO verifier que mode construction false quand ennemis
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "ground")
         {
-           
-            transform.gameObject.renderer.material.color = Color.red;
+            foreach (var it in transform.gameObject.renderer.materials)
+                it.color = Color.red;
             _hitCounter++;
-         //   Debug.Log("Trigger Enter" + transform.gameObject + " " + _hitCounter);
         }
     }
 
@@ -78,12 +79,12 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
-           
              _hitCounter--;
-        //     Debug.Log("Trigger exit" + transform.gameObject + " " + _hitCounter);
-            if(_hitCounter == 0)
-                transform.gameObject.renderer.material.color = Color.green;
-           
+             if (_hitCounter == 0)
+             {
+                 foreach (var it in transform.gameObject.renderer.materials)
+                     it.color = Color.green;
+             }
         }
     }
 
