@@ -17,7 +17,10 @@ public class IAEnemy : MonoBehaviour
 	private NavMeshAgent _agent;
 
 	// This is the speed with which the follower will pursue
-	public float speed = 4f;
+    [SerializeField]
+	private float _speed = 4f;
+    private float _backSpeed = -6f;
+
 	// This is the range at which to pursue
 	public float chaseRange;
     public float minRange;
@@ -28,43 +31,44 @@ public class IAEnemy : MonoBehaviour
 
 	void Start()
     {
-        _agent.SetDestination(ArrivalP.position);
+        _agent.SetDestination(ArrivalP.position + new Vector3(1, 0, 0));
         NavMeshPath path = new NavMeshPath();
-        _agent.CalculatePath(ArrivalP.position, path);
         bShoot = false;
         _recharging = false;
     }
 	void Update()
     {
-		// Calculate the distance between the follower and the leader.
         if(_agent == null)
             return;
-        if (_agent.pathStatus == NavMeshPathStatus.PathComplete)
-            _agent.SetDestination(ArrivalP.position + new Vector3(1, 0, 0));
-
+        // Calculate the distance between the follower and the leader.
 		range = Vector3.Distance( transform.position,leader.position );
-        if (range < chaseRange && range >= minRange)
-        {
-            //_agent.Stop();
-            transform.LookAt(leader);
-            _agent.SetDestination(leader.position);
-            //transform.Translate(-(speed * Vector3.forward * Time.deltaTime));
-        }
-        else if (range < minRange)
+        if (range < backrange)
         {
             _agent.Stop();
             transform.LookAt(leader);
             bShoot = true;
-            
+            transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
         }
-       /* else
-           _agent.Resume();
-		else if ( range <= chaseRange )
+        else if (range < minRange)
         {
             _agent.Stop();
-			transform.LookAt(leader);
-			transform.Translate( speed * Vector3.forward * Time.deltaTime);
-		}*/
+            bShoot = true;
+            transform.LookAt(leader);
+        }
+        else if (range <= chaseRange)
+        {
+
+            _agent.Stop();
+            bShoot = false;
+            transform.LookAt(leader);
+            transform.Translate(_speed * Vector3.forward * Time.deltaTime);
+
+        }
+        else
+        {
+            bShoot = false;
+            _agent.Resume();
+        }
         if (bShoot)
         {
 

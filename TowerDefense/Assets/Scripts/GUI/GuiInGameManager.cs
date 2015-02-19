@@ -30,7 +30,6 @@ public class GuiInGameManager : MonoBehaviour
             if (_target != ModelTowerPoolManager.GetElectricTower())
             {
                 _newTarget = ModelTowerPoolManager.GetElectricTower();
-                Debug.Log(_target);
                 SetTower(_target, _newTarget);
                 _target = _newTarget;
             }
