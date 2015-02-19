@@ -64,6 +64,7 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    //TODO verifier que mode construction false quand ennemis
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "ground")
@@ -71,7 +72,6 @@ public class ConstructionController : MonoBehaviour
             foreach (var it in transform.gameObject.renderer.materials)
                 it.color = Color.red;
             _hitCounter++;
-            //Debug.Log("Trigger Enter" + other.gameObject.name + " " + _hitCounter);
         }
     }
 
@@ -80,7 +80,6 @@ public class ConstructionController : MonoBehaviour
         if (other.gameObject.tag != "ground")
         {
              _hitCounter--;
-             //Debug.Log("Trigger exit" + other.gameObject.name + " " + _hitCounter);
              if (_hitCounter == 0)
              {
                  foreach (var it in transform.gameObject.renderer.materials)

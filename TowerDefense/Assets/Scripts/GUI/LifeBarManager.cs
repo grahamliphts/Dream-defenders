@@ -16,7 +16,6 @@ public class LifeBarManager : MonoBehaviour
 	void Start () 
     {
         _lifeManager = Player.GetComponent<PlayerLifeManager>();
-       // _life = _lifeManager.GetLife();
         _lifeBar = transform.GetChild(0).GetComponent<Image>();
 	}
 
@@ -31,11 +30,7 @@ public class LifeBarManager : MonoBehaviour
         }
 
         if (_lifeManager.GetLife() <= 0)
-        {
-            Debug.Log("txt update");
             FeedbackText.text = "You died";
-        }
-        
 	}
 
     void SetColorLife()
