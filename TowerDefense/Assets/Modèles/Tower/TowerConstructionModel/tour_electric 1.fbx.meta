@@ -1,43 +1,30 @@
 fileFormatVersion: 2
-guid: 27f9a9da24ce9cd4fa73ad6c30b81ddb
+guid: 4894297429490cb41bd36f6941842885
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: Cube
-    100002: Cube.001
-    100004: Cylinder
-    100006: Cylinder.002
-    100008: Sphere
-    100010: //RootNode
-    400000: Cube
-    400002: Cube.001
-    400004: Cylinder
-    400006: Cylinder.002
-    400008: Sphere
-    400010: //RootNode
-    2300000: Cube
-    2300002: Cube.001
-    2300004: Cylinder
-    2300006: Cylinder.002
-    2300008: Sphere
-    2300010: //RootNode
-    3300000: Cube
-    3300002: Cube.001
-    3300004: Cylinder
-    3300006: Cylinder.002
-    3300008: Sphere
-    3300010: //RootNode
-    4300000: Cylinder
-    4300002: Cube.001
-    4300004: Cube
-    4300006: Cylinder.002
-    4300008: Sphere
-    6400000: Cube
-    6400002: Cube.001
-    6400004: Cylinder
-    6400006: Cylinder.002
-    6400008: Sphere
-    6400010: //RootNode
+    100000: Camera
+    100002: ElectricTower
+    100004: Lamp
+    100006: Sun
+    100008: Sun.001
+    100010: Sun.002
+    100012: Sun.003
+    100014: //RootNode
+    400000: Camera
+    400002: ElectricTower
+    400004: Lamp
+    400006: Sun
+    400008: Sun.001
+    400010: Sun.002
+    400012: Sun.003
+    400014: //RootNode
+    2300000: ElectricTower
+    2300002: //RootNode
+    3300000: ElectricTower
+    3300002: //RootNode
+    4300000: ElectricTower
+    6400000: //RootNode
     9500000: //RootNode
   materials:
     importMaterials: 1

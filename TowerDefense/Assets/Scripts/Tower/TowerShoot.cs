@@ -31,7 +31,6 @@ public class TowerShoot : MonoBehaviour
         if (col.gameObject.tag == "ennemy")
         {
             _enemiesTransform.Remove(col.transform);
-            Debug.Log(_enemiesTransform.Count);
             if (_enemiesTransform.Count == 0)
                 StopCoroutine("TryToShoot");
         }

@@ -1,30 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 public class PlayerLifeManager : MonoBehaviour
 {
     private float _life;
-    public string[] _tag;
-    public int[] _damage;
+    public string[] Tag;
+    public int[] Damage;
 
-    void OnTriggerEnter(Collider target)
+    void Start()
     {
+        _life = 100;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        Debug.Log(col.gameObject.name);
         int count = 0;
-        if (_life >= 0)
+        if (_life > 0)
         {
-            foreach (string element in _tag)
+            foreach (string element in Tag)
             {
-                if (target.tag == element)
+                if (col.gameObject.tag == element)
                 {
-                    Debug.Log(_damage[count]);
-                    _life = _life - _damage[count];
+                    Debug.Log(_life);
+                    _life = _life - Damage[count];
+
                 }
                 count++;
             }
         }
-        else
-            transform.gameObject.SetActive(false);
     }
 
     public float GetLife()
