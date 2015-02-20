@@ -17,21 +17,25 @@ public class PointManager : MonoBehaviour
                 SphereCollider collider = point_list[i].GetComponent<SphereCollider>();
                 collider.isTrigger = true;
                 collider.radius = 1;
-
-               
+                point_list[i].AddComponent<Teleport>();
+                point_list[i].gameObject.tag = "tp";
+                Teleport teleport = point_list[i].GetComponent<Teleport>();
                 GameObject tpPoint = GameObject.Instantiate(TpParticle, point_list[i].transform.position, Quaternion.identity) as GameObject;
+
                 if(i%2 == 0)
-                    tpPoint.transform.Rotate(0, 180, 0, Space.World);
+                    teleport.GetGameObject().transform.Rotate(0, 180, 0, Space.World);
+
+                if (i > 1 && (i % 2) == 0)
+                    teleport.prevPoint = point_list[i - 1];
+
+                if (i < point_list.Count - 1 && (i % 2) == 1)
+                {
+                    teleport.nextPoint = point_list[i + 1];
+                    teleport.nextPointDest = point_list[i + 2]; //Destination ennemi
+                }
+
+
             }
-
-            point_list[i].AddComponent<Teleport>();
-            Teleport teleport = point_list[i].GetComponent<Teleport>();
-
-            if (i > 1)
-                teleport.prevPoint = point_list[i - 1];
-   
-            if(i < point_list.Count - 1 && (i%2) == 1)
-                teleport.nextPoint = point_list[i + 1];
         }
     }
 }

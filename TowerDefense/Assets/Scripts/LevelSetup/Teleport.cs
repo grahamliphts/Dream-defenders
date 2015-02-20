@@ -4,7 +4,11 @@ using System.Collections;
 public class Teleport : MonoBehaviour 
 {
     public GameObject nextPoint;
+    public GameObject nextPointDest;
+
     public GameObject prevPoint;
+
+    public GameObject _tpPoint;
     private float count = 0;
 
 	void OnTriggerEnter(Collider other)
@@ -12,28 +16,27 @@ public class Teleport : MonoBehaviour
         if (other.tag != "ennemy")
         {
             if (nextPoint != null)
-            {
-                nextPoint.collider.enabled = false;
-                other.transform.position = nextPoint.transform.position;
-              
-                nextPoint.collider.enabled = true;
-            }
+                other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
+
             if (prevPoint != null)
-                other.transform.position = prevPoint.transform.position;// +other.rigidbody.velocity;
+                other.transform.position = prevPoint.transform.position + prevPoint.transform.forward * 3;
         }
         else
         {
-            other.gameObject.SetActive(false);   
+            NavMeshAgent agent;
+            agent = other.transform.GetComponent<NavMeshAgent>();
+            other.gameObject.SetActive(false);
             if (nextPoint != null)
-            {
-                nextPoint.collider.enabled = false;
-                other.transform.position = nextPoint.transform.position;
-
-                nextPoint.collider.enabled = true;
-            }
-                
+                other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
             other.gameObject.SetActive(true);
+
+            if(nextPoint != null && nextPointDest != null)
+                agent.SetDestination(nextPointDest.transform.position);
         }
     }
 
+    public GameObject GetGameObject()
+    {
+        return transform.gameObject;
+    }
 }
