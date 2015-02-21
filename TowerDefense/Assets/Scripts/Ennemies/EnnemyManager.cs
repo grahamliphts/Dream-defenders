@@ -14,7 +14,7 @@ public class EnnemyManager : MonoBehaviour {
     public PointManager ManagerPoint;
     private int i;
 
-	void Start () 
+	public void spawn () 
     {
 	    for(i = 0; i < number; i++)
         {
@@ -25,7 +25,7 @@ public class EnnemyManager : MonoBehaviour {
             enemy.GetComponent<IAEnemy>().SetAgent(enemy.Agent);
             enemy.Transform.position = SpawnEnemy.position;
             enemy.gameObject.SetActive(true);
-            Debug.Log(i + " " + number);
+          //  Debug.Log(i + " " + number);
         }
 	}
 
