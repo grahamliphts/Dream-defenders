@@ -20,7 +20,7 @@ public class MonsterLifeManager : MonoBehaviour
         {
             if (col.gameObject.tag == element)
             {
-                Debug.Log(col.gameObject.tag);
+               // Debug.Log(col.gameObject.tag);
                 life = life - _damage[count];
             }
             count++;
