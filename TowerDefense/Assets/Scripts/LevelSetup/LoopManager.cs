@@ -2,54 +2,59 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class LoopManager : MonoBehaviour {
+public class LoopManager : MonoBehaviour 
+{
+    public ModelTowerPoolManager ModelTower;
+    public Text TimeInfo;
+    public Text GameInfo;
 
-    public Text _feedbackText;
-    public int _waveNumber;
-    public int _ennemyAddedByWave;
-    public int _waveWait;
+    [SerializeField]
+    private int _waveNumber;
+    [SerializeField]
+    private int _ennemyAddedByWave;
+    [SerializeField]
+    private int _constructionTime;
 
     private EnnemyManager m_ennemyManager;
-    private int _WaveNumberEnnemy;
-    private int _ActualWave;
+    private int _actualWave;
     private float _startTime;
-	// Use this for initialization
 
-	void Start () {
-        _feedbackText.text = "Wave 1";
-        m_ennemyManager = GetComponent<EnnemyManager>();
-        _WaveNumberEnnemy = m_ennemyManager.CurrentNumber;
-        _ActualWave = 0;
+    private bool _modeConstruction;
+    private bool _modeBattle;
+
+	void Start () 
+    {
+        GameInfo.text = "Poser des Tours";
+        ModelTower.SetConstruction(true);
+        _modeConstruction = true;
+        _modeBattle = false;
         _startTime = Time.time;
-        m_ennemyManager.spawn();
+        m_ennemyManager = GetComponent<EnnemyManager>();
+        _actualWave = 1;
 	}
 	
-	// Update is called once per frame
 	void Update () 
     {
-       
-        _feedbackText.text = ((int)(Time.time-_startTime)%60).ToString();
-       /*  if (((int)(Time.time - _startTime) % 60) >= _waveWait)
+
+        TimeInfo.text = ((int)(Time.time - _startTime) % 60).ToString();
+        if (((int)(Time.time - _startTime) % 60) >= _constructionTime && _modeConstruction == true)
         {
-            m_ennemyManager.spawn();
-        }*/
-
-
-        if (m_ennemyManager.AllSpawned && ((int)(Time.time - _startTime) % 60) >= _waveWait)
-       {
-           if (_waveNumber >= _ActualWave)
-           {
-               _startTime = Time.time;
-              /* _ActualWave++;
-               _feedbackText.text = "Wave" + _ActualWave;       
-               m_ennemyManager.CurrentNumber = m_ennemyManager.CurrentNumber + _ennemyAddedByWave;
-               m_ennemyManager.spawn();*/
-           }
-           else
-           {
-               //_feedbackText.text = "You Win";
-           }
-
-       }
+            ModelTower.SetConstruction(false);
+            _modeConstruction = false;
+            _modeBattle = true;
+            GameInfo.text = "Wave" + _actualWave;
+            m_ennemyManager.Spawn();
+        }
+        else if (m_ennemyManager.AllDied() == true && _actualWave < _waveNumber && _modeConstruction == false)
+        {
+            _actualWave++;
+            m_ennemyManager.AddEnemies(_ennemyAddedByWave);
+            GameInfo.text = "Poser des Tours";
+            ModelTower.SetConstruction(true);
+            _modeConstruction = true;
+            _startTime = Time.time;
+        }
+        else if(_actualWave == _waveNumber && m_ennemyManager.AllDied() == true)
+            GameInfo.text = "You Win";
     }
 }

@@ -1,64 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnnemyManager : MonoBehaviour {
-
+public class EnnemyManager : MonoBehaviour 
+{
     [SerializeField]
-    int number;
+    private int _numberMax;
     [SerializeField]
-    int damage;
+    private int _number;
+    [SerializeField]
+    private int _damage;
 
     public Transform SpawnEnemy;
     public EnemyPoolManager EnemyPoolManager;
     public Transform ArrivalP;
     public PointManager ManagerPoint;
-    private int i;
 
-	public void spawn () 
+	public void Spawn() 
     {
-	    for(i = 0; i < number; i++)
+        Debug.Log("Spawn" + _number);
+        for (int i = 0; i < _number; i++)
         {
             var enemy = EnemyPoolManager.GetEnemy();
             enemy.Transform.position = SpawnEnemy.position;
-            enemy.Agent = enemy.gameObject.AddComponent<NavMeshAgent>();
 
+            enemy.Agent = enemy.gameObject.AddComponent<NavMeshAgent>();
             enemy.GetComponent<IAEnemy>().SetAgent(enemy.Agent);
             enemy.Transform.position = SpawnEnemy.position;
             enemy.gameObject.SetActive(true);
-          //  Debug.Log(i + " " + number);
+            enemy.Agent.SetDestination(ArrivalP.position);
         }
+
+        EnemyPoolManager.ResetIndex();
 	}
 
-    public int CurrentNumber
+    public bool AllDied()
     {
-        get { return number; }
-        set { number = value; }
-    }
-
-    public bool AllSpawned
-    {
-       
-        get
-        {
-            if(i == number)
-                return true;
-            else
-                return false;
-        }
-    }
-
-     public bool AllDied
-    {
-
-        get
-        {
-            /*if(<is all died>)
-              return true;
-          else
-              return false;*/
+        int numberEnemies = EnemyPoolManager.NumberEnemiesActive();
+        if (numberEnemies == 0)
             return true;
+        else
+            return false;
+    }
 
-        }
+    public void AddEnemies(int number)
+    {
+        Debug.Log("Before" + number);
+        _number += number;
+        Debug.Log("After" + number);
+        if (_number > _numberMax)
+            Debug.Log("No more enemies");
     }
 
 }

@@ -15,12 +15,22 @@ public class TowerShoot : MonoBehaviour
         _enemiesTransform = new List<Transform>();
     }
 
+    void Update()
+    {
+        for(int i = 0; i < _enemiesTransform.Count; i++)
+        {
+            if (_enemiesTransform[i].gameObject.activeSelf == false)
+                _enemiesTransform.Remove(_enemiesTransform[i]);
+        }
+
+        if(_enemiesTransform.Count == 0)
+            StopCoroutine("TryToShoot");
+    }
+
     void OnTriggerEnter(Collider col)
     {
-       
         if (col.gameObject.tag == "ennemy")
         {
-            Debug.Log(col.gameObject);
             _enemiesTransform.Add(col.transform);
             if (_enemiesTransform.Count == 1)
                 StartCoroutine("TryToShoot");
@@ -29,10 +39,8 @@ public class TowerShoot : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        //Debug.Log(col.gameObject);
         if (col.gameObject.tag == "ennemy")
         {
-            Debug.Log(col.gameObject);
             _enemiesTransform.Remove(col.transform);
             if (_enemiesTransform.Count == 0)
                 StopCoroutine("TryToShoot");

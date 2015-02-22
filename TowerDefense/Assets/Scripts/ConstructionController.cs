@@ -10,30 +10,8 @@ public class ConstructionController : MonoBehaviour
     private float _distance = 3.0f;
     private bool _construction = false;
 
-    void Start()
-    {
-        _hitCounter = 0;
-        //transform.gameObject.renderer.material.color = Color.green;
-        foreach (var it in transform.gameObject.renderer.materials)
-            it.color = Color.green;
-    }
     void Update()
     {
-        if (Input.GetKeyDown("t"))
-        {
-            
-            if (_construction == false)
-            {
-                _construction = true;
-                transform.gameObject.SetActive(true);
-            }
-
-            else
-            {
-                transform.position = new Vector3(1000, 1000, 1000);
-                _construction = false;
-            }
-        }
         if (_construction == true)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -64,7 +42,6 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
-    //TODO verifier que mode construction false quand ennemis
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "ground")
@@ -88,8 +65,20 @@ public class ConstructionController : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        _hitCounter = 0;
+        foreach (var it in transform.gameObject.renderer.materials)
+            it.color = Color.green;
+    }
+
     public void SetConstruction(bool contruction)
     {
         _construction = contruction;
+    }
+
+    public bool GetConstruction()
+    {
+        return _construction;
     }
 }

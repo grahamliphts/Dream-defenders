@@ -15,5 +15,21 @@ public class EnemyPoolManager : MonoBehaviour {
             Debug.Log("No more enemies");
         return enemy;
     }
+
+    public int NumberEnemiesActive()
+    {
+        int found = 0;
+        for(int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i].gameObject.activeSelf == true)
+                found++;
+        }
+        return found;
+    }
+
+    public void ResetIndex()
+    {
+        _index = 0;
+    }
 }
 
