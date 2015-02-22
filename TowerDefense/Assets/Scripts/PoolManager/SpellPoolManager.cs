@@ -3,7 +3,8 @@ using System.Collections;
 
 public class SpellPoolManager : MonoBehaviour 
 {
-    public SpellScript[] _spells;
+    [SerializeField]
+    private SpellScript[] _spells;
     int _index = 0;
 
     public SpellScript GetSpell()

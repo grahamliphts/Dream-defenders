@@ -3,16 +3,18 @@ using System.Collections;
 
 public class ModelTowerPoolManager : MonoBehaviour 
 {
-    public TowerConstructionScript[] ModelTowers;
+    [SerializeField]
+    private TowerConstructionScript[] _modelTowers;
+
     public TowerConstructionScript GetFireTower()
     {
-        var tower = ModelTowers[0];
+        var tower = _modelTowers[0];
         return tower;
     }
 
     public TowerConstructionScript GetElectricTower()
     {
-        var tower = ModelTowers[1];
+        var tower = _modelTowers[1];
         return tower;
     }
 
@@ -20,23 +22,22 @@ public class ModelTowerPoolManager : MonoBehaviour
     {
         if (value == false)
         {
-            for (int i = 0; i < ModelTowers.Length; i++)
+            for (int i = 0; i < _modelTowers.Length; i++)
             {
-
-                if (ModelTowers[i].ConstructionController.GetConstruction() == true)
+                if (_modelTowers[i].ConstructionController.GetConstruction() == true)
                 {
-                    ModelTowers[i].ConstructionController.SetConstruction(false);
-                    ModelTowers[i].Transform.position = new Vector3(1000, 1000, 1000);
-                    ModelTowers[i].gameObject.SetActive(false);
+                    _modelTowers[i].ConstructionController.SetConstruction(false);
+                    _modelTowers[i].Transform.position = new Vector3(1000, 1000, 1000);
+                    _modelTowers[i].gameObject.SetActive(false);
                 }
             }
         }
         else
         {
-            ModelTowers[0].ConstructionController.Reset();
-            ModelTowers[0].gameObject.SetActive(true);
-            ModelTowers[0].ConstructionController.enabled = true;
-            ModelTowers[0].ConstructionController.SetConstruction(true);
+            _modelTowers[0].ConstructionController.Reset();
+            _modelTowers[0].gameObject.SetActive(true);
+            _modelTowers[0].ConstructionController.enabled = true;
+            _modelTowers[0].ConstructionController.SetConstruction(true);
         }
             
     }

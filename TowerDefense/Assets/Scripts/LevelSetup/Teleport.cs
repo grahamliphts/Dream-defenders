@@ -32,6 +32,11 @@ public class Teleport : MonoBehaviour
 
             if(nextPoint != null && nextPointDest != null)
                 agent.SetDestination(nextPointDest.transform.position);
+
+            if (nextPoint == null)
+            {
+                Debug.Log("Touch Nexus");
+            }
         }
     }
 

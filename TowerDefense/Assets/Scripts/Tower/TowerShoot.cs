@@ -52,13 +52,14 @@ public class TowerShoot : MonoBehaviour
         while (true)
         {
             yield return new WaitForFixedUpdate();
-            var ps = _projectilePoolManager.GetSpell();
 
+            var ps = _projectilePoolManager.GetSpell();
             ps.gameObject.SetActive(true);
             ps.Transform.position = SpawnPoint.position;
+
             Physics.IgnoreCollision(ps.collider, transform.collider);
             ps.Rigidbody.AddForce((_enemiesTransform[0].position - transform.position).normalized * _projectileSpeed);
-            //ps.Rigidbody.velocity = (
+
             yield return new WaitForSeconds(_shootDelay);
         }
     }

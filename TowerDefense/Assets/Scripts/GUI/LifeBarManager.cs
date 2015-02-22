@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class LifeBarManager : MonoBehaviour 
 {
-    public Text FeedbackText;
     public GameObject Player;
     public Scrollbar LifeValue;
     private Color _lifeBarColor;
@@ -28,9 +27,6 @@ public class LifeBarManager : MonoBehaviour
             SetColorLife();
             _lifeBar.color = _lifeBarColor;
         }
-
-        if (_lifeManager.GetLife() <= 0)
-            FeedbackText.text = "You died";
 	}
 
     void SetColorLife()

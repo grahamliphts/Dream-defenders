@@ -11,13 +11,14 @@ public class PointManager : MonoBehaviour
     {
         for(int i = 0; i < point_list.Count; i++)
         {
-            if (i != 0 && i != point_list.Count) //on ignore le premier et le dernier
+            if (i != 0) //on ignore le premier
             {
                 point_list[i].AddComponent<SphereCollider>();
                 SphereCollider collider = point_list[i].GetComponent<SphereCollider>();
                 collider.isTrigger = true;
                 collider.radius = 1;
                 point_list[i].AddComponent<Teleport>();
+
                 point_list[i].gameObject.tag = "tp";
                 Teleport teleport = point_list[i].GetComponent<Teleport>();
                 GameObject tpPoint = GameObject.Instantiate(TpParticle, point_list[i].transform.position, Quaternion.identity) as GameObject;

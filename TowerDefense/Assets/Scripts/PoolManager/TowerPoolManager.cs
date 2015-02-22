@@ -3,13 +3,30 @@ using System.Collections;
 
 public class TowerPoolManager : MonoBehaviour 
 {
-
-    public TowerScript[] Towers;
+    [SerializeField]
+    public TowerScript[] _towers;
     int _index = 0;
+
     public TowerScript GetTower()
     {
-        var tower = Towers[_index];
+        var spell = _towers[_index];
         _index++;
-        return tower;
+        return spell;
+    }
+
+    public int GetTowersNumber()
+    {
+        int number = 0;
+        for (int i = 0; i < _towers.Length; i++)
+        {
+            if(_towers[i].gameObject.activeSelf == true)
+                number++;
+        }
+        return number;
+    }
+
+    public int GetTowerNumberMax()
+    {
+        return _towers.Length;
     }
 }

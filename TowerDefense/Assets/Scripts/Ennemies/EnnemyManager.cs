@@ -17,7 +17,6 @@ public class EnnemyManager : MonoBehaviour
 
 	public void Spawn() 
     {
-        Debug.Log("Spawn" + _number);
         for (int i = 0; i < _number; i++)
         {
             var enemy = EnemyPoolManager.GetEnemy();
@@ -44,9 +43,7 @@ public class EnnemyManager : MonoBehaviour
 
     public void AddEnemies(int number)
     {
-        Debug.Log("Before" + number);
         _number += number;
-        Debug.Log("After" + number);
         if (_number > _numberMax)
             Debug.Log("No more enemies");
     }
