@@ -32,9 +32,13 @@ public class LoopManager : MonoBehaviour
     private bool _lose;
 
     private PlayerLifeManager _lifeManager;
+    private float _timer;
 
 	void Start () 
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         GameInfo.text = "Poser des Tours";
         ModelTower.SetConstruction(true);
         _modeConstruction = true;
@@ -45,6 +49,7 @@ public class LoopManager : MonoBehaviour
         m_ennemyManager = GetComponent<EnnemyManager>();
         _actualWave = 0;
         _lifeManager = Player.GetComponent<PlayerLifeManager>();
+        _timer = 0;
 	}
 	
 	void Update () 
@@ -76,11 +81,18 @@ public class LoopManager : MonoBehaviour
                 GameInfo.text = "You Win";
                 _win = true;
             }
+        }
 
-            if (_lifeManager.GetLife() <= 0)
+        if (_lifeManager.GetLife() <= 0)
+        {
+            GameInfo.text = "You died";
+            _lose = true;
+            _timer += Time.deltaTime;
+            Debug.Log("Timer" + _timer);
+            if (_timer >= 3)
             {
-                GameInfo.text = "You died";
-                _lose = true;
+                Debug.Log("Timer = 4");
+                Application.LoadLevel("MenuScene");
             }
         }
     }

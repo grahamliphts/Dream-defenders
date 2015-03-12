@@ -14,17 +14,18 @@ public class ConstructionController : MonoBehaviour
     {
         if (_construction == true)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 pos = new Vector3(Screen.width/2.0f, Screen.height/2.0f, 0.0f);
+            Ray ray = Camera.main.ScreenPointToRay(pos);
             RaycastHit hitTower;
             transform.position = new Vector3(1000, 1000, 1000);
 
           
-            int layerMask = (1 << 8 | 1 << 9 | 1 << 10);
+            int layerMask = (1 << 8 | 1 << 9);
             layerMask = ~layerMask;
             if (Physics.Raycast(ray, out hitTower, 100, layerMask))
             {
                 transform.position = hitTower.point;
-                 if(Input.GetMouseButtonDown(0) && _hitCounter == 0)
+                if (Input.GetMouseButtonDown(0) && _hitCounter == 0)
                 {
                     var tower = TowerPoolManager.GetTower();
                     tower.gameObject.SetActive(true);
@@ -36,7 +37,7 @@ public class ConstructionController : MonoBehaviour
                     //add box collider to tower
                     tower.OwnCollider.enabled = true;
 
-                    Physics.IgnoreCollision(transform.GetComponent<Collider>(), tower.RangeCollider);
+                    Physics.IgnoreCollision(transform.GetComponent<BoxCollider>(), tower.RangeCollider);
                 }
             }
         }
