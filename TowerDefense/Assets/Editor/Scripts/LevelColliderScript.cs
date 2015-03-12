@@ -31,7 +31,7 @@ public class LevelColliderScript : MonoBehaviour
                 if (collider != null)
                 {   
                     if(child.gameObject.GetComponent<BoxCollider>() == null)
-                        child.gameObject.AddComponent("BoxCollider");
+                        child.gameObject.AddComponent<BoxCollider>();
                     DestroyImmediate(collider);
                 }
 
@@ -41,17 +41,17 @@ public class LevelColliderScript : MonoBehaviour
                     manager.point_list.Add(child.gameObject);
                 }
 
-                if(child.gameObject.renderer != null)
+                if(child.gameObject.GetComponent<Renderer>() != null)
                 {
                     Debug.Log(child.gameObject.name);
                     //Debug.Log(child.gameObject.renderer.sharedMaterial.name);
-                    if (child.gameObject.renderer.sharedMaterial.name == "ground")
+                    if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "ground")
                         child.gameObject.tag = "ground";
-                    else if (child.gameObject.renderer.sharedMaterial.name == "wall")
+                    else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall")
                         child.gameObject.tag = "wall";
-                    else if (child.gameObject.renderer.sharedMaterial.name == "cap")
+                    else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "cap")
                         child.gameObject.tag = "cap";
-                    else if (child.gameObject.renderer.sharedMaterial.name == "wall_inside")
+                    else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall_inside")
                         child.gameObject.tag = "wall_inside";
                    
                 }

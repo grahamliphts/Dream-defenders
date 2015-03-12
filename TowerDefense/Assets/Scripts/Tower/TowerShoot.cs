@@ -57,7 +57,7 @@ public class TowerShoot : MonoBehaviour
             ps.gameObject.SetActive(true);
             ps.Transform.position = SpawnPoint.position;
 
-            Physics.IgnoreCollision(ps.collider, transform.collider);
+            Physics.IgnoreCollision(ps.GetComponent<Collider>(), transform.GetComponent<Collider>());
             ps.Rigidbody.AddForce((_enemiesTransform[0].position - transform.position).normalized * _projectileSpeed);
 
             yield return new WaitForSeconds(_shootDelay);

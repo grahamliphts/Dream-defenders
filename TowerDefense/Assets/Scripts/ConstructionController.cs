@@ -36,7 +36,7 @@ public class ConstructionController : MonoBehaviour
                     //add box collider to tower
                     tower.OwnCollider.enabled = true;
 
-                    Physics.IgnoreCollision(transform.collider, tower.RangeCollider);
+                    Physics.IgnoreCollision(transform.GetComponent<Collider>(), tower.RangeCollider);
                 }
             }
         }
@@ -46,7 +46,7 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
-            foreach (var it in transform.gameObject.renderer.materials)
+            foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
                 it.color = Color.red;
             _hitCounter++;
         }
@@ -59,7 +59,7 @@ public class ConstructionController : MonoBehaviour
              _hitCounter--;
              if (_hitCounter == 0)
              {
-                 foreach (var it in transform.gameObject.renderer.materials)
+                 foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
                      it.color = Color.green;
              }
         }
@@ -68,7 +68,7 @@ public class ConstructionController : MonoBehaviour
     public void Reset()
     {
         _hitCounter = 0;
-        foreach (var it in transform.gameObject.renderer.materials)
+        foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
             it.color = Color.green;
     }
 

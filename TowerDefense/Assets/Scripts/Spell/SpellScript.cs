@@ -33,7 +33,7 @@ public class SpellScript : MonoBehaviour
     {
         if(col.gameObject.tag != "fireball")
         {
-            transform.rigidbody.velocity = new Vector3(0, 0, 0);
+            transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             transform.transform.position = new Vector3(0, 0, 0);
             transform.gameObject.SetActive(false);
         }

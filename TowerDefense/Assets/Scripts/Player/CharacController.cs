@@ -33,15 +33,15 @@ public class CharacController : MonoBehaviour
         {
 
             direction += -transform.forward; //inverted axis change in progress
-            animation["Armature.000|run"].speed = 1.8f;
-            animation.Play("Armature.000|run", PlayMode.StopAll);
+            GetComponent<Animation>()["Armature.000|run"].speed = 1.8f;
+            GetComponent<Animation>().Play("Armature.000|run", PlayMode.StopAll);
             isWalking = true;
         }
         if (Input.GetKey("s"))
         {
             direction = transform.forward; //inverted axis change in progress
-            animation["Armature.000|run"].speed = 1f;
-            animation.Play("Armature.000|run", PlayMode.StopAll);
+            GetComponent<Animation>()["Armature.000|run"].speed = 1f;
+            GetComponent<Animation>().Play("Armature.000|run", PlayMode.StopAll);
             isWalking = true;
         }
         if (Input.GetKey("a"))
@@ -49,8 +49,8 @@ public class CharacController : MonoBehaviour
             direction += transform.right; //inverted axis change in progress
             if (!isWalking)
             {
-                animation["Armature.000|left"].speed = 2f;
-                animation.Play("Armature.000|left", PlayMode.StopAll);
+                GetComponent<Animation>()["Armature.000|left"].speed = 2f;
+                GetComponent<Animation>().Play("Armature.000|left", PlayMode.StopAll);
                 isWalking = true;
             }
         }
@@ -60,8 +60,8 @@ public class CharacController : MonoBehaviour
             direction -= transform.right; //inverted axis change in progress
             if (!isWalking)
             {
-                animation["Armature.000|right"].speed = 2f;
-                animation.Play("Armature.000|right", PlayMode.StopAll);
+                GetComponent<Animation>()["Armature.000|right"].speed = 2f;
+                GetComponent<Animation>().Play("Armature.000|right", PlayMode.StopAll);
                 isWalking = true;
             }
         } 
@@ -74,7 +74,7 @@ public class CharacController : MonoBehaviour
         }*/
         if (!isWalking)
         {
-            animation.Play("Armature.000|idle",PlayMode.StopSameLayer);
+            GetComponent<Animation>().Play("Armature.000|idle",PlayMode.StopSameLayer);
             isWalking = false;
         }
         if (Input.GetKey("q"))
