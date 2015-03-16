@@ -36,8 +36,8 @@ public class LoopManager : MonoBehaviour
 
 	void Start () 
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        /*Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;*/
 
         GameInfo.text = "Poser des Tours";
         ModelTower.SetConstruction(true);

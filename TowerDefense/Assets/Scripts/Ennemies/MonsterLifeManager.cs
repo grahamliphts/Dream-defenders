@@ -7,9 +7,14 @@ public class MonsterLifeManager : MonoBehaviour
     public string[] _tag;
     public int[] _damage;
     private int life_save;
+    public Material material;
+    public GameObject healthBar;
 
-    void start()
+    void Start()
     {
+        Debug.Log(material.shader);
+        healthBar.GetComponent<Renderer>().material.CopyPropertiesFromMaterial(material);
+        Debug.Log(healthBar.GetComponent<Renderer>().material.shader);
         life_save = life;
     }
 

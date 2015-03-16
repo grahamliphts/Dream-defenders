@@ -19,6 +19,7 @@ public class NetworkManager : MonoBehaviour
     private const string _typeName = "TowerDefenseGameRavonyx";
     private string _gameName;
     private HostData[] _hostList;
+    private HostData _hostConnected;
 
 	public GameObject net_player;
 
@@ -41,10 +42,14 @@ public class NetworkManager : MonoBehaviour
         if (serverName.text != "" && nbPlayers.text != "")
         {
             Network.InitializeServer(int.Parse(nbPlayers.text) - 1, _listenPort, !Network.HavePublicAddress());
-            MasterServer.RegisterHost(_typeName, serverName.text);
+            MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
         }
 	}
 
+    public void RefreshPlayersName()
+    {
+        Debug.Log(_hostConnected.connectedPlayers);
+    }
     public void RefreshHostList()
     {
         int i = 0;
@@ -75,35 +80,25 @@ public class NetworkManager : MonoBehaviour
                 rectTransform.offsetMax = new Vector2(0, 0);
                 b_object.GetComponentInChildren<Text>().text = _hostList[i].gameName + "-" + _hostList[i].connectedPlayers.ToString() + "/" + _hostList[i].playerLimit.ToString();
 
+                HostData host = _hostList[i];
                 b_object.onClick.RemoveAllListeners();
                 b_object.onClick.AddListener( () => 
                 {
                     MenuManager menuManager = canvas.GetComponent<MenuManager>();
                     menuManager.ShowMenu(LobbyMenu);
+                    JoinServer(host);
                 });
             }
             _hostList = null;
         }
         //MasterServer.ClearHostList();
     }
-    public void TestConnect()
-    {
-        MasterServer.RequestHostList(_typeName);
-        if (_hostList != null)
-        {
-            foreach (HostData host in _hostList)
-            {
-               // if (host.gameName)
-                    JoinServer(host);
-            }
-                
-        }
-    }
 
     public void JoinServer(HostData hostData)
     {
         Network.Connect(hostData);
-        Application.LoadLevel("MainScene");
+        _hostConnected = hostData;
+        //Application.LoadLevel("MainScene");
     }
 
 	private void OnLevelWasLoaded()
@@ -127,7 +122,6 @@ public class NetworkManager : MonoBehaviour
     private void OnConnectedToServer()  //Client 
     {
         Debug.Log("Connected to server");
-        Application.LoadLevel("MainScene");
     }
 
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
