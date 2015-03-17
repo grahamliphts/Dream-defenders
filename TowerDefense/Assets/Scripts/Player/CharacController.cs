@@ -9,7 +9,6 @@ public class CharacController : MonoBehaviour
     private bool _wantToJump = false;
     private Rigidbody _rigidbody;
     private Vector3 _eulerAngleVelocity = new Vector3(0, 100, 0);
-    private float _distance = 3.0f;
 
     private bool isWalking = false;
     void Start()

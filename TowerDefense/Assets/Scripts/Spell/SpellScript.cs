@@ -3,29 +3,29 @@ using System.Collections;
 
 public class SpellScript : MonoBehaviour 
 {
-    public Transform transform;
-    public Rigidbody rigidbody;
+    public Transform newtransform;
+    public Rigidbody newrigidbody;
 
     public Transform Transform
     {
         get
         {
-            return transform;
+            return newtransform;
         }
         set
         {
-            transform = value;
+            newtransform = value;
         }
     }
     public Rigidbody Rigidbody
     {
         get
         {
-            return rigidbody;
+            return newrigidbody;
         }
         set
         {
-            rigidbody = value;
+            newrigidbody = value;
         }
     }
 

@@ -18,12 +18,6 @@ public class CameraController : MonoBehaviour
     private int _yMaxLimit = 70;
 
     private Vector3 _smoothTarget;
-    private Vector3 _currentVelocity;
-
-	void Start() 
-	{
-        _currentVelocity = Vector3.zero;
-	}
 
 	void AdjustCamera()
 	{

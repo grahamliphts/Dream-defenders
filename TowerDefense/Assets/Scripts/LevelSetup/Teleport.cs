@@ -9,7 +9,6 @@ public class Teleport : MonoBehaviour
     public GameObject prevPoint;
 
     public GameObject _tpPoint;
-    private float count = 0;
 
 	void OnTriggerEnter(Collider other)
     {

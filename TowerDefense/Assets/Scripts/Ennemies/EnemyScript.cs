@@ -3,30 +3,30 @@ using System.Collections;
 
 public class EnemyScript : MonoBehaviour
 {
-    public Transform transform;
-    public Rigidbody rigidbody;
+    public Transform newtransform;
+    public Rigidbody newrigidbody;
     public NavMeshAgent agent;
 
     public Transform Transform
     {
         get
         {
-            return transform;
+            return newtransform;
         }
         set
         {
-            transform = value;
+            newtransform = value;
         }
     }
     public Rigidbody Rigidbody
     {
         get
         {
-            return rigidbody;
+            return newrigidbody;
         }
         set
         {
-            rigidbody = value;
+            newrigidbody = value;
         }
     }
 

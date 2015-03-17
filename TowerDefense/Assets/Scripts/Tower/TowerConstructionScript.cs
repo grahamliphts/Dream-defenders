@@ -4,7 +4,7 @@ using System.Collections;
 public class TowerConstructionScript : MonoBehaviour 
 {
     public ConstructionController constructionController;
-    public Transform transform;
+    public Transform newtransform;
     public ConstructionController ConstructionController
     {
         get
@@ -21,11 +21,11 @@ public class TowerConstructionScript : MonoBehaviour
     {
         get
         {
-            return transform;
+            return newtransform;
         }
         set
         {
-            transform = value;
+            newtransform = value;
         }
     }
 }

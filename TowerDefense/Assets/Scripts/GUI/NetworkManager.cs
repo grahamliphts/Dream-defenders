@@ -1,27 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour 
 {
     //Gui
     public GameObject serverList;
     public Text serverName;
-    public Text nbPlayers;
+    public Text nbPlayersInput;
     public Canvas canvas;
     public Menu LobbyMenu;
-    public Button createButton;
     public Button modelButton;
+    public Text nbPlayersConnected;
 
     //Network
-   
 	private int _listenPort = 4242; //le port d'écoute du serveur
-    private const string _typeName = "TowerDefenseGameRavonyx";
+    private const string _typeName = "TowerDefense";
     private string _gameName;
     private HostData[] _hostList;
+    List<NetworkPlayer> _players;
     private HostData _hostConnected;
+    private uint _playerCount;
 
 	public GameObject net_player;
+    
+    void Start()
+    {
+        _players = new List<NetworkPlayer>();
+        _playerCount = 0;
+    }
 
 	void Awake()
 	{
@@ -39,17 +47,27 @@ public class NetworkManager : MonoBehaviour
 
 	public void StartServer () 
 	{
-        if (serverName.text != "" && nbPlayers.text != "")
+        if (serverName.text != "" && nbPlayersInput.text != "")
         {
-            Network.InitializeServer(int.Parse(nbPlayers.text) - 1, _listenPort, !Network.HavePublicAddress());
+            Network.InitializeServer(int.Parse(nbPlayersInput.text) - 1, _listenPort, !Network.HavePublicAddress());
             MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
+            _playerCount++;
         }
 	}
 
     public void RefreshPlayersName()
     {
-        Debug.Log(_hostConnected.connectedPlayers);
+        if(Network.isServer)
+        {
+            nbPlayersConnected.text = _playerCount + "/" + nbPlayersInput;
+        }
+        else if(Network.isClient)
+        {
+            nbPlayersConnected.text = _playerCount + "/" + _hostConnected.playerLimit;
+            Debug.Log(_hostConnected.connectedPlayers);
+        }
     }
+
     public void RefreshHostList()
     {
         int i = 0;
@@ -91,14 +109,12 @@ public class NetworkManager : MonoBehaviour
             }
             _hostList = null;
         }
-        //MasterServer.ClearHostList();
     }
 
     public void JoinServer(HostData hostData)
     {
         Network.Connect(hostData);
         _hostConnected = hostData;
-        //Application.LoadLevel("MainScene");
     }
 
 	private void OnLevelWasLoaded()
@@ -119,9 +135,15 @@ public class NetworkManager : MonoBehaviour
         Debug.Log(msEvent.ToString());
     }
 
+    private void OnPlayerConnected(NetworkPlayer player) //Server
+	{
+        _players.Add(player); 
+        _playerCount++;
+	}
+
     private void OnConnectedToServer()  //Client 
     {
-        Debug.Log("Connected to server");
+        _playerCount++;
     }
 
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
@@ -133,11 +155,4 @@ public class NetworkManager : MonoBehaviour
     {
         Debug.Log("Could not connect to server: " + error);
     }
-
-	
-    private void OnPlayerConnected(NetworkPlayer player) //Server
-	{
-		Debug.Log("Connecté !");
-
-	}
 }

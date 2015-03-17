@@ -3,19 +3,21 @@ using System.Collections;
 
 public class TowerScript : MonoBehaviour 
 {
-    public Transform transform;
-    public Rigidbody rigidbody;
-    public Collider collider;
+    public Transform newtransform;
+    public Rigidbody newrigidbody;
+    public Collider owncollider;
     public Collider rangeCollider;
+
+
     public Transform Transform
     {
         get
         {
-            return transform;
+            return newtransform;
         }
         set
         {
-            transform = value;
+            newtransform = value;
         }
     }
     public Collider RangeCollider
@@ -33,22 +35,22 @@ public class TowerScript : MonoBehaviour
      {
          get
          {
-             return collider;
+             return owncollider;
          }
          set
          {
-             collider = value;
+             owncollider = value;
          }
      }
     public Rigidbody Rigidbody
     {
         get
         {
-            return rigidbody;
+            return newrigidbody;
         }
         set
         {
-            rigidbody = value;
+            newrigidbody = value;
         }
     }
 }

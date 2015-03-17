@@ -7,7 +7,6 @@ public class ConstructionController : MonoBehaviour
     public TowerPoolManager TowerPoolManager;
     public int RangeTower = 6;
     private uint _hitCounter;
-    private float _distance = 3.0f;
     private bool _construction = false;
 
     void Update()
