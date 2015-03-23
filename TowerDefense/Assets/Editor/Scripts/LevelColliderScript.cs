@@ -7,7 +7,7 @@ public class LevelColliderScript : MonoBehaviour
     [MenuItem("Window/LevelCollider")]
     static void Init()
     {
-        GameObject level = GameObject.Find("level_generator");
+        GameObject level = GameObject.Find("Level");
         
         if (level != null)
         {
@@ -27,13 +27,7 @@ public class LevelColliderScript : MonoBehaviour
             for (int i = 0; i < level.transform.childCount; i++)
             {       
                 Transform child = level.transform.GetChild(i);
-                MeshCollider collider = child.gameObject.GetComponent<MeshCollider>();
-                if (collider != null)
-                {   
-                    if(child.gameObject.GetComponent<BoxCollider>() == null)
-                        child.gameObject.AddComponent<BoxCollider>();
-                    DestroyImmediate(collider);
-                }
+                child.gameObject.AddComponent<BoxCollider>();
 
                 if (child.gameObject.name.StartsWith("Point"))
                 {

@@ -22,13 +22,13 @@ public class NetworkManager : MonoBehaviour
     List<NetworkPlayer> _players;
     private HostData _hostConnected;
     private uint _playerCount;
+    private string _serverName;
+    private int _nbPlayersMax;
 
-	public GameObject net_player;
-    
     void Start()
     {
         _players = new List<NetworkPlayer>();
-        _playerCount = 0;
+        _playerCount = 1;
     }
 
 	void Awake()
@@ -51,7 +51,8 @@ public class NetworkManager : MonoBehaviour
         {
             Network.InitializeServer(int.Parse(nbPlayersInput.text) - 1, _listenPort, !Network.HavePublicAddress());
             MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
-            _playerCount++;
+            _nbPlayersMax = int.Parse(nbPlayersInput.text);
+            _serverName = serverName.text;
         }
 	}
 
@@ -59,10 +60,14 @@ public class NetworkManager : MonoBehaviour
     {
         if(Network.isServer)
         {
-            nbPlayersConnected.text = _playerCount + "/" + nbPlayersInput;
+            Debug.Log("Server:" + _playerCount);
+            nbPlayersConnected.text = _playerCount + "/" + _nbPlayersMax;
+            
+
         }
         else if(Network.isClient)
         {
+            Debug.Log("Client:"+_playerCount);
             nbPlayersConnected.text = _playerCount + "/" + _hostConnected.playerLimit;
             Debug.Log(_hostConnected.connectedPlayers);
         }
@@ -70,8 +75,7 @@ public class NetworkManager : MonoBehaviour
 
     public void RefreshHostList()
     {
-        int i = 0;
-        for (i = 0; i < serverList.transform.childCount; i++)
+        for (int i = 0; i < serverList.transform.childCount; i++)
            Destroy(serverList.transform.GetChild(i).gameObject);
         MasterServer.RequestHostList(_typeName);
     }
@@ -117,14 +121,7 @@ public class NetworkManager : MonoBehaviour
         _hostConnected = hostData;
     }
 
-	private void OnLevelWasLoaded()
-	{
-		if (Network.peerType == NetworkPeerType.Client) 
-		{
-				Debug.Log ("Instantiate");
-				Network.Instantiate (net_player, new Vector3 (0, 0, 0), Quaternion.identity, 0);
-		}
-	}
+	
     private void OnMasterServerEvent(MasterServerEvent msEvent)
     {
         if (msEvent == MasterServerEvent.HostListReceived)
@@ -139,11 +136,13 @@ public class NetworkManager : MonoBehaviour
 	{
         _players.Add(player); 
         _playerCount++;
+        Debug.Log("On player connected:"+_playerCount);
 	}
 
     private void OnConnectedToServer()  //Client 
     {
         _playerCount++;
+        Debug.Log(_playerCount);
     }
 
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)

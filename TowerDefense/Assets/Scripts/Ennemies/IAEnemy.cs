@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class IAEnemy : MonoBehaviour 
 {
-	public Transform leader;  
+    [SerializeField]
+    private List<Transform> _leader;  
 	public Transform ArrivalP;
     public Transform SpawnPoint;
     public SpellPoolManager ProjectilePool;
@@ -38,11 +40,11 @@ public class IAEnemy : MonoBehaviour
         if(_agent == null)
             return;
         // Calculate the distance between the follower and the leader.
-		float range = Vector3.Distance( transform.position,leader.position );
+        float range = Vector3.Distance(transform.position, _leader[0].position);
         if (range < backrange)
         {
             _agent.Stop();
-            transform.LookAt(leader);
+            transform.LookAt(_leader[0]);
             _bShoot = true;
             transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
         }
@@ -50,13 +52,13 @@ public class IAEnemy : MonoBehaviour
         {
             _agent.Stop();
             _bShoot = true;
-            transform.LookAt(leader);
+            transform.LookAt(_leader[0]);
         }
         else if (range <= chaseRange)
         {
             _agent.Stop();
             _bShoot = false;
-            transform.LookAt(leader);
+            transform.LookAt(_leader[0]);
             transform.Translate(_speed * Vector3.forward * Time.deltaTime);
         }
         else
@@ -93,12 +95,17 @@ public class IAEnemy : MonoBehaviour
         _agent = agent;
     }
 
+    public void SetLeader(Transform leader)
+    {
+        _leader.Add(leader);
+    }
+
     void TryToShoot()
     {
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);
-        ps.Transform.position = SpawnPoint.position;
-        ps.Rigidbody.AddForce((leader.position - transform.position).normalized * _projectileSpeed);
+        ps.newtransform.position = SpawnPoint.position;
+        ps.Rigidbody.AddForce((_leader[0].position - transform.position).normalized * _projectileSpeed);
     }
 }
 

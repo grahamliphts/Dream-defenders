@@ -11,9 +11,11 @@ public class CharacController : MonoBehaviour
     private Vector3 _eulerAngleVelocity = new Vector3(0, 100, 0);
 
     private bool isWalking = false;
+    private NetworkView _networkView;
     void Start()
     {
-        _rigidbody = this.GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _networkView = GetComponent<NetworkView>();
         transform.tag = "player";
     }
     void Update()
@@ -26,6 +28,9 @@ public class CharacController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!_networkView.isMine)
+            return;
+
         isWalking = false;
         Vector3 direction = Vector3.zero;
         if (Input.GetKey("z"))

@@ -5,7 +5,6 @@ public class CameraController : MonoBehaviour
 {
 	public Transform target;
     public float distCamera;
-    public Rigidbody targetRigidbody;
     public float cameraSpeed = 1f;
     public float smoothTime = 0.3f;
 

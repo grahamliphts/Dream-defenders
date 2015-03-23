@@ -20,7 +20,7 @@ public class EnnemyManager : MonoBehaviour
         for (int i = 0; i < _number; i++)
         {
             var enemy = EnemyPoolManager.GetEnemy();
-            enemy.Transform.position = SpawnEnemy.position;
+            enemy.newtransform.position = SpawnEnemy.position;
 
             enemy.Agent = enemy.gameObject.AddComponent<NavMeshAgent>();
             enemy.GetComponent<IAEnemy>().SetAgent(enemy.Agent);
