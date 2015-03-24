@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnnemyManager : MonoBehaviour 
 {
@@ -13,7 +14,7 @@ public class EnnemyManager : MonoBehaviour
     public Transform SpawnEnemy;
     public EnemyPoolManager EnemyPoolManager;
     public Transform ArrivalP;
-    public PointManager ManagerPoint;
+	public List<Transform> players;
 
 	public void Spawn() 
     {
@@ -23,9 +24,14 @@ public class EnnemyManager : MonoBehaviour
             enemy.newtransform.position = SpawnEnemy.position;
 
             enemy.Agent = enemy.gameObject.AddComponent<NavMeshAgent>();
-            enemy.GetComponent<IAEnemy>().SetAgent(enemy.Agent);
+			IAEnemy iaEnnemy = enemy.GetComponent<IAEnemy>();
+			//Debug.Log("add " + players.Count + "leader to ennemy" + enemy.gameObject.name);
+			for (int j = 0; j < players.Count; j++)
+				iaEnnemy.AddLeader(players[j]);
+            iaEnnemy.SetAgent(enemy.Agent);
             enemy.Transform.position = SpawnEnemy.position;
             enemy.gameObject.SetActive(true);
+			iaEnnemy.SetArrivalP(ArrivalP);
             enemy.Agent.SetDestination(ArrivalP.position);
         }
 

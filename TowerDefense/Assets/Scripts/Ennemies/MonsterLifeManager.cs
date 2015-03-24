@@ -12,9 +12,9 @@ public class MonsterLifeManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(material.shader);
+        //Debug.Log(material.shader);
         healthBar.GetComponent<Renderer>().material.CopyPropertiesFromMaterial(material);
-        Debug.Log(healthBar.GetComponent<Renderer>().material.shader);
+        //Debug.Log(healthBar.GetComponent<Renderer>().material.shader);
         life_save = life;
     }
 

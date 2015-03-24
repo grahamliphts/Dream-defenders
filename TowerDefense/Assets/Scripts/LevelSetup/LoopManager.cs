@@ -20,7 +20,7 @@ public class LoopManager : MonoBehaviour
     [SerializeField]
     private int _constructionTime;
 
-    private EnnemyManager m_ennemyManager;
+    private EnnemyManager _ennemyManager;
     private int _actualWave;
     private float _startTime;
 
@@ -31,10 +31,16 @@ public class LoopManager : MonoBehaviour
     private bool _win;
     private bool _lose;
 
+	[SerializeField]
     private PlayerLifeManager _lifeManager;
     private float _timer;
 
-	void Start () 
+	void Start()
+	{
+		_startTime = Time.time;
+		_ennemyManager = GetComponent<EnnemyManager>();
+	}
+	public void Init() 
     {
         /*Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;*/
@@ -45,8 +51,7 @@ public class LoopManager : MonoBehaviour
         _nbFireTower = ElectricPool.GetTowerNumberMax();
         _nbElectricTower = FirePool.GetTowerNumberMax();
         _win = false;
-        _startTime = Time.time;
-        m_ennemyManager = GetComponent<EnnemyManager>();
+        
         _actualWave = 0;
         _lifeManager = Player.GetComponent<PlayerLifeManager>();
         _timer = 0;
@@ -65,18 +70,18 @@ public class LoopManager : MonoBehaviour
                 ModelTower.SetConstruction(false);
                 _modeConstruction = false;
                 GameInfo.text = "Wave" + _actualWave;
-                m_ennemyManager.Spawn();
+				_ennemyManager.Spawn();
             }
-            else if (m_ennemyManager.AllDied() == true && _actualWave < _waveNumber && _modeConstruction == false)
+			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && _modeConstruction == false)
             {
                 _actualWave++;
-                m_ennemyManager.AddEnemies(_ennemyAddedByWave);
+				_ennemyManager.AddEnemies(_ennemyAddedByWave);
                 GameInfo.text = "Poser des Tours";
                 ModelTower.SetConstruction(true);
                 _modeConstruction = true;
                 _startTime = Time.time;
             }
-            else if (_actualWave == _waveNumber && m_ennemyManager.AllDied() == true && _win == false)
+			else if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
             {
                 GameInfo.text = "You Win";
                 _win = true;

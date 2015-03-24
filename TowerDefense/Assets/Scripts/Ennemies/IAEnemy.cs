@@ -40,6 +40,7 @@ public class IAEnemy : MonoBehaviour
         if(_agent == null)
             return;
         // Calculate the distance between the follower and the leader.
+		//Debug.Log(gameObject.name + " " + _leader.Count);
         float range = Vector3.Distance(transform.position, _leader[0].position);
         if (range < backrange)
         {
@@ -95,7 +96,12 @@ public class IAEnemy : MonoBehaviour
         _agent = agent;
     }
 
-    public void SetLeader(Transform leader)
+	public void SetArrivalP(Transform arrivalP)
+	{
+		ArrivalP = arrivalP;
+	}
+
+    public void AddLeader(Transform leader)
     {
         _leader.Add(leader);
     }
@@ -105,7 +111,7 @@ public class IAEnemy : MonoBehaviour
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);
         ps.newtransform.position = SpawnPoint.position;
-        ps.Rigidbody.AddForce((_leader[0].position - transform.position).normalized * _projectileSpeed);
+        ps.newrigidbody.AddForce((_leader[0].position - transform.position).normalized * _projectileSpeed);
     }
 }
 
