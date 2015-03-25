@@ -38,6 +38,6 @@ public class LevelLoader : MonoBehaviour {
 
         var gameObjects = FindObjectsOfType<GameObject>();
         foreach (var go in gameObjects)
-            go.SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);
+            go.SendMessage("OnLoadedLevel", true);
     }
 }

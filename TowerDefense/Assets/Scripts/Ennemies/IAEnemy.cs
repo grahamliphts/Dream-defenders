@@ -41,9 +41,6 @@ public class IAEnemy : MonoBehaviour
         if(_agent == null)
             return;
         // Calculate the distance between the follower and the leader.
-		
-		Debug.Log(_agent.remainingDistance);
-		Debug.Log(_agent.pathStatus);
         float range = Vector3.Distance(transform.position, _leader[0].position);
         if (range < backrange)
         {
