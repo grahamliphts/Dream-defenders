@@ -8,7 +8,7 @@ public class LevelStart : MonoBehaviour
 	private int _countPlayer;
 
 	[SerializeField]
-	private Vector3 _spawnPosition;
+	private Transform _spawnPosition;
 
 	public bool network;
 
@@ -27,10 +27,13 @@ public class LevelStart : MonoBehaviour
         Debug.Log("Level was loaded");
 		GameObject player;
 		if (network)
-			player = Network.Instantiate(netPlayer, _spawnPosition, Quaternion.identity, 0) as GameObject;
+			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 0) as GameObject;
 		else
-			player = Instantiate(netPlayer, _spawnPosition, Quaternion.identity) as GameObject;
-
+		{
+			Debug.Log(_spawnPosition);
+			player = Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity) as GameObject;
+			Debug.Log("Player position" + player.transform.position);
+		}
 		Transform targetCamera = null;
 		Transform firePoint = null;
 		for (int i = 0; i < player.transform.childCount; i++)

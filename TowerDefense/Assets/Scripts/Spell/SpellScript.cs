@@ -35,6 +35,5 @@ public class SpellScript : MonoBehaviour
         transform.transform.position = new Vector3(0, 0, 0);
         transform.gameObject.SetActive(false);
 		Debug.Log("set active false");
-		Debug.Log(gameObject.name);
     }
 }
