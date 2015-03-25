@@ -11,7 +11,7 @@ public class ConstructionController : MonoBehaviour
 
     void Update()
     {
-       /* if (_construction == true)
+        if (_construction == true)
         {
             Vector3 pos = new Vector3(Screen.width/2.0f, Screen.height/2.0f, 0.0f);
             Ray ray = Camera.main.ScreenPointToRay(pos);
@@ -28,7 +28,7 @@ public class ConstructionController : MonoBehaviour
                 {
                     var tower = TowerPoolManager.GetTower();
                     tower.gameObject.SetActive(true);
-                    tower.Transform.position = transform.position;
+                    tower.newtransform.position = transform.position;
 
                      //add box collider for shoot range
                     tower.RangeCollider.enabled = true;
@@ -39,7 +39,7 @@ public class ConstructionController : MonoBehaviour
                     Physics.IgnoreCollision(transform.GetComponent<BoxCollider>(), tower.RangeCollider);
                 }
             }
-        }*/
+        }
     }
 
     void OnTriggerEnter(Collider other)

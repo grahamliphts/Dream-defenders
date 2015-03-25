@@ -110,7 +110,9 @@ public class IAEnemy : MonoBehaviour
     {
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);
+		//Debug.Log(ps.newrigidbody.velocity);
         ps.newtransform.position = SpawnPoint.position;
+		ps.newrigidbody.velocity = new Vector3(0, 0, 0);
         ps.newrigidbody.AddForce((_leader[0].position - transform.position).normalized * _projectileSpeed);
     }
 }

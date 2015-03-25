@@ -7,14 +7,29 @@ public class LevelStart : MonoBehaviour
 	public SpellPoolManager spellPool;
 	private int _countPlayer;
 
+	[SerializeField]
+	private Vector3 _spawnPosition;
+
+	public bool network;
+
 	void Start()
 	{
 		_countPlayer = 0;
+		if (Application.isEditor)
+		{
+			network = false;
+			OnLoadedLevel();
+		}
 	}
-    void OnNetworkLoadedLevel()
+
+    void OnLoadedLevel()
     {
         Debug.Log("Level was loaded");
-        GameObject player = Network.Instantiate(netPlayer, new Vector3(5, 1, 5), Quaternion.identity, 0) as GameObject;
+		GameObject player;
+		if (network)
+			player = Network.Instantiate(netPlayer, _spawnPosition, Quaternion.identity, 0) as GameObject;
+		else
+			player = Instantiate(netPlayer, _spawnPosition, Quaternion.identity) as GameObject;
 
 		Transform targetCamera = null;
 		Transform firePoint = null;
@@ -30,11 +45,9 @@ public class LevelStart : MonoBehaviour
 		if(targetCamera != null)
 			Camera.main.gameObject.GetComponent<CameraController>().target = targetCamera;
 
-		Debug.Log(_countPlayer);
+		Debug.Log("Count player:"+_countPlayer);
 		GetComponent<EnnemyManager>().players.Add(player.transform);
-		//Debug.Log(firePoint);
 		firePoint.GetComponent<SpellController>()._spellPoolManager = spellPool;
-
 		LoopManager loopManager = GetComponent<LoopManager>();
 		loopManager.Player = player;
 		loopManager.Init();

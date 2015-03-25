@@ -28,14 +28,12 @@ public class CharacController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!_networkView.isMine)
+		if (!_networkView.isMine && !Application.isEditor)
             return;
-
         isWalking = false;
         Vector3 direction = Vector3.zero;
         if (Input.GetKey("z"))
         {
-
             direction += -transform.forward; //inverted axis change in progress
             GetComponent<Animation>()["Armature.000|run"].speed = 1.8f;
             GetComponent<Animation>().Play("Armature.000|run", PlayMode.StopAll);

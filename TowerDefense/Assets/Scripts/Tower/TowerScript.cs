@@ -8,7 +8,6 @@ public class TowerScript : MonoBehaviour
     public Collider owncollider;
     public Collider rangeCollider;
 
-
     public Transform Transform
     {
         get

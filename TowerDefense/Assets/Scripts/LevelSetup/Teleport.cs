@@ -34,7 +34,7 @@ public class Teleport : MonoBehaviour
 
             if (nextPoint == null)
             {
-                Debug.Log("Touch Nexus");
+               // Debug.Log("Touch Nexus");
             }
         }
     }
