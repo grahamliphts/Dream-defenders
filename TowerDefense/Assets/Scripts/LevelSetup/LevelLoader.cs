@@ -17,7 +17,6 @@ public class LevelLoader : MonoBehaviour {
     {
         Network.RemoveRPCsInGroup(0);
         Network.RemoveRPCsInGroup(1);
-        Debug.Log("Load scene");
         _networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MainScene", _lastLevelPrefix + 1);
     }
 
@@ -30,14 +29,13 @@ public class LevelLoader : MonoBehaviour {
         Network.isMessageQueueRunning = false;
         Network.SetLevelPrefix(levelPrefix);
         Application.LoadLevel(level);
-        Debug.Log("load level");
         yield return null;
 
         Network.isMessageQueueRunning = true;
         Network.SetSendingEnabled(0, true);
 
         var gameObjects = FindObjectsOfType<GameObject>();
-        foreach (var go in gameObjects)
-            go.SendMessage("OnLoadedLevel", true);
+		foreach (var go in gameObjects)
+			go.SendMessage("OnLoadedLevel", true);
     }
 }

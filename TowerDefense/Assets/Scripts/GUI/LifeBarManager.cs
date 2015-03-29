@@ -12,14 +12,10 @@ public class LifeBarManager : MonoBehaviour
     private PlayerLifeManager _lifeManager;
     private Image _lifeBar;
 
-	void Start () 
-    {
-        _lifeManager = Player.GetComponent<PlayerLifeManager>();
-        _lifeBar = transform.GetChild(0).GetComponent<Image>();
-	}
-
 	void Update () 
     {
+		if (_lifeManager == null)
+			return;
         if (_lifeManager.GetLife() >= 0)
         {
             _lifeBarValue = _lifeManager.GetLife() / 100;
@@ -38,4 +34,14 @@ public class LifeBarManager : MonoBehaviour
         else if (_lifeBarValue < 0.25)
             _lifeBarColor = Color.red;
     }
+
+	public void SetLifeManager(PlayerLifeManager lifeManager)
+	{
+		_lifeManager = lifeManager;
+	}
+
+	public void SetLifeBar(Image lifeBar)
+	{
+		_lifeBar = lifeBar;
+	}
 }

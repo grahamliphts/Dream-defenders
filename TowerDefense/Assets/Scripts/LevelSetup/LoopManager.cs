@@ -12,6 +12,7 @@ public class LoopManager : MonoBehaviour
     public GameObject Player;
     public TowerPoolManager FirePool;
     public TowerPoolManager ElectricPool;
+	public GuiInGameManager GuiManager;
 
     [SerializeField]
     private int _waveNumber;
@@ -31,16 +32,16 @@ public class LoopManager : MonoBehaviour
     private bool _win;
     private bool _lose;
 
-	[SerializeField]
     private PlayerLifeManager _lifeManager;
     private float _timer;
+	private SpellController _spellController;
 
 	void Start()
 	{
 		_startTime = Time.time;
 		_ennemyManager = GetComponent<EnnemyManager>();
 	}
-	public void Init() 
+	public void Init(SpellController spellController, PlayerLifeManager lifeManager) 
     {
         /*Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;*/
@@ -53,12 +54,17 @@ public class LoopManager : MonoBehaviour
         _win = false;
         
         _actualWave = 0;
-        _lifeManager = Player.GetComponent<PlayerLifeManager>();
+		_lifeManager = lifeManager;
+		_spellController = spellController;
+		Debug.Log(_lifeManager);
+
         _timer = 0;
 	}
 	
 	void Update () 
     {
+		if (_lifeManager == null)
+			return;
         if(_lose == false)
         {
             ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
@@ -68,8 +74,10 @@ public class LoopManager : MonoBehaviour
             if (((int)(Time.time - _startTime) % 60) >= _constructionTime && _modeConstruction == true)
             {
                 ModelTower.SetConstruction(false);
+				GuiManager.SetConstructionController(false);
                 _modeConstruction = false;
-                GameInfo.text = "Wave" + _actualWave;
+				int wave = _actualWave + 1;
+                GameInfo.text = "Wave " + wave;
 				_ennemyManager.Spawn();
             }
 			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && _modeConstruction == false)
@@ -78,6 +86,7 @@ public class LoopManager : MonoBehaviour
 				_ennemyManager.AddEnemies(_ennemyAddedByWave);
                 GameInfo.text = "Poser des Tours";
                 ModelTower.SetConstruction(true);
+				GuiManager.SetConstructionController(true);
                 _modeConstruction = true;
                 _startTime = Time.time;
             }
@@ -86,6 +95,8 @@ public class LoopManager : MonoBehaviour
                 GameInfo.text = "You Win";
                 _win = true;
             }
+
+			_spellController.SetModeConstruction(_modeConstruction);
         }
 
         if (_lifeManager.GetLife() <= 0)

@@ -8,14 +8,15 @@ public class CharacController : MonoBehaviour
 
     private bool _wantToJump = false;
     private Rigidbody _rigidbody;
-    private Vector3 _eulerAngleVelocity = new Vector3(0, 100, 0);
+    private Vector3 _eulerAngleVelocity = new Vector3(0, 140, 0);
 
     private bool isWalking = false;
     private NetworkView _networkView;
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _networkView = GetComponent<NetworkView>();
+		if (GetComponent<NetworkView>() != null)
+			_networkView = GetComponent<NetworkView>();
         transform.tag = "player";
     }
     void Update()
@@ -24,12 +25,22 @@ public class CharacController : MonoBehaviour
         {
             _wantToJump = true;
         }
+
+		if(Input.GetKey(KeyCode.LeftShift))
+			movementSpeed = 10.0f;
+		else
+			movementSpeed = 6.0f;
+
+		Debug.Log(movementSpeed);
     }
 
     void FixedUpdate()
     {
-		if (!_networkView.isMine && !Application.isEditor)
-            return;
+		if (_networkView != null )
+		{
+			if (!_networkView.isMine)
+				return;
+		}
         isWalking = false;
         Vector3 direction = Vector3.zero;
         if (Input.GetKey("z"))
@@ -97,8 +108,6 @@ public class CharacController : MonoBehaviour
         float groundDist = 0.2f;
         RaycastHit hit;
         Debug.DrawRay(transform.position + new Vector3(0, 0.2f, 0), groundDir * groundDist, Color.red);
-       /* int layerMask = 1 << 8;
-        layerMask = ~layerMask;*/
         if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), groundDir, out hit, groundDist))
         {
             if (_wantToJump)
@@ -112,5 +121,18 @@ public class CharacController : MonoBehaviour
         _rigidbody.velocity = direction;
     }
 
-
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		Vector3 position = Vector3.zero;
+		if (stream.isWriting)
+		{
+			position = transform.position;
+			stream.Serialize(ref position);
+		}
+		else
+		{
+			stream.Serialize(ref position);
+			transform.position = position;
+		}
+	}
 }

@@ -16,24 +16,28 @@ public class GuiInGameManager : MonoBehaviour
 	
 	void Update () 
     {
-        if (Input.GetKey("1"))
-        {
-            if (_target != ModelTowerPoolManager.GetFireTower())
-            {
-                _newTarget = ModelTowerPoolManager.GetFireTower();
-                SetTower(_target, _newTarget);
-                _target = _newTarget;
-            }
-        }
-        if (Input.GetKey("2"))
-        {
-            if (_target != ModelTowerPoolManager.GetElectricTower())
-            {
-                _newTarget = ModelTowerPoolManager.GetElectricTower();
-                SetTower(_target, _newTarget);
-                _target = _newTarget;
-            }
-        }
+		if (_target.ConstructionController.enabled == true)
+		{
+			if (Input.GetKey("1"))
+			{
+				if (_target != ModelTowerPoolManager.GetFireTower())
+				{
+					_newTarget = ModelTowerPoolManager.GetFireTower();
+					SetTower(_target, _newTarget);
+					_target = _newTarget;
+				}
+			}
+			if (Input.GetKey("2"))
+			{
+				if (_target != ModelTowerPoolManager.GetElectricTower())
+				{
+					_newTarget = ModelTowerPoolManager.GetElectricTower();
+					SetTower(_target, _newTarget);
+					_target = _newTarget;
+				}
+			}
+		}
+        
        /* if (Input.GetKey("3"))
         {
             if (_target != ModelTowerPoolManager.GetElectricTower())
@@ -56,4 +60,9 @@ public class GuiInGameManager : MonoBehaviour
         tower.ConstructionController.enabled = true;
         tower.ConstructionController.SetConstruction(true);
     }
+
+	public void SetConstructionController(bool construction)
+	{
+		_target.ConstructionController.enabled = construction;
+	}
 }

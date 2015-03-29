@@ -6,10 +6,14 @@ public class SpellController : MonoBehaviour
     public Transform SpawnPoint;
     public SpellPoolManager _spellPoolManager;
 
+	private bool _modeConstruction;
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-            TryToShoot();
+		if(_modeConstruction == false)
+		{
+			if (Input.GetMouseButtonDown(0))
+				TryToShoot();
+		}
     }
 
     void TryToShoot()
@@ -19,4 +23,14 @@ public class SpellController : MonoBehaviour
         spell.newtransform.position = transform.position;
         spell.newrigidbody.AddForce(transform.forward * 1500);
     }
+
+	public void SetModeConstruction(bool mode)
+	{
+		_modeConstruction = mode;
+	}
+
+	public void SetSpellPoolManager(SpellPoolManager spellPool)
+	{
+		_spellPoolManager = spellPool;
+	}
 }

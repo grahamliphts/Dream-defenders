@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     private int _yMaxLimit = 70;
 
     private Vector3 _smoothTarget;
+	private GameObject _player;
 
 	void AdjustCamera()
 	{
@@ -45,9 +46,11 @@ public class CameraController : MonoBehaviour
 
 	void RotateCharacter(float x)
 	{
-		Vector3 actualEuler = target.rotation.eulerAngles;
+		Debug.Log(_player);
+		Vector3 actualEuler = _player.transform.rotation.eulerAngles;
+		actualEuler.y += x;
 		Quaternion rotation = Quaternion.Euler(actualEuler);
-		target.rotation = rotation;
+		_player.transform.localRotation = rotation;
 	}
 	
 	void RotateCamera(float x, float y)
@@ -71,5 +74,10 @@ public class CameraController : MonoBehaviour
 		if (angle > 360)
 			angle -= 360;
 		return Mathf.Clamp (angle, min, max);
+	}
+
+	public void SetPlayer(GameObject player)
+	{
+		_player = player;
 	}
 }

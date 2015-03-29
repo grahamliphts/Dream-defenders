@@ -36,7 +36,7 @@ public class ConstructionController : MonoBehaviour
                     //add box collider to tower
                     tower.OwnCollider.enabled = true;
 
-                    Physics.IgnoreCollision(transform.GetComponent<BoxCollider>(), tower.RangeCollider);
+                    //Physics.IgnoreCollision(transform.GetComponent<BoxCollider>(), tower.RangeCollider);
                 }
             }
         }

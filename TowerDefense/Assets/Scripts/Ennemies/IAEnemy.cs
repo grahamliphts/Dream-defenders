@@ -33,7 +33,7 @@ public class IAEnemy : MonoBehaviour
     {
         _bShoot = false;
         _recharging = false;
-		Debug.Log(_agent.destination);
+		//Debug.Log(_agent.destination);
     }
 
 	void Update()

@@ -14,7 +14,7 @@ public class PlayerLifeManager : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-		Debug.Log(col.gameObject.name);
+		//Debug.Log(col.gameObject.name);
         int count = 0;
         if (_life > 0)
         {
