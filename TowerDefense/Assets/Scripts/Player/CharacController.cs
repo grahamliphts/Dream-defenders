@@ -12,12 +12,17 @@ public class CharacController : MonoBehaviour
 
     private bool isWalking = false;
     private NetworkView _networkView;
+	private Animation _animation;
+	private Vector3 _direction;
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
 		if (GetComponent<NetworkView>() != null)
 			_networkView = GetComponent<NetworkView>();
         transform.tag = "player";
+
+		_animation = GetComponent<Animation>();
     }
     void Update()
     {
@@ -42,39 +47,39 @@ public class CharacController : MonoBehaviour
 				return;
 		}
         isWalking = false;
-        Vector3 direction = Vector3.zero;
+		_direction = Vector3.zero;
         if (Input.GetKey("z"))
         {
-            direction += -transform.forward; //inverted axis change in progress
-            GetComponent<Animation>()["Armature.000|run"].speed = 1.8f;
-            GetComponent<Animation>().Play("Armature.000|run", PlayMode.StopAll);
+			_direction += -transform.forward; //inverted axis change in progress
+			_animation["Armature.000|run"].speed = 1.8f;
+			_animation.Play("Armature.000|run", PlayMode.StopAll);
             isWalking = true;
         }
         if (Input.GetKey("s"))
         {
-            direction = transform.forward; //inverted axis change in progress
-            GetComponent<Animation>()["Armature.000|run"].speed = 1f;
-            GetComponent<Animation>().Play("Armature.000|run", PlayMode.StopAll);
+			_direction = transform.forward; //inverted axis change in progress
+			_animation["Armature.000|run"].speed = 1f;
+			_animation.Play("Armature.000|run", PlayMode.StopAll);
             isWalking = true;
         }
         if (Input.GetKey("a"))
         {
-            direction += transform.right; //inverted axis change in progress
+			_direction += transform.right; //inverted axis change in progress
             if (!isWalking)
             {
-                GetComponent<Animation>()["Armature.000|left"].speed = 2f;
-                GetComponent<Animation>().Play("Armature.000|left", PlayMode.StopAll);
+				_animation["Armature.000|left"].speed = 2f;
+				_animation.Play("Armature.000|left", PlayMode.StopAll);
                 isWalking = true;
             }
         }
         if (Input.GetKey("e"))
         {
 
-            direction -= transform.right; //inverted axis change in progress
+			_direction -= transform.right; //inverted axis change in progress
             if (!isWalking)
             {
-                GetComponent<Animation>()["Armature.000|right"].speed = 2f;
-                GetComponent<Animation>().Play("Armature.000|right", PlayMode.StopAll);
+				_animation["Armature.000|right"].speed = 2f;
+				_animation.Play("Armature.000|right", PlayMode.StopAll);
                 isWalking = true;
             }
         } 
@@ -87,7 +92,7 @@ public class CharacController : MonoBehaviour
         }*/
         if (!isWalking)
         {
-            GetComponent<Animation>().Play("Armature.000|idle",PlayMode.StopSameLayer);
+			_animation.Play("Armature.000|idle", PlayMode.StopSameLayer);
             isWalking = false;
         }
         if (Input.GetKey("q"))
@@ -101,8 +106,8 @@ public class CharacController : MonoBehaviour
             _rigidbody.MoveRotation(_rigidbody.rotation * deltaRotation);
         }
 
-        direction.Normalize();
-        direction *= movementSpeed;
+		_direction.Normalize();
+		_direction *= movementSpeed;
 
         Vector3 groundDir = -Vector3.up;
         float groundDist = 0.2f;
@@ -113,26 +118,37 @@ public class CharacController : MonoBehaviour
             if (_wantToJump)
             {
                 _wantToJump = false;
-                direction += transform.up * jumpSpeed;
+				_direction += transform.up * jumpSpeed;
             }
         }
 
-        direction.y += _rigidbody.velocity.y;
-        _rigidbody.velocity = direction;
+		_direction.y += _rigidbody.velocity.y;
+		_rigidbody.velocity = _direction;
     }
 
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
 	{
 		Vector3 position = Vector3.zero;
+		Vector3 velocity = Vector3.zero;
+		Quaternion rotation = Quaternion.identity;
 		if (stream.isWriting)
 		{
 			position = transform.position;
+			velocity = _rigidbody.velocity;
+			rotation = _rigidbody.rotation;
 			stream.Serialize(ref position);
+			stream.Serialize(ref velocity);
+			stream.Serialize(ref rotation);
 		}
+		
 		else
 		{
 			stream.Serialize(ref position);
+			stream.Serialize(ref velocity);
+			stream.Serialize(ref rotation);
 			transform.position = position;
+			_rigidbody.velocity = velocity;
+			_rigidbody.rotation = rotation;
 		}
 	}
 }

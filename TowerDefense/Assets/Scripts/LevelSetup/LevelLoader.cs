@@ -36,6 +36,6 @@ public class LevelLoader : MonoBehaviour {
 
         var gameObjects = FindObjectsOfType<GameObject>();
 		foreach (var go in gameObjects)
-			go.SendMessage("OnLoadedLevel", true);
+			go.SendMessage("OnLoadedLevel", true, SendMessageOptions.DontRequireReceiver);
     }
 }
