@@ -17,22 +17,23 @@ public class LightManagement : MonoBehaviour {
 		//m_light.intensity = 0;
 
 		timmer += Time.deltaTime;
-		if (timmer >= 1) {
+		if (timmer >= 1 || m_light.intensity / 10 == m_new_intensity) {
 			Debug.Log (timmer);
 			timmer = 0;
-			m_new_intensity = Random.value;
+
 			Debug.Log(m_new_intensity);
 			Debug.Log(m_light.intensity/10);
+			m_new_intensity = Random.value;
+			while(m_new_intensity > 0.4)
+				m_new_intensity = Random.value;
 			//m_light.intensity = rand;
 		}
 		if (m_light.intensity / 10 > m_new_intensity) {
-			m_light.intensity -= 0.05f;
-			if(m_light.intensity > 4)
-				m_light.intensity =m_light.intensity/2;
+			m_light.intensity -= 0.01f;
+
 		} else {
-			if(m_light.intensity > 4)
-				m_light.intensity =m_light.intensity/2;
-			m_light.intensity += 0.05f;
+
+			m_light.intensity += 0.01f;
 			//m_light.intensity = m_light.intensity/2;
 		}
 	}
