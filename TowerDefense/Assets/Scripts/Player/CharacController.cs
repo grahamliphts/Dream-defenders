@@ -131,6 +131,7 @@ public class CharacController : MonoBehaviour
 		Vector3 position = Vector3.zero;
 		Vector3 velocity = Vector3.zero;
 		Quaternion rotation = Quaternion.identity;
+
 		if (stream.isWriting)
 		{
 			position = transform.position;
