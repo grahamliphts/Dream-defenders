@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class LevelStart : MonoBehaviour 
 {
+	public static LevelStart instance = null;
     public GameObject netPlayer;
 	public SpellPoolManager spellPool;
 	public GameObject lifeBar;
@@ -15,6 +16,7 @@ public class LevelStart : MonoBehaviour
 
 	void Start()
 	{
+		instance = this;
 		if (Application.isEditor)
 		{
 			//OnLoadedLevel(network);

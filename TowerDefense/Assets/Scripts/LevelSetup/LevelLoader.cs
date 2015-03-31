@@ -34,8 +34,10 @@ public class LevelLoader : MonoBehaviour {
         Network.isMessageQueueRunning = true;
         Network.SetSendingEnabled(0, true);
 
-        var gameObjects = FindObjectsOfType<GameObject>();
+       /* var gameObjects = FindObjectsOfType<GameObject>();
 		foreach (var go in gameObjects)
-			go.SendMessage("OnLoadedLevel", true, SendMessageOptions.DontRequireReceiver);
+			go.SendMessage("OnLoadedLevel", true, SendMessageOptions.DontRequireReceiver);*/
+
+		LevelStart.instance.OnLoadedLevel(true);
     }
 }

@@ -12,7 +12,7 @@ public class LevelColliderScript : MonoBehaviour
         if (level != null)
         {
             GameObject pointManager;
-            if((pointManager = GameObject.Find("level_generator/ManagerPoint")) == null)
+            if((pointManager = GameObject.Find("Level/ManagerPoint")) == null)
             {
                 pointManager = new GameObject("ManagerPoint");
                 pointManager.transform.parent = level.transform;
@@ -23,33 +23,57 @@ public class LevelColliderScript : MonoBehaviour
             if(manager.point_list == null)
                 manager.point_list = new List<GameObject>();
             manager.point_list.Clear();
+			for (int i = 0; i < level.transform.childCount; i++)
+			{
+				Transform child = level.transform.GetChild(i);
+				Debug.Log(child.gameObject.name);
+				child.gameObject.AddComponent<BoxCollider>();
+				if (child.gameObject.name.StartsWith("Point") || child.gameObject.name.StartsWith("spawnEnemy") || child.gameObject.name.StartsWith("nexus") || child.gameObject.name.StartsWith("tpPoint"))
+					manager.point_list.Add(child.gameObject);
 
-            for (int i = 0; i < level.transform.childCount; i++)
-            {       
-                Transform child = level.transform.GetChild(i);
-                child.gameObject.AddComponent<BoxCollider>();
+				if (child.gameObject.GetComponent<Renderer>() != null)
+				{
+					//Debug.Log(child.gameObject.name);
+					//Debug.Log(child.gameObject.renderer.sharedMaterial.name);
+					if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "ground")
+					{
+						child.gameObject.tag = "ground";
+						child.gameObject.name = "ground";
+					}
+					else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall")
+					{
+						child.gameObject.tag = "wall";
+						child.gameObject.name = "wall";
+					}
 
-                if (child.gameObject.name.StartsWith("Point"))
-                {
-                    Debug.Log(child.gameObject);
-                    manager.point_list.Add(child.gameObject);
-                }
+					else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "cap")
+					{
+						child.gameObject.tag = "cap";
+						child.gameObject.name = "cap";
+					}
 
-                if(child.gameObject.GetComponent<Renderer>() != null)
-                {
-                    Debug.Log(child.gameObject.name);
-                    //Debug.Log(child.gameObject.renderer.sharedMaterial.name);
-                    if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "ground")
-                        child.gameObject.tag = "ground";
-                    else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall")
-                        child.gameObject.tag = "wall";
-                    else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "cap")
-                        child.gameObject.tag = "cap";
-                    else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall_inside")
-                        child.gameObject.tag = "wall_inside";
-                   
-                }
-            }
-        }
-    }
+					else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall_inside")
+					{
+						child.gameObject.tag = "wall_inside";
+						child.gameObject.name = "wall_inside";
+					}
+				}
+			}
+			for (int i = 0; i < manager.point_list.Count; i++)
+			{
+				Debug.Log("managerPointList");
+				if (i == 0)
+					manager.point_list[i].name = "spawnEnemy";
+				else if (i == manager.point_list.Count - 1)
+					manager.point_list[i].name = "nexus";
+				else
+					manager.point_list[i].name = "tpPoint";
+			}
+
+			GameObject gameManager = GameObject.Find("GameManager");
+			gameManager.GetComponent<EnnemyManager>().SpawnEnemy = manager.point_list[0].transform;
+			gameManager.GetComponent<EnnemyManager>().ArrivalP = manager.point_list[manager.point_list.Count - 1].transform;
+		}
+	}
 }
+

@@ -21,7 +21,9 @@ public class PointManager : MonoBehaviour
 
                 point_list[i].gameObject.tag = "tp";
                 Teleport teleport = point_list[i].GetComponent<Teleport>();
-                GameObject tpPoint = GameObject.Instantiate(TpParticle, point_list[i].transform.position, Quaternion.identity) as GameObject;
+				
+				if(TpParticle != null)
+					GameObject.Instantiate(TpParticle, point_list[i].transform.position, Quaternion.identity);
 
                 if(i%2 == 0)
                     teleport.GetGameObject().transform.Rotate(0, 180, 0, Space.World);
@@ -34,8 +36,6 @@ public class PointManager : MonoBehaviour
                     teleport.nextPoint = point_list[i + 1];
                     teleport.nextPointDest = point_list[i + 2]; //Destination ennemi
                 }
-
-
             }
         }
     }
