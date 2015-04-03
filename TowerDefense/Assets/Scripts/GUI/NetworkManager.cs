@@ -22,7 +22,6 @@ public class NetworkManager : MonoBehaviour
     List<NetworkPlayer> _players;
     private HostData _hostConnected;
     private uint _playerCount;
-    private string _serverName;
     private int _nbPlayersMax;
 
     void Start()
@@ -52,7 +51,6 @@ public class NetworkManager : MonoBehaviour
             Network.InitializeServer(int.Parse(nbPlayersInput.text) - 1, _listenPort, !Network.HavePublicAddress());
             MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
             _nbPlayersMax = int.Parse(nbPlayersInput.text);
-            _serverName = serverName.text;
         }
 	}
 

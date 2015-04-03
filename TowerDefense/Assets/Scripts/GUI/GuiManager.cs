@@ -16,16 +16,6 @@ public class GuiManager : MonoBehaviour
 	{
 		Application.LoadLevel("MainScene");
 		yield return null;
-		var gameObjects = FindObjectsOfType<GameObject>();
-		foreach (var go in gameObjects)
-		{
-			LevelStart startLevel = go.GetComponent<LevelStart>();
-			if (startLevel != null)
-			{
-				Debug.Log("Start level solo");
-				startLevel.OnLoadedLevel(false);
-			}
-
-		}
+		LevelStart.instance.OnLoadedLevel(false);
 	}
 }

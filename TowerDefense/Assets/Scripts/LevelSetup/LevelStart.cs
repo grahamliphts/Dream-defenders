@@ -6,6 +6,7 @@ public class LevelStart : MonoBehaviour
 {
 	public static LevelStart instance = null;
     public GameObject netPlayer;
+	public GameObject playerSolo;
 	public SpellPoolManager spellPool;
 	public GameObject lifeBar;
 
@@ -17,10 +18,6 @@ public class LevelStart : MonoBehaviour
 	void Start()
 	{
 		instance = this;
-		if (Application.isEditor)
-		{
-			//OnLoadedLevel(network);
-		}
 	}
 
     public void OnLoadedLevel(bool network)
@@ -31,8 +28,7 @@ public class LevelStart : MonoBehaviour
 			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 1) as GameObject;
 		else
 		{
-			player = Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity) as GameObject;
-			Destroy(player.GetComponent<NetworkView>());
+			player = Instantiate(playerSolo, _spawnPosition.position, Quaternion.identity) as GameObject;
 		}
 
 		player.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
@@ -57,7 +53,7 @@ public class LevelStart : MonoBehaviour
 
 		/*Pool Set*/
 		firePoint.GetComponent<SpellController>().SetSpellPoolManager(spellPool);
-
+		Debug.Log(spellPool);
 		/*Life Set*/
 		LifeBarManager lifeBarManager = lifeBar.GetComponent<LifeBarManager>();
 		lifeBarManager.Player = player;

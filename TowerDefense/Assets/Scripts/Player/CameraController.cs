@@ -46,7 +46,6 @@ public class CameraController : MonoBehaviour
 
 	void RotateCharacter(float x)
 	{
-		Debug.Log(_player);
 		Vector3 actualEuler = _player.transform.rotation.eulerAngles;
 		actualEuler.y += x;
 		Quaternion rotation = Quaternion.Euler(actualEuler);

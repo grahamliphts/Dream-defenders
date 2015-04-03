@@ -19,6 +19,7 @@ public class SpellController : MonoBehaviour
     void TryToShoot()
     {
         var spell = _spellPoolManager.GetSpell();
+		Debug.Log(spell);
         spell.gameObject.SetActive(true);
         spell.newtransform.position = transform.position;
         spell.newrigidbody.AddForce(transform.forward * 1500);

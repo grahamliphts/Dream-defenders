@@ -1,0 +1,726 @@
+fileFormatVersion: 2
+guid: 7fb7fe809b5c43d439934c21c80f3861
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Armature.000
+    100002: Bone
+    100004: Bone.001
+    100006: Bone.002
+    100008: Bone.002_end
+    100010: Bone.008
+    100012: Bone.009
+    100014: Bone.010
+    100016: Bone.011
+    100018: Bone.011_end
+    100020: Bone.012
+    100022: Bone.013
+    100024: Bone.013_end
+    100026: Bone.014
+    100028: Bone.015
+    100030: Bone.016
+    100032: Bone.017
+    100034: Bone.018
+    100036: Bone.018_end
+    100038: Bone.019
+    100040: Bone.019_end
+    100042: Camera
+    100044: Lamp
+    100046: //RootNode
+    100048: Teddy_Bear.001
+    400000: Armature.000
+    400002: Bone
+    400004: Bone.001
+    400006: Bone.002
+    400008: Bone.002_end
+    400010: Bone.008
+    400012: Bone.009
+    400014: Bone.010
+    400016: Bone.011
+    400018: Bone.011_end
+    400020: Bone.012
+    400022: Bone.013
+    400024: Bone.013_end
+    400026: Bone.014
+    400028: Bone.015
+    400030: Bone.016
+    400032: Bone.017
+    400034: Bone.018
+    400036: Bone.018_end
+    400038: Bone.019
+    400040: Bone.019_end
+    400042: Camera
+    400044: Lamp
+    400046: //RootNode
+    400048: Teddy_Bear.001
+    4300000: Teddy_Bear.001
+    7400000: Armature.000|Run Action.001
+    7400002: Teddy_Bear.001|Run Action.002
+    7400004: Armature.000|run
+    7400006: Armature.000|Idle
+    7400008: Armature.000|left
+    7400010: Armature.000|right
+    7400012: Armature.000|jump
+    7400014: Armature.000|idle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Teddy_Bear.001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature.000|left
+      takeName: Armature.000|left
+      firstFrame: 0
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|run
+      takeName: Armature.000|run
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|right
+      takeName: Armature.000|right
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|jump
+      takeName: Armature.000|jump
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Armature.000|idle
+      takeName: Armature.000|idle
+      firstFrame: 0
+      lastFrame: 46
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature.000
+        weight: 1
+      - path: Armature.000/Bone
+        weight: 1
+      - path: Armature.000/Bone/Bone.001
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.002/Bone.002_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.008/Bone.012/Bone.013/Bone.013_end
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011
+        weight: 1
+      - path: Armature.000/Bone/Bone.001/Bone.009/Bone.010/Bone.011/Bone.011_end
+        weight: 1
+      - path: Armature.000/Bone.014
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019
+        weight: 1
+      - path: Armature.000/Bone.014/Bone.016/Bone.019/Bone.019_end
+        weight: 1
+      - path: Armature.000/Bone.015
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018
+        weight: 1
+      - path: Armature.000/Bone.015/Bone.017/Bone.018/Bone.018_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Teddy_Bear.001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .300000012
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: Armature.000
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.016
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.017
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.019
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.018
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.001
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.010
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.008
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.012
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.013
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone.011
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: nours_rebirth(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Armature.000
+      position: {x: -1.05130172, y: .753481448, z: .130254015}
+      rotation: {x: -.0111652184, y: .707018733, z: .707018614, w: -.0111652166}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone
+      position: {x: -1.12036121, y: -.142325506, z: -.035394419}
+      rotation: {x: .707106769, y: 2.14360032e-08, z: -8.2887702e-08, w: .707106888}
+      scale: {x: .999998748, y: .999995768, z: .999995887}
+      transformModified: 1
+    - name: Bone.001
+      position: {x: -3.70200737e-09, y: .300000012, z: 2.09688378e-09}
+      rotation: {x: -.168548673, y: -.270089805, z: -.13206552, w: .938723445}
+      scale: {x: .999999464, y: .999999881, z: 1.00000191}
+      transformModified: 1
+    - name: Bone.002
+      position: {x: -4.47034836e-08, y: .346675605, z: -2.23517418e-08}
+      rotation: {x: -.210275784, y: -.810970008, z: -.125926077, w: -.531276166}
+      scale: {x: 1.00000095, y: 1.0000006, z: .999999046}
+      transformModified: 1
+    - name: Bone.002_end
+      position: {x: -0, y: .403896242, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone.008
+      position: {x: -4.47034836e-08, y: .346675605, z: -2.23517418e-08}
+      rotation: {x: -.541806221, y: -.19602038, z: -.404725075, w: .71008426}
+      scale: {x: 1.00000143, y: .999998569, z: 1}
+      transformModified: 1
+    - name: Bone.012
+      position: {x: 4.47034854e-09, y: .313631058, z: -2.34693296e-08}
+      rotation: {x: -.134786516, y: -.00546446163, z: .0197035428, w: -.990663707}
+      scale: {x: .999998808, y: .999999285, z: 1.00000155}
+      transformModified: 1
+    - name: Bone.013
+      position: {x: -8.94069707e-09, y: .27533403, z: -3.12924406e-08}
+      rotation: {x: .013711093, y: .00789418723, z: -.0212491285, w: .999649107}
+      scale: {x: .999999642, y: .999999642, z: .999999821}
+      transformModified: 1
+    - name: Bone.013_end
+      position: {x: -0, y: .29385379, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone.009
+      position: {x: -4.47034836e-08, y: .346675605, z: -2.23517418e-08}
+      rotation: {x: -.232219309, y: .494761497, z: .731711805, w: .407287508}
+      scale: {x: 1.00000119, y: .999995708, z: 1.00000024}
+      transformModified: 1
+    - name: Bone.010
+      position: {x: -1.22934587e-08, y: .314139575, z: -4.91738348e-08}
+      rotation: {x: -.0847614259, y: -.004665941, z: .0224911869, w: .996136546}
+      scale: {x: .999999821, y: 1.00000095, z: .999998808}
+      transformModified: 1
+    - name: Bone.011
+      position: {x: 4.74974549e-09, y: .305105656, z: -3.24100284e-08}
+      rotation: {x: -.0450552739, y: -.00454535987, z: .0130765857, w: .998888612}
+      scale: {x: .999999046, y: .999999583, z: .999999106}
+      transformModified: 1
+    - name: Bone.011_end
+      position: {x: -0, y: .289323151, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone.014
+      position: {x: -1.12036121, y: -.142325506, z: -.035394419}
+      rotation: {x: .0217373651, y: -.0219891425, z: -.710825145, w: .702688932}
+      scale: {x: .999996722, y: .999996841, z: .999996841}
+      transformModified: 1
+    - name: Bone.016
+      position: {x: -9.25883814e-09, y: .282936096, z: 8.1898186e-09}
+      rotation: {x: .554267526, y: -.561214328, z: .420181841, w: -.448634893}
+      scale: {x: .999999404, y: .999999404, z: 1.00000095}
+      transformModified: 1
+    - name: Bone.019
+      position: {x: 2.64204587e-08, y: .644483566, z: -2.0116568e-08}
+      rotation: {x: -.332886696, y: -.00689388113, z: .0157379769, w: -.942810297}
+      scale: {x: 1.00000095, y: .999998629, z: 1.00000012}
+      transformModified: 1
+    - name: Bone.019_end
+      position: {x: -0, y: .246691287, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone.015
+      position: {x: -1.12036121, y: -.142325506, z: -.035394419}
+      rotation: {x: -.0197712462, y: -.0189327132, z: -.691363871, w: -.721988022}
+      scale: {x: 1.00000012, y: .999999881, z: .999999762}
+      transformModified: 1
+    - name: Bone.017
+      position: {x: -2.98605318e-09, y: .276990891, z: -1.39698386e-09}
+      rotation: {x: .544680715, y: .55571574, z: -.478261948, w: -.407146722}
+      scale: {x: 1.00000012, y: 1, z: .999999285}
+      transformModified: 1
+    - name: Bone.018
+      position: {x: -1.6480918e-07, y: .638405323, z: -9.49949097e-09}
+      rotation: {x: -.318093926, y: -.00762597565, z: .0243064184, w: -.947716951}
+      scale: {x: .999999344, y: .99999994, z: .999999762}
+      transformModified: 1
+    - name: Bone.018_end
+      position: {x: -0, y: .236846149, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Camera
+      position: {x: 2.24433947, y: 1.60309958, z: -1.95229208}
+      rotation: {x: -.210611299, y: .905240178, z: .0892817006, w: -.358066887}
+      scale: {x: 1.00000012, y: .99999994, z: 1}
+      transformModified: 1
+    - name: Lamp
+      position: {x: .792704642, y: 1.90614212, z: .0292134769}
+      rotation: {x: .755880356, y: -.169075698, z: -.570947647, w: -.272171199}
+      scale: {x: .99999994, y: .999999881, z: .999999881}
+      transformModified: 1
+    - name: Teddy_Bear.001
+      position: {x: 1.18464236e-07, y: 1.2293458e-07, z: -1.78813941e-08}
+      rotation: {x: -1.86264137e-09, y: 1, z: -8.14603425e-08, w: 4.37113918e-08}
+      scale: {x: 1, y: .999999881, z: 1}
+      transformModified: 1
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -18,11 +18,11 @@ public class LightManagement : MonoBehaviour {
 
 		timmer += Time.deltaTime;
 		if (timmer >= 1 || m_light.intensity / 10 == m_new_intensity) {
-			Debug.Log (timmer);
+			//Debug.Log (timmer);
 			timmer = 0;
 
-			Debug.Log(m_new_intensity);
-			Debug.Log(m_light.intensity/10);
+			//Debug.Log(m_new_intensity);
+			//Debug.Log(m_light.intensity/10);
 			m_new_intensity = Random.value;
 			while(m_new_intensity > 0.4)
 				m_new_intensity = Random.value;
