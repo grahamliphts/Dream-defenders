@@ -9,6 +9,8 @@ public class TowerPoolManager : MonoBehaviour
 
     public TowerScript GetTower()
     {
+		if (_index >= GetTowerNumberMax())
+			return null;
         var spell = _towers[_index];
         _index++;
         return spell;

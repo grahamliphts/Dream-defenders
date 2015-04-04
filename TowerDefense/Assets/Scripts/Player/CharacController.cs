@@ -21,7 +21,7 @@ public class CharacController : MonoBehaviour
 		if (GetComponent<NetworkView>() != null)
 		{
 			_networkView = GetComponent<NetworkView>();
-			_modeMulti = false;
+			_modeMulti = true;
 		}
         transform.tag = "player";
 
@@ -70,7 +70,6 @@ public class CharacController : MonoBehaviour
 		}
 		_rigidbody.velocity = _direction;
 		float dotProduct = Vector3.Dot(_rigidbody.velocity, transform.right);
-		Debug.Log(dotProduct);
 		Vector3 velocity = new Vector3(_rigidbody.velocity.x, 0.0f, _rigidbody.velocity.z);
 
 		if (dotProduct < -0.1f)

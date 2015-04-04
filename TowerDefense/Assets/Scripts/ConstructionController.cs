@@ -27,16 +27,17 @@ public class ConstructionController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0) && _hitCounter == 0)
                 {
                     var tower = TowerPoolManager.GetTower();
-                    tower.gameObject.SetActive(true);
-                    tower.newtransform.position = transform.position;
+					if(tower != null)
+					{
+						tower.gameObject.SetActive(true);
+						tower.newtransform.position = transform.position;
 
-                     //add box collider for shoot range
-                    tower.RangeCollider.enabled = true;
-					tower.RangeCollider.isTrigger = true;
-                    //add box collider to tower
-                    tower.OwnCollider.enabled = true;
-
-                    //Physics.IgnoreCollision(transform.GetComponent<BoxCollider>(), tower.RangeCollider);
+						//add box collider for shoot range
+						tower.RangeCollider.enabled = true;
+						tower.RangeCollider.isTrigger = true;
+						//add box collider to tower
+						tower.OwnCollider.enabled = true;
+					}
                 }
             }
         }

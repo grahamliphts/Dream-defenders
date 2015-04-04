@@ -25,7 +25,7 @@ public class LoopManager : MonoBehaviour
     private int _actualWave;
     private float _startTime;
 
-    private bool _modeConstruction;
+    public static bool modeConstruction;
 
     private int _nbFireTower;
     private int _nbElectricTower;
@@ -48,7 +48,7 @@ public class LoopManager : MonoBehaviour
 
         GameInfo.text = "Poser des Tours";
         ModelTower.SetConstruction(true);
-        _modeConstruction = true;
+		modeConstruction = true;
         _nbFireTower = ElectricPool.GetTowerNumberMax();
         _nbElectricTower = FirePool.GetTowerNumberMax();
         _win = false;
@@ -69,25 +69,26 @@ public class LoopManager : MonoBehaviour
         {
             ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
             ValueFireTower.text = (_nbFireTower - FirePool.GetTowersNumber()).ToString();
-
+			
             TimeInfo.text = ((int)(Time.time - _startTime) % 60).ToString();
-            if (((int)(Time.time - _startTime) % 60) >= _constructionTime && _modeConstruction == true)
+			if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
             {
                 ModelTower.SetConstruction(false);
 				GuiManager.SetConstructionController(false);
-                _modeConstruction = false;
+				modeConstruction = false;
 				int wave = _actualWave + 1;
                 GameInfo.text = "Wave " + wave;
 				_ennemyManager.Spawn();
             }
-			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && _modeConstruction == false)
+			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
             {
                 _actualWave++;
 				_ennemyManager.AddEnemies(_ennemyAddedByWave);
+				
                 GameInfo.text = "Poser des Tours";
                 ModelTower.SetConstruction(true);
 				GuiManager.SetConstructionController(true);
-                _modeConstruction = true;
+				modeConstruction = true;
                 _startTime = Time.time;
             }
 			else if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
@@ -95,8 +96,6 @@ public class LoopManager : MonoBehaviour
                 GameInfo.text = "You Win";
                 _win = true;
             }
-
-			_spellController.SetModeConstruction(_modeConstruction);
         }
 
         if (_lifeManager.GetLife() <= 0)
