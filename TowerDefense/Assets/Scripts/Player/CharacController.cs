@@ -39,7 +39,7 @@ public class CharacController : MonoBehaviour
 
     void FixedUpdate()
     {
-		if (_modeMulti == false || _networkView.isMine)
+		if (LevelStart.modeMulti == false || _networkView.isMine)
 		{
 			_direction = Vector3.zero;
 			if (Input.GetKey("z"))

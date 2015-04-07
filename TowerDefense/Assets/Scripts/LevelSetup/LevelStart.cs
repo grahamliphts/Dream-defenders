@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LevelStart : MonoBehaviour 
 {
 	public static LevelStart instance = null;
+	public static bool modeMulti;
     public GameObject netPlayer;
 	public GameObject playerSolo;
 	public SpellPoolManager spellPool;
@@ -25,10 +26,14 @@ public class LevelStart : MonoBehaviour
         Debug.Log("Level was loaded");
 		GameObject player;
 		if (network)
+		{
 			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 1) as GameObject;
+			modeMulti = true;
+		}
 		else
 		{
 			player = Instantiate(playerSolo, _spawnPosition.position, Quaternion.identity) as GameObject;
+			modeMulti = false;
 		}
 
 		player.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
@@ -51,9 +56,6 @@ public class LevelStart : MonoBehaviour
 		/*Enemies Set*/
 		GetComponent<EnnemyManager>().players.Add(player.transform);
 
-		/*Pool Set*/
-		firePoint.GetComponent<SpellController>().SetSpellPoolManager(spellPool);
-		Debug.Log(spellPool);
 		/*Life Set*/
 		LifeBarManager lifeBarManager = lifeBar.GetComponent<LifeBarManager>();
 		lifeBarManager.Player = player;

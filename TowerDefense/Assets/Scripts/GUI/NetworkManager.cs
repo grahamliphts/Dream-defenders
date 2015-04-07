@@ -23,11 +23,13 @@ public class NetworkManager : MonoBehaviour
     private HostData _hostConnected;
     private uint _playerCount;
     private int _nbPlayersMax;
+	public MenuManager _menuManager;
 
     void Start()
     {
         _players = new List<NetworkPlayer>();
         _playerCount = 1;
+		_menuManager = canvas.GetComponent<MenuManager>();
     }
 
 	void Awake()
@@ -41,27 +43,31 @@ public class NetworkManager : MonoBehaviour
 
     public void ShutDownServer()
     {
-        MasterServer.UnregisterHost();
+		Debug.Log("Unregister");
+		if (Network.isServer)
+		{
+			Network.Disconnect();
+			MasterServer.UnregisterHost();
+		}
     }
 
 	public void StartServer () 
 	{
-        if (serverName.text != "" && nbPlayersInput.text != "")
+        if (serverName.text != "" && nbPlayersInput.text != "" && int.Parse(nbPlayersInput.text) != 0)
         {
-            Network.InitializeServer(int.Parse(nbPlayersInput.text) - 1, _listenPort, !Network.HavePublicAddress());
+			_nbPlayersMax = int.Parse(nbPlayersInput.text) - 1;
+			Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
             MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
-            _nbPlayersMax = int.Parse(nbPlayersInput.text);
+			_menuManager.ShowMenu(LobbyMenu);
         }
 	}
 
-    public void RefreshPlayersName()
+    public void RefreshPlayersCount()
     {
         if(Network.isServer)
         {
             Debug.Log("Server:" + _playerCount);
             nbPlayersConnected.text = _playerCount + "/" + _nbPlayersMax;
-            
-
         }
         else if(Network.isClient)
         {
@@ -91,7 +97,7 @@ public class NetworkManager : MonoBehaviour
 
                 Button b_object;
                 b_object = Instantiate(modelButton) as Button;
-                b_object.transform.parent = serverList.transform;
+                b_object.transform.SetParent(serverList.transform);
                 rectTransform = b_object.GetComponent<RectTransform>();
                 rectTransform.anchorMax = new Vector2(anchorMaxX,  1.0f - 0.1f*(i + 1));
                 rectTransform.anchorMin = new Vector2(anchorMinX, 1.0f - 0.1f*(i + 2));

@@ -56,7 +56,7 @@ public class LoopManager : MonoBehaviour
         _actualWave = 0;
 		_lifeManager = lifeManager;
 		_spellController = spellController;
-		Debug.Log(_lifeManager);
+		//Debug.Log(_lifeManager);
 
         _timer = 0;
 	}

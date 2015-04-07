@@ -9,9 +9,7 @@ public class SpellPoolManager : MonoBehaviour
 
     public SpellScript GetSpell()
     {
-		
         var spell = _spells[_index];
-		Debug.Log(spell);
         _index++;
         if (_index >= _spells.Length)
             _index = 0;
