@@ -8,21 +8,17 @@ public class CharacController : MonoBehaviour
 
     private bool _wantToJump = false;
     private Rigidbody _rigidbody;
-    private Vector3 _eulerAngleVelocity = new Vector3(0, 140, 0);
 
     private NetworkView _networkView;
 	private Animator _animator;
 	private Vector3 _direction;
-	private bool _modeMulti;
 
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
 		if (GetComponent<NetworkView>() != null)
-		{
 			_networkView = GetComponent<NetworkView>();
-			_modeMulti = true;
-		}
+
         transform.tag = "player";
 
 		_animator = GetComponent<Animator>();
@@ -39,7 +35,7 @@ public class CharacController : MonoBehaviour
 
     void FixedUpdate()
     {
-		if (LevelStart.modeMulti == false || _networkView.isMine)
+		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
 		{
 			_direction = Vector3.zero;
 			if (Input.GetKey("z"))

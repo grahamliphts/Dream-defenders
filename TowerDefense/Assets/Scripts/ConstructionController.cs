@@ -4,10 +4,12 @@ using System.Collections;
 public class ConstructionController : MonoBehaviour
 {
     //public Object Item;
-    public TowerPoolManager TowerPoolManager;
+	private NetworkView _networkView;
+
     public int RangeTower = 6;
     private uint _hitCounter;
     private bool _construction = false;
+	private TowerController _towerController;
 
     void Update()
     {
@@ -20,28 +22,22 @@ public class ConstructionController : MonoBehaviour
 
           
             int layerMask = (1 << 8 | 1 << 9);
-            layerMask = ~layerMask;
+			layerMask = ~layerMask;
+
             if (Physics.Raycast(ray, out hitTower, 100, layerMask))
             {
                 transform.position = hitTower.point;
-                if (Input.GetMouseButtonDown(0) && _hitCounter == 0)
+				if (Input.GetMouseButtonDown(0) && _hitCounter == 0)
                 {
-                    var tower = TowerPoolManager.GetTower();
-					if(tower != null)
-					{
-						tower.gameObject.SetActive(true);
-						tower.newtransform.position = transform.position;
-
-						//add box collider for shoot range
-						tower.RangeCollider.enabled = true;
-						tower.RangeCollider.isTrigger = true;
-						//add box collider to tower
-						tower.OwnCollider.enabled = true;
-					}
-                }
-            }
-        }
+					if (LevelStart.instance.modeMulti == false)
+						_towerController.PlaceTower();
+					else
+						_networkView.RPC("SyncTowerPosition", RPCMode.All);
+				}
+			}
+		}
     }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -72,6 +68,16 @@ public class ConstructionController : MonoBehaviour
         foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
             it.color = Color.green;
     }
+
+	public void SetNetworkView(NetworkView networkView)
+	{
+		_networkView = networkView;
+	}
+
+	public void SetTowerController(TowerController towerController)
+	{
+		_towerController = towerController;
+	}
 
     public void SetConstruction(bool contruction)
     {

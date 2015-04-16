@@ -19,14 +19,13 @@ public class SpellController : MonoBehaviour
     {
 		if (LoopManager.modeConstruction == false)
 		{
-			if (Input.GetMouseButtonDown(0) && (LevelStart.modeMulti == false || _networkView.isMine))
+			if (Input.GetMouseButtonDown(0) && (LevelStart.instance.modeMulti == false || _networkView.isMine))
 			{
-				if (LevelStart.modeMulti == false)
+				if (LevelStart.instance.modeMulti == false)
 					TryToShoot();
 				else
 					_networkView.RPC("SyncShoot", RPCMode.All);
 			}
-				
 		}
     }
 
@@ -36,6 +35,7 @@ public class SpellController : MonoBehaviour
 	{
 		TryToShoot();
 	}
+
     void TryToShoot()
     {
 		var spell = _spellPoolManager.GetSpell();
@@ -52,8 +52,4 @@ public class SpellController : MonoBehaviour
 		spell.newtransform.LookAt(mousePos);
 		spell.newrigidbody.AddForce(spell.newtransform.forward * 1500);*/
     }
-	public void SetSpellPoolManager(SpellPoolManager spellPool)
-	{
-		_spellPoolManager = spellPool;
-	}
 }

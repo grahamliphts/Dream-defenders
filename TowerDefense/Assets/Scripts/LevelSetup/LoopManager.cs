@@ -34,14 +34,13 @@ public class LoopManager : MonoBehaviour
 
     private PlayerLifeManager _lifeManager;
     private float _timer;
-	private SpellController _spellController;
 
 	void Start()
 	{
 		_startTime = Time.time;
 		_ennemyManager = GetComponent<EnnemyManager>();
 	}
-	public void Init(SpellController spellController, PlayerLifeManager lifeManager) 
+	public void Init(PlayerLifeManager lifeManager) 
     {
         /*Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;*/
@@ -55,7 +54,6 @@ public class LoopManager : MonoBehaviour
         
         _actualWave = 0;
 		_lifeManager = lifeManager;
-		_spellController = spellController;
 		//Debug.Log(_lifeManager);
 
         _timer = 0;
