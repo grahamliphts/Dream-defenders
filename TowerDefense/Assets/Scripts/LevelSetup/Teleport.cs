@@ -10,17 +10,28 @@ public class Teleport : MonoBehaviour
 
     public GameObject _tpPoint;
 
+	private static int _nbFloor;
+
+	void Start()
+	{
+		_nbFloor = 0;
+	}
 	void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "ennemy")
+        if (other.tag == "player")
         {
-            if (nextPoint != null)
-                other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
-
+			if (nextPoint != null)
+			{
+				other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
+				_nbFloor++;
+			}
             if (prevPoint != null)
-                other.transform.position = prevPoint.transform.position + prevPoint.transform.forward * 3;
+			{
+				other.transform.position = prevPoint.transform.position + prevPoint.transform.forward * 3;
+				_nbFloor--;
+			}
         }
-        else
+        else if(other.tag == "ennemy")
         {
             NavMeshAgent agent;
             agent = other.transform.GetComponent<NavMeshAgent>();
@@ -43,4 +54,9 @@ public class Teleport : MonoBehaviour
     {
         return transform.gameObject;
     }
+
+	public int GetNbFloor()
+	{
+		return _nbFloor;
+	}
 }

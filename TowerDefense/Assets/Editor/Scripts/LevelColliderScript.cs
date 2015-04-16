@@ -29,8 +29,10 @@ public class LevelColliderScript : MonoBehaviour
 				Debug.Log(child.gameObject.name);
 				child.gameObject.AddComponent<BoxCollider>();
 				if (child.gameObject.name.StartsWith("Point") || child.gameObject.name.StartsWith("spawnEnemy") || child.gameObject.name.StartsWith("nexus") || child.gameObject.name.StartsWith("tpPoint"))
+				{
 					manager.point_list.Add(child.gameObject);
-
+					child.gameObject.tag = "tp";
+				}
 				if (child.gameObject.GetComponent<Renderer>() != null)
 				{
 					//Debug.Log(child.gameObject.name);
