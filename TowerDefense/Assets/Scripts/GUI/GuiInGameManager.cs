@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GuiInGameManager : MonoBehaviour 
 {
@@ -7,11 +8,20 @@ public class GuiInGameManager : MonoBehaviour
     private TowerConstructionScript _target;
     private TowerConstructionScript _newTarget;
 
+	public Shadow action1;
+	public Shadow action2;
+	public Shadow action3;
+	public Shadow action4;
+
+	private Shadow _shadowTarget;
+
 	void Start () 
     {
         _target = ModelTowerPoolManager.GetFireTower();
         _target.gameObject.SetActive(true);
         _target.ConstructionController.enabled = true;
+
+		_shadowTarget = action1;
 	}
 	
 	void Update () 
@@ -29,6 +39,8 @@ public class GuiInGameManager : MonoBehaviour
 			}
 			if (Input.GetKey("2"))
 			{
+
+				action2.effectColor = Color.yellow;
 				if (_target != ModelTowerPoolManager.GetElectricTower())
 				{
 					_newTarget = ModelTowerPoolManager.GetElectricTower();
@@ -37,16 +49,33 @@ public class GuiInGameManager : MonoBehaviour
 				}
 			}
 		}
-        
-       /* if (Input.GetKey("3"))
+
+		if (Input.GetKey("1"))
+		{
+			SetColor(_shadowTarget, action1);
+		}
+		if (Input.GetKey("2"))
+		{
+			SetColor(_shadowTarget, action2);
+		}
+
+       else if (Input.GetKey("3"))
         {
-            if (_target != ModelTowerPoolManager.GetElectricTower())
-            {
-                _newTarget = ModelTowerPoolManager.GetElectricTower();
-                SetTower(_target, _newTarget);
-                _target = _newTarget;
-            }
-        }*/
+			SetColor(_shadowTarget, action3);
+        }
+
+	   else if (Input.GetKey("4"))
+		{
+			SetColor(_shadowTarget, action4);
+		}
+	}
+
+	void SetColor(Shadow previous, Shadow current)
+	{
+		previous.effectColor = Color.black;
+		current.effectColor = Color.yellow;
+
+		_shadowTarget = current;
 	}
 
     void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)

@@ -4,8 +4,8 @@ using System.Collections;
 public class SpellController : MonoBehaviour 
 {
     public Transform SpawnPoint;
-    public SpellPoolManager _spellPoolManager;
-
+    private SpellPoolManager []_spellPoolManager;
+	private SpellPoolManager _currentSpellPool;
 	private NetworkView _networkView;
 	private Transform _firePoint;
 
@@ -14,6 +14,7 @@ public class SpellController : MonoBehaviour
 		_networkView = GetComponent<NetworkView>();
 		_firePoint = transform.GetChild(2);
 		_spellPoolManager = LevelStart.instance.spellPool;
+		_currentSpellPool = LevelStart.instance.currentSpellPool;
 	}
     void Update()
     {
@@ -26,6 +27,15 @@ public class SpellController : MonoBehaviour
 				else
 					_networkView.RPC("SyncShoot", RPCMode.All);
 			}
+
+			if (Input.GetKey("1"))
+				_currentSpellPool = _spellPoolManager[0];
+			else if (Input.GetKey("2"))
+				_currentSpellPool = _spellPoolManager[1];
+			else if (Input.GetKey("3"))
+				_currentSpellPool = _spellPoolManager[2];
+			else if (Input.GetKey("4"))
+				_currentSpellPool = _spellPoolManager[3];
 		}
     }
 
@@ -38,12 +48,11 @@ public class SpellController : MonoBehaviour
 
     void TryToShoot()
     {
-		var spell = _spellPoolManager.GetSpell();
+		var spell = _currentSpellPool.GetSpell();
         spell.gameObject.SetActive(true);
         spell.newtransform.position = _firePoint.position;
-
-		//-transform.forward cause player is inverted
         spell.newrigidbody.AddForce(_firePoint.forward * 1500);
+
 		/* Script Mouse Spell
 		Vector3 mousePos;
 		mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);

@@ -8,7 +8,9 @@ public class LevelStart : MonoBehaviour
 	public bool modeMulti;
     public GameObject netPlayer;
 	public GameObject playerSolo;
-	public SpellPoolManager spellPool;
+	public SpellPoolManager[] spellPool;
+	public SpellPoolManager currentSpellPool;
+
 	public GameObject lifeBar;
 	public ConstructionController constructionController;
 	public TowerPoolManager towerPoolManager;
@@ -21,6 +23,7 @@ public class LevelStart : MonoBehaviour
 	void Start()
 	{
 		instance = this;
+		currentSpellPool = spellPool[0];
 	}
 
     public void OnLoadedLevel(bool network)
