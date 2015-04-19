@@ -13,7 +13,10 @@ public class LevelStart : MonoBehaviour
 
 	public GameObject lifeBar;
 	public ConstructionController constructionController;
-	public TowerPoolManager towerPoolManager;
+	public TowerPoolManager[] towerPool;
+	public TowerPoolManager currentTowerPool;
+
+	public ModelTowerPoolManager modelTowerManager;
 
 	[SerializeField]
 	private Transform _spawnPosition;
@@ -24,22 +27,20 @@ public class LevelStart : MonoBehaviour
 	{
 		instance = this;
 		currentSpellPool = spellPool[0];
+		currentTowerPool = towerPool[0];
 	}
 
     public void OnLoadedLevel(bool network)
     {
-        Debug.Log("Level was loaded");
 		GameObject player;
 		if (network)
 		{
 			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 1) as GameObject;
-			constructionController.SetNetworkView(player.GetComponent<NetworkView>());
 			modeMulti = true;
 		}
 		else
 		{
 			player = Instantiate(playerSolo, _spawnPosition.position, Quaternion.identity) as GameObject;
-			constructionController.SetTowerController(player.GetComponent<TowerController>());
 			modeMulti = false;
 		}
 
@@ -56,10 +57,6 @@ public class LevelStart : MonoBehaviour
 		if(targetCamera != null)
 			Camera.main.gameObject.GetComponent<CameraController>().target = targetCamera;
 		Camera.main.gameObject.GetComponent<CameraController>().SetPlayer(player);
-
-		//player.GetComponent<TowerController>().SetTowerPoolManager(towerPoolManager);
-		player.GetComponent<TowerController>().SetConstructionController(constructionController);
-		
 
 		/*Enemies Set*/
 		GetComponent<EnnemyManager>().players.Add(player.transform);

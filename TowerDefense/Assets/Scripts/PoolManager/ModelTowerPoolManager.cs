@@ -26,18 +26,18 @@ public class ModelTowerPoolManager : MonoBehaviour
             {
                 if (_modelTowers[i].ConstructionController.GetConstruction() == true)
                 {
-                    _modelTowers[i].ConstructionController.SetConstruction(false);
-                    _modelTowers[i].Transform.position = new Vector3(1000, 1000, 1000);
+                    _modelTowers[i].constructionController.SetConstruction(false);
+                    _modelTowers[i].newtransform.position = new Vector3(1000, 1000, 1000);
                     _modelTowers[i].gameObject.SetActive(false);
                 }
             }
         }
         else
         {
-            _modelTowers[0].ConstructionController.Reset();
+			_modelTowers[0].constructionController.Reset();
             _modelTowers[0].gameObject.SetActive(true);
-            _modelTowers[0].ConstructionController.enabled = true;
-            _modelTowers[0].ConstructionController.SetConstruction(true);
+			_modelTowers[0].constructionController.enabled = true;
+			_modelTowers[0].constructionController.SetConstruction(true);
         }
             
     }

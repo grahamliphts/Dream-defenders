@@ -71,8 +71,7 @@ public class LoopManager : MonoBehaviour
             TimeInfo.text = ((int)(Time.time - _startTime) % 60).ToString();
 			if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
             {
-                ModelTower.SetConstruction(false);
-				GuiManager.SetConstructionController(false);
+				ModelTower.SetConstruction(false);
 				modeConstruction = false;
 				int wave = _actualWave + 1;
                 GameInfo.text = "Wave " + wave;
@@ -84,8 +83,7 @@ public class LoopManager : MonoBehaviour
 				_ennemyManager.AddEnemies(_ennemyAddedByWave);
 				
                 GameInfo.text = "Poser des Tours";
-                ModelTower.SetConstruction(true);
-				GuiManager.SetConstructionController(true);
+				ModelTower.SetConstruction(true);
 				modeConstruction = true;
                 _startTime = Time.time;
             }

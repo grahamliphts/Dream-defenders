@@ -34,6 +34,5 @@ public class SpellScript : MonoBehaviour
         transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         transform.transform.position = new Vector3(0, 0, 0);
         transform.gameObject.SetActive(false);
-		Debug.Log("set active false");
     }
 }

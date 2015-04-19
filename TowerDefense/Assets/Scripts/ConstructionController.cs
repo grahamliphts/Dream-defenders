@@ -3,37 +3,25 @@ using System.Collections;
 
 public class ConstructionController : MonoBehaviour
 {
-    //public Object Item;
-	private NetworkView _networkView;
-
     public int RangeTower = 6;
     private uint _hitCounter;
-    private bool _construction = false;
-	private TowerController _towerController;
+	private bool _construction;
 
     void Update()
     {
-        if (_construction == true)
+        if (_construction == true && LoopManager.modeConstruction)
         {
             Vector3 pos = new Vector3(Screen.width/2.0f, Screen.height/2.0f, 0.0f);
             Ray ray = Camera.main.ScreenPointToRay(pos);
             RaycastHit hitTower;
             transform.position = new Vector3(1000, 1000, 1000);
 
-          
             int layerMask = (1 << 8 | 1 << 9);
 			layerMask = ~layerMask;
 
             if (Physics.Raycast(ray, out hitTower, 100, layerMask))
             {
                 transform.position = hitTower.point;
-				if (Input.GetMouseButtonDown(0) && _hitCounter == 0)
-                {
-					if (LevelStart.instance.modeMulti == false)
-						_towerController.PlaceTower();
-					else
-						_networkView.RPC("SyncTowerPosition", RPCMode.All);
-				}
 			}
 		}
     }
@@ -69,23 +57,18 @@ public class ConstructionController : MonoBehaviour
             it.color = Color.green;
     }
 
-	public void SetNetworkView(NetworkView networkView)
+	public bool GetConstruction()
 	{
-		_networkView = networkView;
+		return _construction;
 	}
 
-	public void SetTowerController(TowerController towerController)
+	public void SetConstruction(bool construction)
 	{
-		_towerController = towerController;
+		_construction = construction;
 	}
 
-    public void SetConstruction(bool contruction)
-    {
-        _construction = contruction;
-    }
-
-    public bool GetConstruction()
-    {
-        return _construction;
-    }
+	public uint GetHitCounter()
+	{
+		return _hitCounter;
+	}
 }
