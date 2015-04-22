@@ -4,6 +4,7 @@
 		_Height("Healthbar Height", Float) = 1
 		_MaxHP("Healthbar MaxHP", Float) = 10
 		_HP("HealthBar HP", Float) = 5
+		_Color("HealthBat Color", Color) = (0,1,0,1)
 	}
     SubShader {
         Pass {
@@ -18,6 +19,7 @@
 			float _Height;
 			float _MaxHP;
 			float _HP;
+			float4 _Color;
 
             struct v2f {
                 float4 pos : SV_POSITION;
@@ -29,7 +31,7 @@
                 v2f o;
 				float4 worldv = mul(UNITY_MATRIX_MVP, float4(0,0,0,1));
 				o.pos = worldv + float4(v.vertex.x * _Width * (_HP/_MaxHP), v.vertex.y * _Height, v.vertex.z, v.vertex.w);
-                o.color = float4(0,1,0,1);
+                o.color = _Color;
                 return o;
             }
 
