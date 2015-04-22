@@ -99,10 +99,8 @@ public class LoopManager : MonoBehaviour
             GameInfo.text = "You died";
             _lose = true;
             _timer += Time.deltaTime;
-            Debug.Log("Timer" + _timer);
             if (_timer >= 3)
             {
-                Debug.Log("Timer = 4");
                 Application.LoadLevel("MenuScene");
             }
         }

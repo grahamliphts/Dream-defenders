@@ -27,14 +27,13 @@ public class TowerController : MonoBehaviour
 
 	void Update()
 	{
-		Debug.Log(LoopManager.modeConstruction);
 		if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction
 			&& (LevelStart.instance.modeMulti == false || _networkView.isMine))
 		{
 			if (LevelStart.instance.modeMulti == false)
-				PlaceTower();
+				PlaceTower(_constructionController.transform.position);
 			else
-				_networkView.RPC("SyncTowerPosition", RPCMode.All);
+				_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position);
 		}
 
 		if (Input.GetKey("1"))
@@ -64,22 +63,17 @@ public class TowerController : MonoBehaviour
 	}
 
 	[RPC]
-	void SyncTowerPosition()
+	void SyncTowerPosition(Vector3 position)
 	{
-		Debug.Log("Sync tower position");
-		PlaceTower();
+		PlaceTower(position);
 	}
 
-	public void PlaceTower()
+	public void PlaceTower(Vector3 position)
 	{
-		Vector3 position = Vector3.zero;
-
 		var tower = _currentTowerPool.GetTower();
 		if (tower != null)
 		{
 			tower.gameObject.SetActive(true);
-			position= _constructionController.transform.position;
-			Debug.Log(position);
 			tower.newtransform.position = position;
 			//add box collider for shoot range
 			tower.RangeCollider.enabled = true;
