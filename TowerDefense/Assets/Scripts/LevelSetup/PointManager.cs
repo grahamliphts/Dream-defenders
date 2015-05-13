@@ -22,10 +22,6 @@ public class PointManager : MonoBehaviour
                 point_list[i].gameObject.tag = "tp";
 				_teleport = point_list[i].GetComponent<Teleport>();
 
-				
-				if(TpParticle != null)
-					GameObject.Instantiate(TpParticle, point_list[i].transform.position, Quaternion.identity);
-
                 if(i%2 == 0)
 					_teleport.GetGameObject().transform.Rotate(0, 180, 0, Space.World);
 

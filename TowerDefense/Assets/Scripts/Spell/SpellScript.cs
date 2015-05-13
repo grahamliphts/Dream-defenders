@@ -31,8 +31,15 @@ public class SpellScript : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        transform.transform.position = new Vector3(0, 0, 0);
-        transform.gameObject.SetActive(false);
+		transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+		transform.localPosition = new Vector3(0, 0, 0);
+		StartCoroutine("Disable");
+       
     }
+
+	IEnumerator Disable()
+	{
+		yield return new WaitForSeconds(GetComponent<ParticleSystem>().duration);
+		transform.gameObject.SetActive(false);
+	}
 }

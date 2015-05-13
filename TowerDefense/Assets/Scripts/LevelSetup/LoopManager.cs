@@ -40,10 +40,13 @@ public class LoopManager : MonoBehaviour
 		_startTime = Time.time;
 		_ennemyManager = GetComponent<EnnemyManager>();
 	}
+
 	public void Init(PlayerLifeManager lifeManager) 
     {
-        /*Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;*/
+		/*Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;*/
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         GameInfo.text = "Poser des Tours";
         ModelTower.SetConstruction(true);
@@ -80,8 +83,11 @@ public class LoopManager : MonoBehaviour
 			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
             {
                 _actualWave++;
-				_ennemyManager.AddEnemies(_ennemyAddedByWave);
-				
+				_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
+				_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
+				_ennemyManager.AddEnemiesIce(_ennemyAddedByWave);
+				_ennemyManager.AddEnemiesPoison(_ennemyAddedByWave);
+
                 GameInfo.text = "Poser des Tours";
 				ModelTower.SetConstruction(true);
 				modeConstruction = true;

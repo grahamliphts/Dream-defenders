@@ -12,6 +12,11 @@ public class GuiManager : MonoBehaviour
 		StartCoroutine("LoadLevel");
     }
 
+	public void QuitGame()
+	{
+		Application.Quit();
+	}
+
 	IEnumerator LoadLevel()
 	{
 		Application.LoadLevel("MainScene");
