@@ -41,7 +41,6 @@ public class SpellController : MonoBehaviour
 				else if (Input.GetKey("4"))
 					_type = 3;
 
-				Debug.Log(_currentSpellPool);
 			}
 			
 		}
@@ -62,9 +61,9 @@ public class SpellController : MonoBehaviour
         spell.newtransform.position = _firePoint.position;
         spell.newrigidbody.AddForce(_firePoint.forward * 1500);
 
-		/* Script Mouse Spell
-		Vector3 mousePos;
-		mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+		// Script Mouse Spell
+		/*Vector3 mousePos;
+		mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 20);
 		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
 		spell.newtransform.LookAt(mousePos);
