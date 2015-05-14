@@ -29,67 +29,81 @@ public class IAEnemy : MonoBehaviour
     public float backrange;
     private bool _bShoot;
 
+	private NetworkView _networkView;
+	private float _range;
+
 	void Start()
     {
         _bShoot = false;
         _recharging = false;
 		//Debug.Log(_agent.destination);
+		_networkView = GetComponent<NetworkView>();
     }
 
 	void Update()
     {
-        if(_agent == null)
-            return;
-        // Calculate the distance between the follower and the leader.
-        float range = Vector3.Distance(transform.position, _leader[0].position);
-        if (range < backrange)
-        {
-            _agent.Stop();
-            transform.LookAt(_leader[0]);
-            _bShoot = true;
-            transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
-        }
-        else if (range < minRange)
-        {
-            _agent.Stop();
-            _bShoot = true;
-            transform.LookAt(_leader[0]);
-        }
-        else if (range <= chaseRange)
-        {
-            _agent.Stop();
-            _bShoot = false;
-            transform.LookAt(_leader[0]);
-            transform.Translate(_speed * Vector3.forward * Time.deltaTime);
-        }
-        else
-        {
-            _bShoot = false;
-            _agent.Resume();
-        }
+		/*if (!LevelStart.instance.modeMulti || Network.isServer)
+		{*/
 
-        if (_bShoot)
-        {
+		/*Debug.Log(_networkView);
+		Debug.Log(_networkView.isMine);*/
+		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
+		{
+			if (_agent == null)
+				return;
+			// Calculate the distance between the follower and the leader.
+			//Debug.Log("set range");
+			//_range = 0.0f;
+			_range = Vector3.Distance(transform.position, _leader[0].position);
+			/*Debug.Log("Position Leader:" + _leader[0].position);
+			Debug.Log("Destination:" + _agent.destination);*/
+		}
+			if (_range < backrange)
+			{
+				Debug.Log("_range < backrange");
+				transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
+			}
+				
+			else if (_range < minRange)
+			{
+				Debug.Log("_range < minRange");
+				_bShoot = true;
+				transform.LookAt(_leader[0]);
+			}
 
-            if (!_recharging)
-            {
-                TryToShoot();
-                _recharging = true;
-                _shootTimer = _shootDelay;
-            }
-            else
-            {
-                _shootTimer -= Time.deltaTime;
-                if (_shootTimer <= 0.0f)
-                    _recharging = false;
-            }
-        }
-        else
-        {
-            _bShoot = false;
-         
-        }
-    } 
+			else if (_range <= chaseRange)
+			{
+				Debug.Log("_range <= chaseRange)");
+				_agent.Stop();
+				_bShoot = false;
+				transform.LookAt(_leader[0]);
+				transform.Translate(_speed * Vector3.forward * Time.deltaTime);
+			}
+			else
+			{
+				Debug.Log("else");
+				_bShoot = false;
+				_agent.Resume();
+			}
+
+			if (_bShoot)
+			{
+
+				if (!_recharging)
+				{
+					TryToShoot();
+					_recharging = true;
+					_shootTimer = _shootDelay;
+				}
+				else
+				{
+					_shootTimer -= Time.deltaTime;
+					if (_shootTimer <= 0.0f)
+						_recharging = false;
+				}
+			}
+		//}
+	} 
 
     public void SetAgent(NavMeshAgent agent)
     {
@@ -114,5 +128,23 @@ public class IAEnemy : MonoBehaviour
 		//ps.newrigidbody.velocity = new Vector3(0, 0, 0);
         ps.newrigidbody.AddForce((_leader[0].position - transform.position).normalized * _projectileSpeed);
     }
+
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		float rangeEnemy = 0;
+		if (stream.isWriting)
+		{
+			rangeEnemy = _range;
+			Debug.Log("range send:" + rangeEnemy);
+			stream.Serialize(ref rangeEnemy);
+		}
+
+		else
+		{
+			stream.Serialize(ref rangeEnemy);
+			_range = rangeEnemy;
+			Debug.Log("range get:" + _range);
+		}
+	}
 }
 

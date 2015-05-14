@@ -27,7 +27,7 @@ public class Options : MonoBehaviour
 				() => SetResolutionIndex(index)
 			);
 
-			button.transform.parent = resoPanel;
+			button.transform.SetParent(resoPanel);
 			button.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 		}
 
@@ -42,7 +42,7 @@ public class Options : MonoBehaviour
 				() => SetQualityIndex(index)
 			);
 
-			button.transform.parent = qualPanel;
+			button.transform.SetParent(qualPanel);
 			button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 		}
 	}

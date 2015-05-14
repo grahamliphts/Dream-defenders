@@ -34,7 +34,10 @@ public class SpellScript : MonoBehaviour
 		Debug.Log(col.gameObject.name);
 		transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 		transform.localPosition = new Vector3(0, 0, 0);
-		//StartCoroutine("Disable");
+		if (GetComponent<ParticleSystem>() != null)
+			StartCoroutine("Disable");
+		else
+			transform.gameObject.SetActive(false);
        
     }
 

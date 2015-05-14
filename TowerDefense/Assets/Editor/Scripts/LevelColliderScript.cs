@@ -23,10 +23,11 @@ public class LevelColliderScript : EditorWindow
 		nameLevel = EditorGUILayout.TextField("Name of Level", nameLevel);
 		tpPrefab = EditorGUILayout.ObjectField("Prefab Tp", tpPrefab, typeof(Object), true);
 		sablierPrefab = EditorGUILayout.ObjectField("Prefab Nexus", sablierPrefab, typeof(Object), true);
-
-		if (GUI.Button(new Rect(10, 70, 50, 30), "OK"))
-			Init(sablierPrefab, tpPrefab, nameLevel);
 		EditorGUILayout.EndVertical();
+
+		if (GUILayout.Button("OK"))
+			Init(sablierPrefab, tpPrefab, nameLevel);
+		
     }
 
     static void Init(Object sablierPrefab, Object tpPrefab, string nameLevel)
@@ -95,7 +96,10 @@ public class LevelColliderScript : EditorWindow
 					manager.point_list[i].name = "nexus";
 					Debug.Log(sablierPrefab);
 					GameObject sablier = PrefabUtility.InstantiatePrefab(sablierPrefab) as GameObject;
-					sablier.transform.position = manager.point_list[i].transform.position;
+
+					Vector3 sablierPosition = manager.point_list[i].transform.position;
+					sablierPosition.y -= 1;
+					sablier.transform.position = sablierPosition; 
 				}
 					
 				else
