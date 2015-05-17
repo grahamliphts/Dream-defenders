@@ -60,6 +60,7 @@ public class EnnemyManager : MonoBehaviour
 		iaEnnemy.SetAgent(enemy.Agent);
 		enemy.Transform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);
+		iaEnnemy.SetArrivalP(ArrivalP);
 		enemy.Agent.SetDestination(ArrivalP.position);
 	}
 

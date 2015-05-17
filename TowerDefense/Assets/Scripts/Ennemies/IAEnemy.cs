@@ -22,6 +22,7 @@ public class IAEnemy : MonoBehaviour
     [SerializeField]
 	private float _speed = 4f;
     private float _backSpeed = -6f;
+	private float _rangeNexus;
 
 	// This is the range at which to pursue
 	public float chaseRange;
@@ -31,6 +32,7 @@ public class IAEnemy : MonoBehaviour
 
 	private NetworkView _networkView;
 	private float _range;
+	private Vector3 _posToShoot;
 
 	void Start()
     {
@@ -47,61 +49,52 @@ public class IAEnemy : MonoBehaviour
 
 		/*Debug.Log(_networkView);
 		Debug.Log(_networkView.isMine);*/
+		
 		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
 		{
 			if (_agent == null)
 				return;
-			// Calculate the distance between the follower and the leader.
-			//Debug.Log("set range");
-			//_range = 0.0f;
+			_rangeNexus = Vector3.Distance(transform.position, ArrivalP.position);
 			_range = Vector3.Distance(transform.position, _leader[0].position);
-			/*Debug.Log("Position Leader:" + _leader[0].position);
-			Debug.Log("Destination:" + _agent.destination);*/
+			//Debug.Log("Position Leader:" + _leader[0].position);
+			Debug.Log("Destination:" + ArrivalP.position);
 		}
-			if (_range < backrange)
-			{
-				Debug.Log("_range < backrange");
-				transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
-			}
-				
-			else if (_range < minRange)
-			{
-				Debug.Log("_range < minRange");
-				_bShoot = true;
-				transform.LookAt(_leader[0]);
-			}
 
-			else if (_range <= chaseRange)
-			{
-				Debug.Log("_range <= chaseRange)");
-				_agent.Stop();
-				_bShoot = false;
-				transform.LookAt(_leader[0]);
-				transform.Translate(_speed * Vector3.forward * Time.deltaTime);
-			}
-			else
-			{
-				Debug.Log("else");
-				_bShoot = false;
-				_agent.Resume();
-			}
 
-			if (_bShoot)
-			{
+		if (_range < backrange)
+			transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
+		else if (_range < minRange)
+		{
+			Debug.Log("_range < minRange");
+			_posToShoot = _leader[0].position;
+			_bShoot = true;
+			transform.LookAt(_leader[0]);
+		}
 
-				if (!_recharging)
-				{
-					TryToShoot();
-					_recharging = true;
-					_shootTimer = _shootDelay;
-				}
-				else
-				{
-					_shootTimer -= Time.deltaTime;
-					if (_shootTimer <= 0.0f)
-						_recharging = false;
-				}
-			}
+		else if (_range <= chaseRange)
+		{
+			Debug.Log("_range <= chaseRange)");
+			_agent.Stop();
+			_bShoot = false;
+			transform.LookAt(_leader[0]);
+			transform.Translate(_speed * Vector3.forward * Time.deltaTime);
+		}
+		else
+		{
+			Debug.Log("else");
+			_bShoot = false;
+			_agent.Resume();
+		}
+
+		if(_rangeNexus < minRange)
+		{
+			Debug.Log("_rangeNexus");
+			_agent.Stop();
+			_posToShoot = ArrivalP.position;
+			_bShoot = true;
+		}
+		Shooting();
+			
 		//}
 	} 
 
@@ -120,13 +113,32 @@ public class IAEnemy : MonoBehaviour
         _leader.Add(leader);
     }
 
+	void Shooting()
+	{
+		if (_bShoot)
+		{
+			if (!_recharging)
+			{
+				TryToShoot();
+				_recharging = true;
+				_shootTimer = _shootDelay;
+			}
+			else
+			{
+				_shootTimer -= Time.deltaTime;
+				if (_shootTimer <= 0.0f)
+					_recharging = false;
+			}
+		}
+	}
+
     void TryToShoot()
     {
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);
         ps.newtransform.position = SpawnPoint.position;
 		//ps.newrigidbody.velocity = new Vector3(0, 0, 0);
-        ps.newrigidbody.AddForce((_leader[0].position - transform.position).normalized * _projectileSpeed);
+		ps.newrigidbody.AddForce((_posToShoot - transform.position).normalized * _projectileSpeed);
     }
 
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
