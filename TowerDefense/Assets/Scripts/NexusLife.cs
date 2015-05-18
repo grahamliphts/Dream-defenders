@@ -22,7 +22,7 @@ public class NexusLife : MonoBehaviour {
 		Debug.Log(_life);
 	}
 
-	public float GetLifeNexus()
+	public float GetLife()
 	{
 		return _life;
 	}

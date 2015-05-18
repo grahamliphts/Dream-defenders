@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TowerController : MonoBehaviour 
 {
+	enum Type {Fire, Elec, Poison, Ice};
 	private TowerPoolManager []_towerPool;
 	private TowerPoolManager _currentTowerPool;
 	private ConstructionController _constructionController;
@@ -19,7 +20,7 @@ public class TowerController : MonoBehaviour
 		_currentTowerPool = LevelStart.instance.currentTowerPool;
 		_modelTowerManager = LevelStart.instance.modelTowerManager;
 
-		_target = _modelTowerManager.GetFireTower();
+		_target = _modelTowerManager.GetTower((int)Type.Fire);
 		_target.gameObject.SetActive(true);
 		_target.constructionController.enabled = true;
 
@@ -37,29 +38,26 @@ public class TowerController : MonoBehaviour
 		}
 
 		if (Input.GetKey("1"))
-		{
-			_currentTowerPool = _towerPool[0];
-			if (_target != _modelTowerManager.GetFireTower())
-			{
-				_newTarget = _modelTowerManager.GetFireTower();
-				SetTower(_target, _newTarget);
-				_target = _newTarget;
-				
-			}
-		}
-		
-		else if (Input.GetKey("2"))
-		{
-			_currentTowerPool = _towerPool[1];
-			if (_target != _modelTowerManager.GetElectricTower())
-			{
-				_newTarget = _modelTowerManager.GetElectricTower();
-				SetTower(_target, _newTarget);
-				_target = _newTarget;
-			}
-		}
+			ChangeTower(Type.Fire);
+		/*else if (Input.GetKey("2"))
+			ChangeTower(Type.Elec);*/
+		else if (Input.GetKey("3"))
+			ChangeTower(Type.Poison);
+		else if (Input.GetKey("4"))
+			ChangeTower(Type.Ice);
 
 		_constructionController = _target.constructionController;
+	}
+
+	void ChangeTower(Type type)
+	{
+		_currentTowerPool = _towerPool[(int)type];
+		if (_target != _modelTowerManager.GetTower((int)type))
+		{
+			_newTarget = _modelTowerManager.GetTower((int)type);
+			SetTower(_target, _newTarget);
+			_target = _newTarget;
+		}
 	}
 
 	[RPC]

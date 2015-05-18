@@ -31,8 +31,7 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
-            foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
-                it.color = Color.red;
+			SetColorChild(Color.red);
             _hitCounter++;
         }
     }
@@ -43,20 +42,22 @@ public class ConstructionController : MonoBehaviour
         {
              _hitCounter--;
              if (_hitCounter == 0)
-             {
-                 foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
-                     it.color = Color.green;
-             }
+				 SetColorChild(Color.green);
         }
     }
 
     public void Reset()
     {
         _hitCounter = 0;
-        foreach (var it in transform.gameObject.GetComponent<Renderer>().materials)
-            it.color = Color.green;
+		SetColorChild(Color.green);
+		
     }
 
+	public void SetColorChild(Color color)
+	{
+		for (int i = 0; i < transform.childCount; i++)
+			transform.GetChild(i).GetComponent<Renderer>().material.color = color;
+	}
 	public bool GetConstruction()
 	{
 		return _construction;

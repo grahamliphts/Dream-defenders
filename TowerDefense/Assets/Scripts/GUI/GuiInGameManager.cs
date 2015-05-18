@@ -11,6 +11,7 @@ public class GuiInGameManager : MonoBehaviour
 
 	private Shadow _shadowTarget;
 
+	private NexusLife nexusLife;
 	void Start () 
     {
 		_shadowTarget = action1;
@@ -19,23 +20,15 @@ public class GuiInGameManager : MonoBehaviour
 	void Update () 
     {
 		if (Input.GetKey("1"))
-		{
 			SetColor(_shadowTarget, action1);
-		}
-		if (Input.GetKey("2"))
-		{
+		else if (Input.GetKey("2"))
 			SetColor(_shadowTarget, action2);
-		}
-
-       else if (Input.GetKey("3"))
-        {
+		else if (Input.GetKey("3"))
 			SetColor(_shadowTarget, action3);
-        }
-
-	   else if (Input.GetKey("4"))
-		{
+		else if (Input.GetKey("4"))
 			SetColor(_shadowTarget, action4);
-		}
+
+		//int life = nexusLife.GetLifeNexus();
 	}
 
 	void SetColor(Shadow previous, Shadow current)

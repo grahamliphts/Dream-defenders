@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public class LoopManager : MonoBehaviour 
 {
+	public RawImage image;
+	public Text MajorInfo;
+	public Text Tuto;
+
     public ModelTowerPoolManager ModelTower;
-    public Text TimeInfo;
     public Text GameInfo;
     public Text ValueElectricTower;
     public Text ValueFireTower;
@@ -33,6 +36,8 @@ public class LoopManager : MonoBehaviour
     private bool _lose;
 
     private PlayerLifeManager _lifeManager;
+	[SerializeField]
+	private NexusLife _nexusLife;
     private float _timer;
 
 	void Start()
@@ -68,10 +73,9 @@ public class LoopManager : MonoBehaviour
 			return;
         if(_lose == false)
         {
-            ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
-            ValueFireTower.text = (_nbFireTower - FirePool.GetTowersNumber()).ToString();
+            //ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
+            //ValueFireTower.text = (_nbFireTower - FirePool.GetTowersNumber()).ToString();
 			
-            TimeInfo.text = ((int)(Time.time - _startTime) % 60).ToString();
 			if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
             {
 				ModelTower.SetConstruction(false);
@@ -101,14 +105,23 @@ public class LoopManager : MonoBehaviour
         }
 
         if (_lifeManager.GetLife() <= 0)
-        {
-            GameInfo.text = "You died";
-            _lose = true;
-            _timer += Time.deltaTime;
-            if (_timer >= 3)
-            {
-                Application.LoadLevel("MenuScene");
-            }
-        }
+			CloseParty("You died");
+		else if(_nexusLife.GetLife() <= 0)
+			CloseParty("Nexus has been destroyed");
     }
+
+	private void CloseParty(string text)
+	{
+		image.gameObject.SetActive(true);
+		MajorInfo.text = text;
+		GameInfo.text = "";
+		Tuto.text = "";
+
+		_lose = true;
+		_timer += Time.deltaTime;
+		if (_timer >= 3)
+		{
+			Application.LoadLevel("MenuScene");
+		}
+	}
 }

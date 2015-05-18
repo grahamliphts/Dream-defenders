@@ -6,21 +6,27 @@ public class LevelStart : MonoBehaviour
 {
 	public static LevelStart instance = null;
 	public bool modeMulti;
+
+	//Prefab player
     public GameObject netPlayer;
 	public GameObject playerSolo;
+
+	//Pools
 	public SpellPoolManager[] spellPool;
 	public SpellPoolManager currentSpellPool;
-
-	public GameObject lifeBar;
-	public ConstructionController constructionController;
 	public TowerPoolManager[] towerPool;
 	public TowerPoolManager currentTowerPool;
 
-	public ModelTowerPoolManager modelTowerManager;
+	public GameObject guiManager;
+	public Image LifeBar;
+	private LifeBarManager _lifeBarPlayer;
 
 	[SerializeField]
 	private Transform _spawnPosition;
 
+	//Variables utiles
+	public ModelTowerPoolManager modelTowerManager;
+	//Debug network
 	public bool network;
 
 	void Start()
@@ -28,6 +34,7 @@ public class LevelStart : MonoBehaviour
 		instance = this;
 		currentSpellPool = spellPool[0];
 		currentTowerPool = towerPool[0];
+		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
 	}
 
     public void OnLoadedLevel(bool network)
@@ -62,10 +69,9 @@ public class LevelStart : MonoBehaviour
 		GetComponent<EnnemyManager>().players.Add(player.transform);
 
 		/*Life Set*/
-		LifeBarManager lifeBarManager = lifeBar.GetComponent<LifeBarManager>();
-		lifeBarManager.Player = player;
-		lifeBarManager.SetLifeBar(lifeBar.transform.GetChild(0).GetComponent<Image>());
-		lifeBarManager.SetLifeManager(player.GetComponent<PlayerLifeManager>());
+		_lifeBarPlayer.SetPlayer(player);
+		_lifeBarPlayer.SetLifeBar(LifeBar);
+		_lifeBarPlayer.SetLifeManager(player.GetComponent<PlayerLifeManager>());
 
 		LoopManager loopManager = GetComponent<LoopManager>();
 		loopManager.Player = player;
