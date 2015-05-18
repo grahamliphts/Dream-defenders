@@ -11,8 +11,10 @@ public class NetworkManager : MonoBehaviour
     public Text nbPlayersInput;
     public Canvas canvas;
     public Menu LobbyMenu;
-    public Button modelButton;
     public Text nbPlayersConnected;
+
+	[SerializeField]
+	GameObject modelButton;
 
     //Network
 	private int _listenPort = 4242; //le port d'écoute du serveur
@@ -53,13 +55,21 @@ public class NetworkManager : MonoBehaviour
 
 	public void StartServer () 
 	{
-        if (serverName.text != "" && nbPlayersInput.text != "" && int.Parse(nbPlayersInput.text) != 0)
-        {
-			_nbPlayersMax = int.Parse(nbPlayersInput.text) - 1;
-			Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
-            MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
-			_menuManager.ShowMenu(LobbyMenu);
-        }
+		 int _nbPlayersMax, i;
+		 if (!int.TryParse(nbPlayersInput.text, out _nbPlayersMax))
+			 return;
+		 else
+		 {
+			 Debug.Log("Success");
+			 if (serverName.text != "" && nbPlayersInput.text != "")
+			 {
+				 _nbPlayersMax = int.Parse(nbPlayersInput.text) - 1;
+				 Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
+				 MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
+				 _menuManager.ShowMenu(LobbyMenu);
+			 }
+		 }
+       
 	}
 
     public void RefreshPlayersCount()
@@ -67,7 +77,7 @@ public class NetworkManager : MonoBehaviour
         if(Network.isServer)
         {
             Debug.Log("Server:" + _playerCount);
-            nbPlayersConnected.text = _playerCount + "/" + _nbPlayersMax;
+            nbPlayersConnected.text = _playerCount + "/" + (_nbPlayersMax + 1);
         }
         else if(Network.isClient)
         {
@@ -92,23 +102,17 @@ public class NetworkManager : MonoBehaviour
             for (int i = 0; i < _hostList.Length; i++)
             {
                 RectTransform rectTransform;
-                float anchorMinX = 0.1f;
-                float anchorMaxX = 0.8f;
 
-                Button b_object;
-                b_object = Instantiate(modelButton) as Button;
-                b_object.transform.SetParent(serverList.transform);
-                rectTransform = b_object.GetComponent<RectTransform>();
-                rectTransform.anchorMax = new Vector2(anchorMaxX,  1.0f - 0.1f*(i + 1));
-                rectTransform.anchorMin = new Vector2(anchorMinX, 1.0f - 0.1f*(i + 2));
-                rectTransform.sizeDelta = new Vector2(130, 50);
-                rectTransform.offsetMin = new Vector2(0, 0);
-                rectTransform.offsetMax = new Vector2(0, 0);
-                b_object.GetComponentInChildren<Text>().text = _hostList[i].gameName + "-" + _hostList[i].connectedPlayers.ToString() + "/" + _hostList[i].playerLimit.ToString();
+
+                GameObject button = Instantiate(modelButton) as GameObject;
+				button.transform.SetParent(serverList.transform);
+
+				rectTransform = button.GetComponent<RectTransform>();
+				rectTransform.localScale = new Vector3(1, 1, 1);
+				button.GetComponentInChildren<Text>().text = _hostList[i].gameName + "-" + _hostList[i].connectedPlayers.ToString() + "/" + _hostList[i].playerLimit.ToString();
 
                 HostData host = _hostList[i];
-                b_object.onClick.RemoveAllListeners();
-                b_object.onClick.AddListener( () => 
+				button.GetComponent<Button>().onClick.AddListener(() => 
                 {
                     MenuManager menuManager = canvas.GetComponent<MenuManager>();
                     menuManager.ShowMenu(LobbyMenu);
@@ -146,7 +150,7 @@ public class NetworkManager : MonoBehaviour
     private void OnConnectedToServer()  //Client 
     {
         _playerCount++;
-        Debug.Log(_playerCount);
+		Debug.Log("On connected to server:" + _playerCount);
     }
 
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
