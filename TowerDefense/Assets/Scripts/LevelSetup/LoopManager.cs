@@ -32,8 +32,7 @@ public class LoopManager : MonoBehaviour
 
 	//Verification de la vie
     private PlayerLifeManager _lifeManager;
-	[SerializeField]
-	private NexusLife _nexusLife;
+	public NexusLife LifeNexus;
     private float _timer;
 
 	void Start()
@@ -102,7 +101,7 @@ public class LoopManager : MonoBehaviour
 
         if (_lifeManager.GetLife() <= 0)
 			CloseParty("You died");
-		else if(_nexusLife.GetLife() <= 0)
+		else if (LifeNexus.GetLife() <= 0)
 			CloseParty("Nexus has been destroyed");
     }
 

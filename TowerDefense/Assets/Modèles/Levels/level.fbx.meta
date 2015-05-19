@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c9cc816f98df4f84ba8a346d850525e1
-timeCreated: 1427059701
+guid: 6540660e88e452749949e987bd6899c2
+timeCreated: 1432026391
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -24,14 +24,12 @@ ModelImporter:
     100032: Cube.015
     100034: Cube.016
     100036: Cube.017
-    100038: Lamp
-    100040: //RootNode
+    100038: //RootNode
+    100040: Light
     100042: Point
     100044: Point.001
     100046: Point.002
     100048: Point.003
-    100050: Sun.001
-    100052: Sun.002
     400000: Camera
     400002: Cube
     400004: Cube.001
@@ -51,14 +49,12 @@ ModelImporter:
     400032: Cube.015
     400034: Cube.016
     400036: Cube.017
-    400038: Lamp
-    400040: //RootNode
+    400038: //RootNode
+    400040: Light
     400042: Point
     400044: Point.001
     400046: Point.002
     400048: Point.003
-    400050: Sun.001
-    400052: Sun.002
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002

@@ -12,7 +12,7 @@ public class LifeBarManager : MonoBehaviour
     private float _life;
     private float _lifeBarValue;
     private PlayerLifeManager _lifeManager;
-	public NexusLife lifeNexus;
+	public NexusLife LifeNexus;
 
     private Image _lifeBar;
 
@@ -30,9 +30,9 @@ public class LifeBarManager : MonoBehaviour
             _lifeBar.color = _lifeBarColor;
         }
 
-		if(lifeNexus.GetLife() >= 0)
+		if (LifeNexus.GetLife() >= 0)
 		{
-			_lifeBarValue = lifeNexus.GetLife() / 100;
+			_lifeBarValue = LifeNexus.GetLife() / 100;
 			LifeNexusValue.size = _lifeBarValue;
 			SetColorLife();
 			lifeBarNexus.color = _lifeBarColor;

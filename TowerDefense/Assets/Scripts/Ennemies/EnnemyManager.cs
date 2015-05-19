@@ -22,12 +22,11 @@ public class EnnemyManager : MonoBehaviour
 	[SerializeField]
 	private int _numberFire;
 
-	[SerializeField]
     public Transform SpawnEnemy;
-
+	public Transform ArrivalP;
 
     public EnemyPoolManager[] EnemyPools;
-    public Transform ArrivalP;
+   
 	public List<Transform> players;
 	private int _nbTotalEnemies;
 	enum Type {Elec, Fire, Ice, Poison};

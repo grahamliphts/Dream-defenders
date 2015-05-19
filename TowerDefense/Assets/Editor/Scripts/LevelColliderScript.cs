@@ -86,16 +86,15 @@ public class LevelColliderScript : EditorWindow
 				}
 			}
 
+			GameObject sablier = null;
 			for (int i = 0; i < manager.point_list.Count; i++)
 			{
-				Debug.Log("managerPointList");
 				if (i == 0)
 					manager.point_list[i].name = "spawnEnemy";
 				else if (i == manager.point_list.Count - 1)
 				{
 					manager.point_list[i].name = "nexus";
-					Debug.Log(sablierPrefab);
-					GameObject sablier = PrefabUtility.InstantiatePrefab(sablierPrefab) as GameObject;
+					sablier = PrefabUtility.InstantiatePrefab(sablierPrefab) as GameObject;
 
 					Vector3 sablierPosition = manager.point_list[i].transform.position;
 					sablierPosition.y -= 1;
@@ -110,20 +109,19 @@ public class LevelColliderScript : EditorWindow
 				}
 			}
 
-			/*GameObject gameManager = GameObject.Find("GameManager");
-			GUI.changed = false;
+			GameObject gameManager = GameObject.Find("GameManager");
 
-			gameManager.GetComponent<EnnemyManager>().SpawnEnemy = EditorGUILayout.ObjectField(manager.point_list[0].transform, typeof(Transform), false) as Transform;
+			Transform nexusPos = manager.point_list[manager.point_list.Count - 1].transform;
+			gameManager.GetComponent<EnnemyManager>().SpawnEnemy = manager.point_list[0].transform;
+			gameManager.GetComponent<EnnemyManager>().ArrivalP = nexusPos;
+			EditorUtility.SetDirty(gameManager.GetComponent<EnnemyManager>());
+			gameManager.GetComponent<LoopManager>().LifeNexus = sablier.GetComponent<NexusLife>();
+			EditorUtility.SetDirty(gameManager.GetComponent<LoopManager>());
 
-			gameManager.GetComponent<EnnemyManager>().ArrivalP = EditorGUILayout.ObjectField(manager.point_list[manager.point_list.Count - 1].transform, typeof(Transform), false) as Transform;
-			if (GUI.changed)
-				EditorUtility.SetDirty(gameManager);*/
+			GameObject guiManager = GameObject.Find("GuiManager");
 
-			
-			//Set the spawn Ennemy and the arrivalPoint of the level
-			/*gameManager.GetComponent<EnnemyManager>().SpawnEnemy = manager.point_list[0].transform;
-			gameManager.GetComponent<EnnemyManager>().ArrivalP = manager.point_list[manager.point_list.Count - 1].transform;*/
-			//Debug.Log(gameManager.GetComponent<EnnemyManager>().SpawnEnemy);
+			guiManager.GetComponent<LifeBarManager>().LifeNexus = sablier.GetComponent<NexusLife>();
+			EditorUtility.SetDirty(guiManager.GetComponent<LifeBarManager>());
 		}
 	}
 }
