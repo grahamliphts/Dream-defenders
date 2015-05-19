@@ -5,6 +5,7 @@ public class SpellScript : MonoBehaviour
 {
     public Transform newtransform;
     public Rigidbody newrigidbody;
+	public ParticleSystem particle;
 
     public Transform Transform
     {
@@ -29,12 +30,23 @@ public class SpellScript : MonoBehaviour
         }
     }
 
+	public ParticleSystem Particle
+	{
+		get
+		{
+			return particle;
+		}
+		set
+		{
+			particle = value;
+		}
+	}
     void OnCollisionEnter(Collision col)
     {
 
-		transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-		transform.localPosition = new Vector3(0, 0, 0);
-		if (GetComponent<ParticleSystem>() != null)
+		newrigidbody.velocity = new Vector3(0, 0, 0);
+		newtransform.localPosition = new Vector3(0, 0, 0);
+		if (particle != null)
 			StartCoroutine("Disable");
 		else
 			transform.gameObject.SetActive(false);
@@ -43,7 +55,7 @@ public class SpellScript : MonoBehaviour
 
 	IEnumerator Disable()
 	{
-		yield return new WaitForSeconds(GetComponent<ParticleSystem>().duration);
+		yield return new WaitForSeconds(particle.duration);
 		transform.gameObject.SetActive(false);
 	}
 }

@@ -6,6 +6,7 @@ public class EnemyScript : MonoBehaviour
     public Transform newtransform;
     public Rigidbody newrigidbody;
     public NavMeshAgent agent;
+	public IAEnemy iaEnemy;
 
     public Transform Transform
     {
@@ -41,4 +42,16 @@ public class EnemyScript : MonoBehaviour
             agent = value;
         }
     }
+
+	public IAEnemy IaEnemy
+	{
+		get
+		{
+			return iaEnemy;
+		}
+		set
+		{
+			iaEnemy = value;
+		}
+	}
 }

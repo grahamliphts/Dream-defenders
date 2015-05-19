@@ -4,13 +4,9 @@ using System.Collections.Generic;
 
 public class EnnemyManager : MonoBehaviour 
 {
-    [SerializeField]
     private int _numberMaxFire;
-	[SerializeField]
 	private int _numberMaxPoison;
-	[SerializeField]
 	private int _numberMaxIce;
-	[SerializeField]
 	private int _numberMaxElec;
 
     [SerializeField]
@@ -31,6 +27,14 @@ public class EnnemyManager : MonoBehaviour
 	private int _nbTotalEnemies;
 	enum Type {Elec, Fire, Ice, Poison};
 
+	public void Start()
+	{
+		//SetMax - Nombre dans la pool
+		_numberMaxFire = EnemyPools[0].enemies.Length;
+		_numberMaxElec = EnemyPools[1].enemies.Length;
+		_numberMaxPoison = EnemyPools[2].enemies.Length;
+		_numberMaxIce = EnemyPools[3].enemies.Length;
+	}
 	public void Spawn() 
     {
 		for (int i = 0; i < _numberElec; i++)
@@ -49,18 +53,13 @@ public class EnnemyManager : MonoBehaviour
 	public void InitEnemy(int index)
 	{
 		var enemy = EnemyPools[index].GetEnemy();
-		enemy.newtransform.position = SpawnEnemy.position;
-		//enemy.Agent = enemy.gameObject.GetComponent<NavMeshAgent>(); TODO
-		enemy.Agent = enemy.gameObject.AddComponent<NavMeshAgent>();
-		IAEnemy iaEnnemy = enemy.GetComponent<IAEnemy>();
-		//Debug.Log("add " + players.Count + "leader to ennemy" + enemy.gameObject.name);
 		for (int j = 0; j < players.Count; j++)
-			iaEnnemy.AddLeader(players[j]);
-		iaEnnemy.SetAgent(enemy.Agent);
-		enemy.Transform.position = SpawnEnemy.position;
+			enemy.iaEnemy.AddLeader(players[j]);
+		
+		enemy.newtransform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);
-		iaEnnemy.SetArrivalP(ArrivalP);
-		enemy.Agent.SetDestination(ArrivalP.position);
+		enemy.iaEnemy.SetArrivalP(ArrivalP);
+		enemy.agent.SetDestination(ArrivalP.position);
 	}
 
     public bool AllDied()

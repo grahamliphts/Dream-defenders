@@ -38,7 +38,7 @@ public class IAEnemy : MonoBehaviour
     {
         _bShoot = false;
         _recharging = false;
-		//Debug.Log(_agent.destination);
+		_agent = GetComponent<NavMeshAgent>();
 		_networkView = GetComponent<NetworkView>();
     }
 
@@ -97,11 +97,6 @@ public class IAEnemy : MonoBehaviour
 			
 		//}
 	} 
-
-    public void SetAgent(NavMeshAgent agent)
-    {
-        _agent = agent;
-    }
 
 	public void SetArrivalP(Transform arrivalP)
 	{
