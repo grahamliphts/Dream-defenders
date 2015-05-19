@@ -4,37 +4,33 @@ using UnityEngine.UI;
 
 public class LoopManager : MonoBehaviour 
 {
+	//Pour la fermeture de la partie
 	public RawImage image;
 	public Text MajorInfo;
 	public Text Tuto;
+	//Infos du jeu
+	public Text GameInfo;
+
+	[SerializeField]
+	private int _constructionTime;
+	[SerializeField]
+	private int _waveNumber;
+	[SerializeField]
+	private int _ennemyAddedByWave;
 
     public ModelTowerPoolManager ModelTower;
-    public Text GameInfo;
-    public Text ValueElectricTower;
-    public Text ValueFireTower;
-    public GameObject Player;
-    public TowerPoolManager FirePool;
-    public TowerPoolManager ElectricPool;
-	public GuiInGameManager GuiManager;
-
-    [SerializeField]
-    private int _waveNumber;
-    [SerializeField]
-    private int _ennemyAddedByWave;
-    [SerializeField]
-    private int _constructionTime;
 
     private EnnemyManager _ennemyManager;
     private int _actualWave;
     private float _startTime;
 
+	public GameObject Player;
     public static bool modeConstruction;
 
-    private int _nbFireTower;
-    private int _nbElectricTower;
     private bool _win;
     private bool _lose;
 
+	//Verification de la vie
     private PlayerLifeManager _lifeManager;
 	[SerializeField]
 	private NexusLife _nexusLife;
@@ -48,6 +44,7 @@ public class LoopManager : MonoBehaviour
 
 	public void Init(PlayerLifeManager lifeManager) 
     {
+		//A mettre ailleurs
 		/*Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;*/
         Cursor.lockState = CursorLockMode.Locked;
@@ -56,13 +53,11 @@ public class LoopManager : MonoBehaviour
         GameInfo.text = "Poser des Tours";
         ModelTower.SetConstruction(true);
 		modeConstruction = true;
-        _nbFireTower = ElectricPool.GetTowerNumberMax();
-        _nbElectricTower = FirePool.GetTowerNumberMax();
+
         _win = false;
         
         _actualWave = 0;
 		_lifeManager = lifeManager;
-		//Debug.Log(_lifeManager);
 
         _timer = 0;
 	}
@@ -72,34 +67,35 @@ public class LoopManager : MonoBehaviour
 		if (_lifeManager == null)
 			return;
         if(_lose == false)
-        {
-            //ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
-            //ValueFireTower.text = (_nbFireTower - FirePool.GetTowersNumber()).ToString();
-			
+        {			
+			//Temps de construction fini
 			if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
             {
 				ModelTower.SetConstruction(false);
 				modeConstruction = false;
-				int wave = _actualWave + 1;
-                GameInfo.text = "Wave " + wave;
+                GameInfo.text = "Wave " + (_actualWave + 1);
 				_ennemyManager.Spawn();
             }
+
+			//Ennemis morts / wave actuelle < waves totale
 			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
             {
                 _actualWave++;
+				//Ajout d'ennemis a spawn
 				_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
 				_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
 				_ennemyManager.AddEnemiesIce(_ennemyAddedByWave);
 				_ennemyManager.AddEnemiesPoison(_ennemyAddedByWave);
 
+				//Set mode construction
                 GameInfo.text = "Poser des Tours";
 				ModelTower.SetConstruction(true);
 				modeConstruction = true;
                 _startTime = Time.time;
             }
-			else if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
+			if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
             {
-                GameInfo.text = "You Win";
+                CloseParty("You Win");
                 _win = true;
             }
         }

@@ -15,6 +15,10 @@ public class GuiInGameManager : MonoBehaviour
 	void Start () 
     {
 		_shadowTarget = action1;
+		/* _nbFireTower = ElectricPool.GetTowerNumberMax();
+		_nbElectricTower = FirePool.GetTowerNumberMax();*/
+		//ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
+		//ValueFireTower.text = (_nbFireTower - FirePool.GetTowersNumber()).ToString();
 	}
 	
 	void Update () 

@@ -9,7 +9,7 @@ public class NbFloorScript : MonoBehaviour
 	
 	void Update () 
 	{
-		int value = pointManager.GetTeleport().GetNbFloor();
-		nbFloorValue.text = value.ToString();
+		/*int value = pointManager.GetTeleport().GetNbFloor();
+		nbFloorValue.text = value.ToString();*/
 	}
 }
