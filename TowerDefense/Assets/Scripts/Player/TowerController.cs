@@ -39,8 +39,8 @@ public class TowerController : MonoBehaviour
 
 		if (Input.GetKey("1"))
 			ChangeTower(Type.Fire);
-		/*else if (Input.GetKey("2"))
-			ChangeTower(Type.Elec);*/
+		else if (Input.GetKey("2"))
+			ChangeTower(Type.Elec);
 		else if (Input.GetKey("3"))
 			ChangeTower(Type.Poison);
 		else if (Input.GetKey("4"))
