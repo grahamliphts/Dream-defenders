@@ -31,6 +31,7 @@ public class TowerShoot : MonoBehaviour
     {
         if (col.gameObject.tag == "ennemy")
         {
+			Debug.Log(col.transform.position);
             _enemiesTransform.Add(col.transform);
             if (_enemiesTransform.Count == 1)
                 StartCoroutine("TryToShoot");
@@ -56,7 +57,8 @@ public class TowerShoot : MonoBehaviour
             var ps = _projectilePoolManager.GetSpell();
             ps.gameObject.SetActive(true);
             ps.newtransform.position = SpawnPoint.position;
-            ps.newrigidbody.AddForce((_enemiesTransform[0].position - transform.position).normalized * _projectileSpeed);
+			Debug.Log(_enemiesTransform[0].position - transform.position);
+            ps.newrigidbody.AddForce((_enemiesTransform[0].position - SpawnPoint.position).normalized * _projectileSpeed);
 
             yield return new WaitForSeconds(_shootDelay);
         }

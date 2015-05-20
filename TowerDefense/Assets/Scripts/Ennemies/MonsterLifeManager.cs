@@ -36,6 +36,13 @@ public class MonsterLifeManager : MonoBehaviour
                
             count++;
         }
+		if(col.gameObject.tag == "proj_friend")
+		{
+			_life = _life - 2;
+			_matHeathBar.SetFloat("_HP", _life);
+			SetColorLife(_life);
+		}
+
         if(_life <= 0)
         {
 			//WHHAT TO DO AFTER ??

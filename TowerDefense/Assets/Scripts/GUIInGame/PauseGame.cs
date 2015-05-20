@@ -25,7 +25,7 @@ public class PauseGame : MonoBehaviour
 		}
 		else 
 		{
-			
+			ImagePause.gameObject.SetActive(false);
 			Time.timeScale = 1;
 			InfoText.text = "";
 			if (Input.GetKeyDown(KeyCode.Escape))

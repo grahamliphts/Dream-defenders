@@ -11,9 +11,11 @@ public class TowerPoolManager : MonoBehaviour
     {
 		if (_index >= GetTowerNumberMax())
 			return null;
-        var spell = _towers[_index];
+		Debug.Log(_index);
+        var tower = _towers[_index];
         _index++;
-        return spell;
+		Debug.Log(_index);
+		return tower;
     }
 
     public int GetTowersNumber()
