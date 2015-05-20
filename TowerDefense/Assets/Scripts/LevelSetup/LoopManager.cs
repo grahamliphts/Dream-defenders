@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class LoopManager : MonoBehaviour 
 {
 	//Pour la fermeture de la partie
-	public RawImage image;
-	public Text MajorInfo;
+	public RawImage ImageClose;
+	public Text CloseInfo;
 	public Text Tuto;
 	//Infos du jeu
 	public Text GameInfo;
@@ -34,6 +34,8 @@ public class LoopManager : MonoBehaviour
     private PlayerLifeManager _lifeManager;
 	public NexusLife LifeNexus;
     private float _timer;
+
+	private bool _closingParty;
 
 	void Start()
 	{
@@ -101,22 +103,31 @@ public class LoopManager : MonoBehaviour
 
         if (_lifeManager.GetLife() <= 0)
 			CloseParty("You died");
+
 		else if (LifeNexus.GetLife() <= 0)
 			CloseParty("Nexus has been destroyed");
     }
 
 	private void CloseParty(string text)
 	{
-		image.gameObject.SetActive(true);
-		MajorInfo.text = text;
+		_closingParty = true;
+
 		GameInfo.text = "";
 		Tuto.text = "";
 
+		ImageClose.gameObject.SetActive(true);
+		CloseInfo.text = text;
+		
 		_lose = true;
 		_timer += Time.deltaTime;
 		if (_timer >= 3)
 		{
 			Application.LoadLevel("MenuScene");
 		}
+	}
+
+	public bool GetClosingParty()
+	{
+		return _closingParty;
 	}
 }

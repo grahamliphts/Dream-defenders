@@ -44,28 +44,18 @@ public class IAEnemy : MonoBehaviour
 
 	void Update()
     {
-		/*if (!LevelStart.instance.modeMulti || Network.isServer)
-		{*/
-
-		/*Debug.Log(_networkView);
-		Debug.Log(_networkView.isMine);*/
-		
 		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
 		{
 			if (_agent == null)
 				return;
 			_rangeNexus = Vector3.Distance(transform.position, ArrivalP.position);
 			_range = Vector3.Distance(transform.position, _leader[0].position);
-			//Debug.Log("Position Leader:" + _leader[0].position);
-			Debug.Log("Destination:" + ArrivalP.position);
 		}
-
 
 		if (_range < backrange)
 			transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
 		else if (_range < minRange)
 		{
-			Debug.Log("_range < minRange");
 			_posToShoot = _leader[0].position;
 			_bShoot = true;
 			transform.LookAt(_leader[0]);
@@ -73,7 +63,6 @@ public class IAEnemy : MonoBehaviour
 
 		else if (_range <= chaseRange)
 		{
-			Debug.Log("_range <= chaseRange)");
 			_agent.Stop();
 			_bShoot = false;
 			transform.LookAt(_leader[0]);
@@ -81,21 +70,19 @@ public class IAEnemy : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("else");
 			_bShoot = false;
 			_agent.Resume();
 		}
 
+		//Dans le range du nexus
 		if(_rangeNexus < minRange)
 		{
-			Debug.Log("_rangeNexus");
 			_agent.Stop();
 			_posToShoot = ArrivalP.position;
 			_bShoot = true;
 		}
+
 		Shooting();
-			
-		//}
 	} 
 
 	public void SetArrivalP(Transform arrivalP)

@@ -6,11 +6,11 @@ public class PauseGame : MonoBehaviour
 {
 	public RawImage ImagePause;
 	public Text InfoText;
+
 	private bool _pause = false;
 
 	void Update () 
 	{
-		Debug.Log(_pause);
 		if(_pause == true)
 		{
 			ImagePause.gameObject.SetActive(true);
@@ -23,10 +23,9 @@ public class PauseGame : MonoBehaviour
 			}
 				
 		}
-
-		else
+		else 
 		{
-			ImagePause.gameObject.SetActive(false);
+			
 			Time.timeScale = 1;
 			InfoText.text = "";
 			if (Input.GetKeyDown(KeyCode.Escape))
