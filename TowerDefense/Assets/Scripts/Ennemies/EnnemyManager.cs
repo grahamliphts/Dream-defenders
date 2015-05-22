@@ -27,6 +27,8 @@ public class EnnemyManager : MonoBehaviour
 	private int _nbTotalEnemies;
 	enum Type {Elec, Fire, Ice, Poison};
 
+	private NetworkView _networkView;
+
 	public void Start()
 	{
 		//SetMax - Nombre dans la pool
@@ -34,6 +36,8 @@ public class EnnemyManager : MonoBehaviour
 		_numberMaxElec = EnemyPools[1].enemies.Length;
 		_numberMaxPoison = EnemyPools[2].enemies.Length;
 		_numberMaxIce = EnemyPools[3].enemies.Length;
+
+		_networkView = GetComponent<NetworkView>();
 	}
 	public void Spawn() 
     {
@@ -52,14 +56,33 @@ public class EnnemyManager : MonoBehaviour
 
 	public void InitEnemy(int index)
 	{
+		if(LevelStart.instance.modeMulti == false || Network.isServer)
+		{
+			if (LevelStart.instance.modeMulti)
+				_networkView.RPC("SetEnemy", RPCMode.All, (index));
+			else
+				SpawnEnemies(index);
+		}
+		
+	}
+	[RPC]
+	private void SetEnemy(int index)
+	{
+		Debug.Log("Server spawn ennemies");
+		SpawnEnemies(index);
+	}
+
+	private void SpawnEnemies(int index)
+	{
 		var enemy = EnemyPools[index].GetEnemy();
 		for (int j = 0; j < players.Count; j++)
 			enemy.iaEnemy.AddLeader(players[j]);
-		
+
 		enemy.newtransform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);
 		enemy.iaEnemy.SetArrivalP(ArrivalP);
-		enemy.agent.SetDestination(ArrivalP.position);
+		if(Network.isServer)
+			enemy.agent.SetDestination(ArrivalP.position);
 	}
 
     public bool AllDied()
@@ -103,5 +126,10 @@ public class EnnemyManager : MonoBehaviour
 		_numberPoison += number;
 		if (_numberPoison > _numberMaxPoison)
 			Debug.Log("No more enemies");
+	}
+
+	public void SetNetworkView(NetworkView networkView)
+	{
+		_networkView = networkView;
 	}
 }

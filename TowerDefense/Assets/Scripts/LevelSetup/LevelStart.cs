@@ -40,9 +40,12 @@ public class LevelStart : MonoBehaviour
     public void OnLoadedLevel(bool network)
     {
 		GameObject player;
+		NetworkView networkView;
 		if (network)
 		{
 			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 1) as GameObject;
+			networkView = player.GetComponent<NetworkView>();
+			//GetComponent<EnnemyManager>().SetNetworkView(networkView);
 			modeMulti = true;
 		}
 		else

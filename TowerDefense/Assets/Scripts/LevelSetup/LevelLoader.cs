@@ -7,6 +7,11 @@ public class LevelLoader : MonoBehaviour {
     private int _lastLevelPrefix;
     private NetworkView _networkView;
 
+	[SerializeField]
+	private int _nbPlayerCount;
+	[SerializeField]
+	private int _nbPlayerMax;
+
     public void Start()
     {
         DontDestroyOnLoad(this);
@@ -15,18 +20,35 @@ public class LevelLoader : MonoBehaviour {
         _networkView.group = 1;
     }
 
-	public void LoadGame(Text players)
+	public void LoadGame()
     {
-		string nbPlayer = players.text;
-		string[] subStrings = nbPlayer.Split('/');
-
 		//Verification que tout les joueurs sont la 
-		if(subStrings[0] == subStrings[1])
+		if(_nbPlayerCount == _nbPlayerMax)
 		{
 			Network.RemoveRPCsInGroup(0);
 			Network.RemoveRPCsInGroup(1);
 			_networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MainScene", _lastLevelPrefix + 1);
 		}
+	}
+
+	public void SetPlayerCount(int nbPlayerCount)
+	{
+		_nbPlayerCount = nbPlayerCount;
+	}
+
+	public void SetPlayerMax(int nbPlayerMax)
+	{
+		_nbPlayerMax = nbPlayerMax;
+	}
+
+	public int GetPlayerCount()
+	{
+		return _nbPlayerCount;
+	}
+
+	public int GetPlayerMax()
+	{
+		return _nbPlayerMax;
 	}
 
     [RPC]

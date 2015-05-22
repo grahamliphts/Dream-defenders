@@ -44,46 +44,57 @@ public class IAEnemy : MonoBehaviour
 
 	void Update()
     {
-		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
+		if(LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			if (_agent == null)
 				return;
+			Debug.Log(ArrivalP.position);
 			_rangeNexus = Vector3.Distance(transform.position, ArrivalP.position);
 			_range = Vector3.Distance(transform.position, _leader[0].position);
-		}
 
-		if (_range < backrange)
-			transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
-		else if (_range < minRange)
-		{
-			_posToShoot = _leader[0].position;
-			_bShoot = true;
-			transform.LookAt(_leader[0]);
-		}
+			if (_range < backrange)
+				transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
+			else if (_range < minRange)
+			{
+				_posToShoot = _leader[0].position;
+				_bShoot = true;
+				transform.LookAt(_leader[0]);
+			}
 
-		else if (_range <= chaseRange)
-		{
-			_agent.Stop();
-			_bShoot = false;
-			transform.LookAt(_leader[0]);
-			transform.Translate(_speed * Vector3.forward * Time.deltaTime);
-		}
-		else
-		{
-			_bShoot = false;
-			_agent.Resume();
-		}
+			else if (_range <= chaseRange)
+			{
+				_agent.Stop();
+				_bShoot = false;
+				transform.LookAt(_leader[0]);
+				transform.Translate(_speed * Vector3.forward * Time.deltaTime);
+			}
+			else
+			{
+				_bShoot = false;
+				_agent.Resume();
+			}
 
-		//Dans le range du nexus
-		if(_rangeNexus < minRange)
-		{
-			_agent.Stop();
-			_posToShoot = ArrivalP.position;
-			_bShoot = true;
-		}
+			//Dans le range du nexus
+			if (_rangeNexus < minRange)
+			{
+				Debug.Log("RangeNexus " + _rangeNexus + " " + minRange);
+				_agent.Stop();
+				_posToShoot = ArrivalP.position;
+				_bShoot = true;
+			}
 
-		Shooting();
+			Shooting();
+			//_networkView.RPC("SyncPos", RPCMode.All, transform.position.x, transform.position.y, transform.position.z);
+		}
 	} 
+
+	[RPC]
+	private void SyncPos(float x, float y, float z)
+	{
+		Debug.Log("Before " + transform.position);
+		transform.position = new Vector3(x,y,z);
+		Debug.Log("After " + transform.position);
+	}
 
 	public void SetArrivalP(Transform arrivalP)
 	{
@@ -129,7 +140,7 @@ public class IAEnemy : MonoBehaviour
 		if (stream.isWriting)
 		{
 			rangeEnemy = _range;
-			Debug.Log("range send:" + rangeEnemy);
+			//Debug.Log("range send:" + rangeEnemy);
 			stream.Serialize(ref rangeEnemy);
 		}
 
@@ -137,7 +148,7 @@ public class IAEnemy : MonoBehaviour
 		{
 			stream.Serialize(ref rangeEnemy);
 			_range = rangeEnemy;
-			Debug.Log("range get:" + _range);
+			//Debug.Log("range get:" + _range);
 		}
 	}
 }

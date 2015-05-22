@@ -13,6 +13,8 @@ public class TowerController : MonoBehaviour
 	private TowerConstructionScript _newTarget;
 	private ModelTowerPoolManager _modelTowerManager;
 
+	private int _type;
+
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView>();
@@ -24,33 +26,40 @@ public class TowerController : MonoBehaviour
 		_target.gameObject.SetActive(true);
 		_target.constructionController.enabled = true;
 
+		_type = 0;
 	}
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction
-			&& (LevelStart.instance.modeMulti == false || _networkView.isMine))
+		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
 		{
-			if (LevelStart.instance.modeMulti == false)
-				PlaceTower(_constructionController.transform.position);
-			else
-				_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position);
+			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction)
+			{
+				if (LevelStart.instance.modeMulti == false)
+					PlaceTower(_constructionController.transform.position, _type);
+				else
+				{
+					Debug.Log("Send RPC with " + _type);
+					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);
+				}
+			}
+
+			if (Input.GetKey("1"))
+				ChangeTower(Type.Fire);
+			else if (Input.GetKey("2"))
+				ChangeTower(Type.Elec);
+			else if (Input.GetKey("3"))
+				ChangeTower(Type.Poison);
+			else if (Input.GetKey("4"))
+				ChangeTower(Type.Ice);
+
+			_constructionController = _target.constructionController;
 		}
-
-		if (Input.GetKey("1"))
-			ChangeTower(Type.Fire);
-		else if (Input.GetKey("2"))
-			ChangeTower(Type.Elec);
-		else if (Input.GetKey("3"))
-			ChangeTower(Type.Poison);
-		else if (Input.GetKey("4"))
-			ChangeTower(Type.Ice);
-
-		_constructionController = _target.constructionController;
 	}
 
 	void ChangeTower(Type type)
 	{
+		_type = (int)type;
 		_currentTowerPool = _towerPool[(int)type];
 		if (_target != _modelTowerManager.GetTower((int)type))
 		{
@@ -61,14 +70,14 @@ public class TowerController : MonoBehaviour
 	}
 
 	[RPC]
-	void SyncTowerPosition(Vector3 position)
+	void SyncTowerPosition(Vector3 position, int type)
 	{
-		PlaceTower(position);
+		PlaceTower(position, type);
 	}
 
-	public void PlaceTower(Vector3 position)
+	public void PlaceTower(Vector3 position, int type)
 	{
-		var tower = _currentTowerPool.GetTower();
+		var tower = _towerPool[type].GetTower();
 		if (tower != null)
 		{
 			tower.gameObject.SetActive(true);

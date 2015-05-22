@@ -46,8 +46,6 @@ public class LoopManager : MonoBehaviour
 	public void Init(PlayerLifeManager lifeManager) 
     {
 		//A mettre ailleurs
-		/*Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;*/
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -94,11 +92,16 @@ public class LoopManager : MonoBehaviour
 				modeConstruction = true;
                 _startTime = Time.time;
             }
-			if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
-            {
-                CloseParty("You Win");
-                _win = true;
-            }
+
+			if(Network.isServer)
+			{
+				if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
+				{
+					CloseParty("You Win");
+					_win = true;
+				}
+			}
+			
         }
 
         if (_lifeManager.GetLife() <= 0)
@@ -122,6 +125,7 @@ public class LoopManager : MonoBehaviour
 		_timer += Time.deltaTime;
 		if (_timer >= 3)
 		{
+			Network.Disconnect();
 			Application.LoadLevel("MenuScene");
 		}
 	}
@@ -129,5 +133,11 @@ public class LoopManager : MonoBehaviour
 	public bool GetClosingParty()
 	{
 		return _closingParty;
+	}
+
+	private void OnDisconnectedFromServer(NetworkDisconnection msg)
+	{
+		Debug.Log(msg);
+		CloseParty("Disconnect");
 	}
 }

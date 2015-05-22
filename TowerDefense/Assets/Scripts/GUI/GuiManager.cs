@@ -6,6 +6,8 @@ public class GuiManager : MonoBehaviour
 	void Start()
 	{
 		DontDestroyOnLoad(this);
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
 	}
 	public void LoadGame()
     {

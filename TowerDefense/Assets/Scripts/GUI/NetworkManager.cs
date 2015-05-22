@@ -11,6 +11,7 @@ public class NetworkManager : MonoBehaviour
     public Text nbPlayersInput;
     public Canvas canvas;
     public Menu LobbyMenu;
+	public Menu ServerMenu;
     public Text nbPlayersConnected;
 
 	[SerializeField]
@@ -23,14 +24,15 @@ public class NetworkManager : MonoBehaviour
     private HostData[] _hostList;
     List<NetworkPlayer> _players;
     private HostData _hostConnected;
-    private uint _playerCount;
-    private int _nbPlayersMax;
+	private int _playerCount;
+	private int _nbPlayersMax;
 	public MenuManager _menuManager;
+	public LevelLoader LevelLoader;
 
     void Start()
     {
         _players = new List<NetworkPlayer>();
-        _playerCount = 1;
+        _playerCount = 0;
 		_menuManager = canvas.GetComponent<MenuManager>();
     }
 
@@ -55,7 +57,7 @@ public class NetworkManager : MonoBehaviour
 
 	public void StartServer () 
 	{
-		 int _nbPlayersMax, i;
+		 int _nbPlayersMax;
 		 if (!int.TryParse(nbPlayersInput.text, out _nbPlayersMax))
 			 return;
 		 else
@@ -63,7 +65,10 @@ public class NetworkManager : MonoBehaviour
 			 Debug.Log("Success");
 			 if (serverName.text != "" && nbPlayersInput.text != "")
 			 {
-				 _nbPlayersMax = int.Parse(nbPlayersInput.text) - 1;
+				 _nbPlayersMax = int.Parse(nbPlayersInput.text);
+				 _playerCount++;
+				 LevelLoader.SetPlayerMax(_nbPlayersMax);
+				 LevelLoader.SetPlayerCount(_playerCount);
 				 Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
 				 MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
 				 _menuManager.ShowMenu(LobbyMenu);
@@ -74,17 +79,7 @@ public class NetworkManager : MonoBehaviour
 
     public void RefreshPlayersCount()
     {
-        if(Network.isServer)
-        {
-            Debug.Log("Server:" + _playerCount);
-            nbPlayersConnected.text = _playerCount + "/" + (_nbPlayersMax + 1);
-        }
-        else if(Network.isClient)
-        {
-            Debug.Log("Client:"+_playerCount);
-            nbPlayersConnected.text = _playerCount + "/" + _hostConnected.playerLimit;
-            Debug.Log(_hostConnected.connectedPlayers);
-        }
+		nbPlayersConnected.text = LevelLoader.GetPlayerCount() + "/" + LevelLoader.GetPlayerMax();
     }
 
     public void RefreshHostList()
@@ -109,13 +104,12 @@ public class NetworkManager : MonoBehaviour
 
 				rectTransform = button.GetComponent<RectTransform>();
 				rectTransform.localScale = new Vector3(1, 1, 1);
-				button.GetComponentInChildren<Text>().text = _hostList[i].gameName + "-" + _hostList[i].connectedPlayers.ToString() + "/" + _hostList[i].playerLimit.ToString();
+				button.GetComponentInChildren<Text>().text = _hostList[i].gameName + " - " + _hostList[i].connectedPlayers.ToString() + "/" + (_hostList[i].playerLimit - 1).ToString();
 
                 HostData host = _hostList[i];
 				button.GetComponent<Button>().onClick.AddListener(() => 
                 {
-                    MenuManager menuManager = canvas.GetComponent<MenuManager>();
-                    menuManager.ShowMenu(LobbyMenu);
+                    _menuManager.ShowMenu(LobbyMenu);
                     JoinServer(host);
                 });
             }
@@ -127,9 +121,10 @@ public class NetworkManager : MonoBehaviour
     {
         Network.Connect(hostData);
         _hostConnected = hostData;
+		_playerCount = 1;
     }
 
-	
+
     private void OnMasterServerEvent(MasterServerEvent msEvent)
     {
         if (msEvent == MasterServerEvent.HostListReceived)
@@ -144,15 +139,23 @@ public class NetworkManager : MonoBehaviour
 	{
         _players.Add(player); 
         _playerCount++;
-        Debug.Log("On player connected:"+_playerCount);
+		LevelLoader.SetPlayerCount(_playerCount);
 	}
 
     private void OnConnectedToServer()  //Client 
     {
         _playerCount++;
-		Debug.Log("On connected to server:" + _playerCount);
+		LevelLoader.SetPlayerMax(_hostConnected.playerLimit - 1);
+		LevelLoader.SetPlayerCount(_playerCount);
     }
 
+	private void OnDisconnectedFromServer(NetworkDisconnection msg)
+	{
+		Debug.Log(msg);
+		_menuManager.ShowMenu(ServerMenu);
+	}
+
+	//Debug;
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
         Debug.Log("Could not connect to master server: " + error);
