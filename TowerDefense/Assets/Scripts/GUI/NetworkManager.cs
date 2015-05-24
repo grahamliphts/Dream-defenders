@@ -151,8 +151,8 @@ public class NetworkManager : MonoBehaviour
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
 	{
-		Debug.Log(msg);
-		_menuManager.ShowMenu(ServerMenu);
+		Debug.Log("OnDisconnectedFromServer");
+		Application.LoadLevel("MenuScene");
 	}
 
 	//Debug;

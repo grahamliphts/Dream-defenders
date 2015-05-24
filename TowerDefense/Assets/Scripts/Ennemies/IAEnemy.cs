@@ -48,7 +48,6 @@ public class IAEnemy : MonoBehaviour
 		{
 			if (_agent == null)
 				return;
-			Debug.Log(ArrivalP.position);
 			_rangeNexus = Vector3.Distance(transform.position, ArrivalP.position);
 			_range = Vector3.Distance(transform.position, _leader[0].position);
 
@@ -83,18 +82,10 @@ public class IAEnemy : MonoBehaviour
 				_bShoot = true;
 			}
 
+			_networkView.RPC("SyncShootEnemy", RPCMode.All);
 			Shooting();
-			//_networkView.RPC("SyncPos", RPCMode.All, transform.position.x, transform.position.y, transform.position.z);
 		}
 	} 
-
-	[RPC]
-	private void SyncPos(float x, float y, float z)
-	{
-		Debug.Log("Before " + transform.position);
-		transform.position = new Vector3(x,y,z);
-		Debug.Log("After " + transform.position);
-	}
 
 	public void SetArrivalP(Transform arrivalP)
 	{
@@ -105,6 +96,12 @@ public class IAEnemy : MonoBehaviour
     {
         _leader.Add(leader);
     }
+
+	[RPC]
+	private void SyncShootEnemy()
+	{
+		Shooting();
+	}
 
 	void Shooting()
 	{
@@ -125,6 +122,8 @@ public class IAEnemy : MonoBehaviour
 		}
 	}
 
+	
+
     void TryToShoot()
     {
         var ps = ProjectilePool.GetSpell();
@@ -134,7 +133,7 @@ public class IAEnemy : MonoBehaviour
 		ps.newrigidbody.AddForce((_posToShoot - transform.position).normalized * _projectileSpeed);
     }
 
-	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	/*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
 	{
 		float rangeEnemy = 0;
 		if (stream.isWriting)
@@ -150,6 +149,6 @@ public class IAEnemy : MonoBehaviour
 			_range = rangeEnemy;
 			//Debug.Log("range get:" + _range);
 		}
-	}
+	}*/
 }
 

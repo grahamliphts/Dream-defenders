@@ -63,52 +63,53 @@ public class LoopManager : MonoBehaviour
 	
 	void Update () 
     {
+
 		if (_lifeManager == null)
 			return;
-        if(_lose == false)
-        {			
-			//Temps de construction fini
-			if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
-            {
-				ModelTower.SetConstruction(false);
-				modeConstruction = false;
-                GameInfo.text = "Wave " + (_actualWave + 1);
-				_ennemyManager.Spawn();
-            }
+		if (Network.isServer)
+		{
+			 if(_lose == false)
+			{			
+				//Temps de construction fini
+				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
+				{
+					ModelTower.SetConstruction(false);
+					modeConstruction = false;
+					GameInfo.text = "Wave " + (_actualWave + 1);
+					_ennemyManager.Spawn();
+				}
 
-			//Ennemis morts / wave actuelle < waves totale
-			else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
-            {
-                _actualWave++;
-				//Ajout d'ennemis a spawn
-				_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
-				_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
-				_ennemyManager.AddEnemiesIce(_ennemyAddedByWave);
-				_ennemyManager.AddEnemiesPoison(_ennemyAddedByWave);
+				//Ennemis morts / wave actuelle < waves totale
+				else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
+				{
+					_actualWave++;
+					//Ajout d'ennemis a spawn
+					_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
+					_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
+					_ennemyManager.AddEnemiesIce(_ennemyAddedByWave);
+					_ennemyManager.AddEnemiesPoison(_ennemyAddedByWave);
 
-				//Set mode construction
-                GameInfo.text = "Poser des Tours";
-				ModelTower.SetConstruction(true);
-				modeConstruction = true;
-                _startTime = Time.time;
-            }
+					//Set mode construction
+					GameInfo.text = "Poser des Tours";
+					ModelTower.SetConstruction(true);
+					modeConstruction = true;
+					_startTime = Time.time;
+				}
 
-			if(Network.isServer)
-			{
+			
 				if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
 				{
 					CloseParty("You Win");
 					_win = true;
 				}
 			}
-			
+
+			 if (_lifeManager.GetLife() <= 0)
+				 CloseParty("You died");
+
+			 else if (LifeNexus.GetLife() <= 0)
+				 CloseParty("Nexus has been destroyed");
         }
-
-        if (_lifeManager.GetLife() <= 0)
-			CloseParty("You died");
-
-		else if (LifeNexus.GetLife() <= 0)
-			CloseParty("Nexus has been destroyed");
     }
 
 	private void CloseParty(string text)
@@ -125,19 +126,19 @@ public class LoopManager : MonoBehaviour
 		_timer += Time.deltaTime;
 		if (_timer >= 3)
 		{
-			Network.Disconnect();
-			Application.LoadLevel("MenuScene");
+			if(Network.isServer)
+			{
+				MasterServer.UnregisterHost();
+				Network.Disconnect();
+			}
+
+			else
+				Network.Disconnect();
 		}
 	}
 
 	public bool GetClosingParty()
 	{
 		return _closingParty;
-	}
-
-	private void OnDisconnectedFromServer(NetworkDisconnection msg)
-	{
-		Debug.Log(msg);
-		CloseParty("Disconnect");
 	}
 }

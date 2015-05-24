@@ -9,6 +9,7 @@ public class GuiManager : MonoBehaviour
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 	}
+
 	public void LoadGame()
     {
 		StartCoroutine("LoadLevel");
