@@ -28,15 +28,13 @@ public class IAEnemy : MonoBehaviour
 	public float chaseRange;
     public float minRange;
     public float backrange;
-    private bool _bShoot;
 
 	private NetworkView _networkView;
 	private float _range;
-	private Vector3 _posToShoot;
+	
 
 	void Start()
     {
-        _bShoot = false;
         _recharging = false;
 		_agent = GetComponent<NavMeshAgent>();
 		_networkView = GetComponent<NetworkView>();
@@ -44,6 +42,8 @@ public class IAEnemy : MonoBehaviour
 
 	void Update()
     {
+		bool bShoot = false;
+		Vector3 posToShoot = new Vector3(0, 0, 0);
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			if (_agent == null)
@@ -55,21 +55,21 @@ public class IAEnemy : MonoBehaviour
 				transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
 			else if (_range < minRange)
 			{
-				_posToShoot = _leader[0].position;
-				_bShoot = true;
+				posToShoot = _leader[0].position;
+				bShoot = true;
 				transform.LookAt(_leader[0]);
 			}
 
 			else if (_range <= chaseRange)
 			{
 				_agent.Stop();
-				_bShoot = false;
+				bShoot = false;
 				transform.LookAt(_leader[0]);
 				transform.Translate(_speed * Vector3.forward * Time.deltaTime);
 			}
 			else
 			{
-				_bShoot = false;
+				bShoot = false;
 				_agent.Resume();
 			}
 
@@ -78,12 +78,17 @@ public class IAEnemy : MonoBehaviour
 			{
 				Debug.Log("RangeNexus " + _rangeNexus + " " + minRange);
 				_agent.Stop();
-				_posToShoot = ArrivalP.position;
-				_bShoot = true;
+				posToShoot = ArrivalP.position;
+				bShoot = true;
 			}
 
-			_networkView.RPC("SyncShootEnemy", RPCMode.All);
-			Shooting();
+			if (bShoot)
+			{
+				if(LevelStart.instance.modeMulti)
+					_networkView.RPC("SyncShootEnemy", RPCMode.All, posToShoot);
+				else
+					Shooting(posToShoot);
+			}
 		}
 	} 
 
@@ -98,57 +103,36 @@ public class IAEnemy : MonoBehaviour
     }
 
 	[RPC]
-	private void SyncShootEnemy()
+	private void SyncShootEnemy(Vector3 posToShoot)
 	{
-		Shooting();
+		Shooting(posToShoot);
 	}
 
-	void Shooting()
+	void Shooting(Vector3 posToShoot)
 	{
-		if (_bShoot)
+		if (!_recharging)
 		{
-			if (!_recharging)
-			{
-				TryToShoot();
-				_recharging = true;
-				_shootTimer = _shootDelay;
-			}
-			else
-			{
-				_shootTimer -= Time.deltaTime;
-				if (_shootTimer <= 0.0f)
-					_recharging = false;
-			}
+			Debug.Log("Shooting");
+			TryToShoot(posToShoot);
+			_recharging = true;
+			_shootTimer = _shootDelay;
+		}
+		else
+		{
+			_shootTimer -= Time.deltaTime;
+			if (_shootTimer <= 0.0f)
+				_recharging = false;
 		}
 	}
 
-	
 
-    void TryToShoot()
+
+	void TryToShoot(Vector3 posToShoot)
     {
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);
         ps.newtransform.position = SpawnPoint.position;
-		//ps.newrigidbody.velocity = new Vector3(0, 0, 0);
-		ps.newrigidbody.AddForce((_posToShoot - transform.position).normalized * _projectileSpeed);
+		ps.newrigidbody.AddForce((posToShoot - transform.position).normalized * _projectileSpeed);
     }
-
-	/*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
-	{
-		float rangeEnemy = 0;
-		if (stream.isWriting)
-		{
-			rangeEnemy = _range;
-			//Debug.Log("range send:" + rangeEnemy);
-			stream.Serialize(ref rangeEnemy);
-		}
-
-		else
-		{
-			stream.Serialize(ref rangeEnemy);
-			_range = rangeEnemy;
-			//Debug.Log("range get:" + _range);
-		}
-	}*/
 }
 
