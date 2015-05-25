@@ -3,9 +3,15 @@ using System.Collections;
 
 public class GuiManager : MonoBehaviour 
 {
+	private static GuiManager _instance;
+
 	void Start()
 	{
-		DontDestroyOnLoad(this);
+		if (!_instance)
+			_instance = this;
+		else
+			Destroy(this.gameObject);
+		DontDestroyOnLoad(this.gameObject);
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 	}

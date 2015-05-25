@@ -68,7 +68,6 @@ public class EnnemyManager : MonoBehaviour
 	[RPC]
 	private void SetEnemy(int index)
 	{
-		Debug.Log("Server spawn ennemies");
 		SpawnEnemies(index);
 	}
 

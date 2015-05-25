@@ -9,9 +9,11 @@ public class TowerShoot : MonoBehaviour
     public float _projectileSpeed;
     public float _shootDelay;
     private List<Transform> _enemiesTransform;
+	private NetworkView _networkView;
 
     void Start()
     {
+		_networkView = GetComponent<NetworkView>();
         _enemiesTransform = new List<Transform>();
     }
 
@@ -33,8 +35,18 @@ public class TowerShoot : MonoBehaviour
         {
 			Debug.Log(col.transform.position);
             _enemiesTransform.Add(col.transform);
-            if (_enemiesTransform.Count == 1)
-                StartCoroutine("TryToShoot");
+			if (LevelStart.instance.modeMulti == false || Network.isServer)
+			{
+				if (_enemiesTransform.Count == 1)
+				{
+					if(LevelStart.instance.modeMulti)
+						_networkView.RPC("StartShootTower", RPCMode.All);
+					else
+						StartCoroutine("TryToShoot");
+				}
+			}
+           
+                
         }
     }
 
@@ -43,10 +55,24 @@ public class TowerShoot : MonoBehaviour
         if (col.gameObject.tag == "ennemy")
         {
             _enemiesTransform.Remove(col.transform);
-            if (_enemiesTransform.Count == 0)
-                StopCoroutine("TryToShoot");
+			if(LevelStart.instance.modeMulti && Network.isServer)
+				_networkView.RPC("StopShootTower", RPCMode.All);
+			else
+				StopCoroutine("TryToShoot");
         }
     }
+
+	[RPC]
+	private void StartShootTower()
+	{
+		StartCoroutine("TryToShoot");
+	}
+
+	[RPC]
+	private void StopShootTower()
+	{
+		StopCoroutine("TryToShoot");
+	}
 
     IEnumerator TryToShoot()
     {

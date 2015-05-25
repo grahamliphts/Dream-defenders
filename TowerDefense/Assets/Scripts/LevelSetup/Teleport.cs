@@ -31,23 +31,30 @@ public class Teleport : MonoBehaviour
 				_nbFloor--;
 			}
         }
+
         else if(other.tag == "ennemy")
         {
-            NavMeshAgent agent;
-            agent = other.transform.GetComponent<NavMeshAgent>();
-            other.gameObject.SetActive(false);
-            if (nextPoint != null)
-                other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
-            other.gameObject.SetActive(true);
+			NetworkView networkView = other.GetComponent<NetworkView>();
+			Debug.Log(networkView.viewID);
 
-            if(nextPoint != null && nextPointDest != null)
-                agent.SetDestination(nextPointDest.transform.position);
+			if (LevelStart.instance.modeMulti == false)
+			{
+				Debug.Log("Before tp " + other.transform.position);
+				NavMeshAgent agent;
+				agent = other.transform.GetComponent<NavMeshAgent>();
 
-            if (nextPoint == null)
-            {
-               // Debug.Log("Touch Nexus");
-            }
-        }
+				
+				other.gameObject.SetActive(false);
+				if (nextPoint != null)
+					other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
+				other.gameObject.SetActive(true);
+				if (nextPoint != null && nextPointDest != null)
+					agent.SetDestination(nextPointDest.transform.position);
+
+				Debug.Log("After tp " + other.transform.position);
+			}
+
+		}
     }
 
     public GameObject GetGameObject()

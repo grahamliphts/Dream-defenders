@@ -44,6 +44,7 @@ public class IAEnemy : MonoBehaviour
     {
 		bool bShoot = false;
 		Vector3 posToShoot = new Vector3(0, 0, 0);
+
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			if (_agent == null)
@@ -76,7 +77,6 @@ public class IAEnemy : MonoBehaviour
 			//Dans le range du nexus
 			if (_rangeNexus < minRange)
 			{
-				Debug.Log("RangeNexus " + _rangeNexus + " " + minRange);
 				_agent.Stop();
 				posToShoot = ArrivalP.position;
 				bShoot = true;
@@ -112,7 +112,6 @@ public class IAEnemy : MonoBehaviour
 	{
 		if (!_recharging)
 		{
-			Debug.Log("Shooting");
 			TryToShoot(posToShoot);
 			_recharging = true;
 			_shootTimer = _shootDelay;

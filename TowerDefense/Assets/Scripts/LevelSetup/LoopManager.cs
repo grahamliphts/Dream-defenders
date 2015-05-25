@@ -36,11 +36,13 @@ public class LoopManager : MonoBehaviour
     private float _timer;
 
 	private bool _closingParty;
+	private NetworkView _networkView;
 
 	void Start()
 	{
 		_startTime = Time.time;
 		_ennemyManager = GetComponent<EnnemyManager>();
+		_networkView = GetComponent<NetworkView>();
 	}
 
 	public void Init(PlayerLifeManager lifeManager) 
@@ -66,33 +68,36 @@ public class LoopManager : MonoBehaviour
 
 		if (_lifeManager == null)
 			return;
-		if (Network.isServer)
+		if (LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			 if(_lose == false)
 			{			
 				//Temps de construction fini
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
 				{
-					ModelTower.SetConstruction(false);
-					modeConstruction = false;
-					GameInfo.text = "Wave " + (_actualWave + 1);
+					if (LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncConstruction", RPCMode.All, false);
+					else
+						SetConstruction(false);
+					
 					_ennemyManager.Spawn();
 				}
 
 				//Ennemis morts / wave actuelle < waves totale
 				else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
 				{
-					_actualWave++;
+					//_actualWave++;
 					//Ajout d'ennemis a spawn
 					_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
 					_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
 					_ennemyManager.AddEnemiesIce(_ennemyAddedByWave);
 					_ennemyManager.AddEnemiesPoison(_ennemyAddedByWave);
 
-					//Set mode construction
-					GameInfo.text = "Poser des Tours";
-					ModelTower.SetConstruction(true);
-					modeConstruction = true;
+					if (LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncConstruction", RPCMode.All, true);
+					else
+						SetConstruction(true);
+
 					_startTime = Time.time;
 				}
 
@@ -111,6 +116,26 @@ public class LoopManager : MonoBehaviour
 				 CloseParty("Nexus has been destroyed");
         }
     }
+
+	[RPC]
+	private void SyncConstruction(bool construction)
+	{
+		SetConstruction(construction);
+	}
+
+	private void SetConstruction(bool construction)
+	{
+		ModelTower.SetConstruction(construction);
+		modeConstruction = construction;
+
+		if (construction == false)
+			GameInfo.text = "Wave " + (_actualWave + 1);
+		else
+		{
+			_actualWave++;
+			GameInfo.text = "Poser des Tours";
+		}
+	}
 
 	private void CloseParty(string text)
 	{
@@ -140,5 +165,11 @@ public class LoopManager : MonoBehaviour
 	public bool GetClosingParty()
 	{
 		return _closingParty;
+	}
+
+	private void OnDisconnectedFromServer(NetworkDisconnection msg)
+	{
+		Debug.Log("OnDisconnectedFromServer - Load Menu Scene");
+		Application.LoadLevel("MenuScene");
 	}
 }

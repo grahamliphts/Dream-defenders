@@ -12,9 +12,15 @@ public class LevelLoader : MonoBehaviour {
 	[SerializeField]
 	private int _nbPlayerMax;
 
+	private static LevelLoader _instance;
+
     public void Start()
     {
-        DontDestroyOnLoad(this);
+		if (!_instance)
+			_instance = this;
+		else
+			Destroy(this.gameObject);
+		DontDestroyOnLoad(this.gameObject);
         _lastLevelPrefix = 0;
         _networkView = GetComponent<NetworkView>();
         _networkView.group = 1;
