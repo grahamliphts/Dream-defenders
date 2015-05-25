@@ -50,7 +50,12 @@ public class NetworkManager : MonoBehaviour
     {
 		Network.Disconnect();
 		if (Network.isServer)
+		{
 			MasterServer.UnregisterHost();
+			_playerCount--;
+			LevelLoader.SetPlayerCount(_playerCount);
+		}
+			
     }
 
 	public void StartServer() 
@@ -80,14 +85,6 @@ public class NetworkManager : MonoBehaviour
     public void RefreshPlayersCount()
     {
 		nbPlayersConnected.text = LevelLoader.GetPlayerCount() + "/" + LevelLoader.GetPlayerMax();
-    }
-
-    public void Update()
-    {
-		
-
-		/*else
-			serverList.SetActive(false);*/
     }
 
 	IEnumerator RefreshHostList()
@@ -121,7 +118,7 @@ public class NetworkManager : MonoBehaviour
 				}
 				_hostList = null;
 			}
-			yield return new WaitForSeconds(4);
+			yield return new WaitForSeconds(0.25f);
 		}
 	}
     public void JoinServer(HostData hostData)
@@ -156,7 +153,7 @@ public class NetworkManager : MonoBehaviour
 		LevelLoader.SetPlayerCount(_playerCount);
     }
 
-	private void OnPlayerDisconnected(NetworkPlayer player) 
+	private void OnPlayerDisconnected(NetworkPlayer player) //Server
 	{
 		_playerCount--;
 		LevelLoader.SetPlayerCount(_playerCount);
@@ -164,7 +161,13 @@ public class NetworkManager : MonoBehaviour
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
 	}
-	
+
+	private void OnDisconnectedFromServer(NetworkDisconnection msg)
+	{
+		_playerCount--;
+		LevelLoader.SetPlayerCount(_playerCount);
+		_menuManager.ShowMenu(ServerMenu);
+	}
 
 	//Debug;
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
