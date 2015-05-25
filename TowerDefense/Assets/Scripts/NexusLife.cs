@@ -8,18 +8,32 @@ public class NexusLife : MonoBehaviour {
 	[SerializeField]
 	private int damage;
 
+	private NetworkView _networkView;
+
 	void Start()
 	{
 		_life = 100;
+		_networkView = GetComponent<NetworkView>();
 	}
 
 	void OnCollisionEnter(Collision col)
 	{
-		Debug.Log(col.gameObject.tag);
-		if (_life > 0)
-			_life = _life - damage;
+		if(LevelStart.instance.modeMulti == false || Network.isServer)
+		{
+			if (_life > 0)
+			{
+				if (LevelStart.instance.modeMulti)
+					_networkView.RPC("SyncLifeNexus", RPCMode.All, (_life - damage));
+				else
+					_life = _life - damage;
+			}
+		}
+	}
 
-		Debug.Log(_life);
+	[RPC]
+	private void SyncLifeNexus(float life)
+	{
+		_life = life;
 	}
 
 	public float GetLife()

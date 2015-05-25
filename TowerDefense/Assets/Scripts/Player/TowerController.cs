@@ -14,24 +14,17 @@ public class TowerController : MonoBehaviour
 	private ModelTowerPoolManager _modelTowerManager;
 
 	private int _type;
+	private bool _reset;
 
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView>();
-		_towerPool = LevelStart.instance.towerPool;
-		_currentTowerPool = LevelStart.instance.currentTowerPool;
-		_modelTowerManager = LevelStart.instance.modelTowerManager;
-
-		_target = _modelTowerManager.GetTower((int)Type.Fire);
-		_target.gameObject.SetActive(true);
-		_target.constructionController.enabled = true;
-
-		_type = 0;
+		Reset();
 	}
 
 	void Update()
 	{
-		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
+		if ((LevelStart.instance.modeMulti == false || _networkView.isMine) && LoopManager.modeConstruction == true)
 		{
 			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction)
 			{
@@ -55,18 +48,41 @@ public class TowerController : MonoBehaviour
 
 			_constructionController = _target.constructionController;
 		}
+		else if (LoopManager.modeConstruction == false && _reset == false)
+		{
+			Reset();
+		}
+	}
+
+	private void Reset()
+	{
+		_reset = true;
+		_towerPool = LevelStart.instance.towerPool;
+		_currentTowerPool = LevelStart.instance.currentTowerPool;
+		_modelTowerManager = LevelStart.instance.modelTowerManager;
+
+		_target = _modelTowerManager.GetTower((int)Type.Fire);
+		_target.gameObject.SetActive(true);
+		_target.constructionController.enabled = true;
+
+		_type = 0;
+
+		Debug.Log("CALL TO RESET HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE");
 	}
 
 	void ChangeTower(Type type)
 	{
 		_type = (int)type;
 		_currentTowerPool = _towerPool[(int)type];
+		//Debug.Log("avant if " + _target == null ? "NULL" : _target.name);
 		if (_target != _modelTowerManager.GetTower((int)type))
 		{
+			//Debug.Log("if");
 			_newTarget = _modelTowerManager.GetTower((int)type);
 			SetTower(_target, _newTarget);
 			_target = _newTarget;
 		}
+		_reset = false;
 	}
 
 	[RPC]
@@ -94,11 +110,12 @@ public class TowerController : MonoBehaviour
 
 	void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)
 	{
+		Debug.Log(previousTower);
 		previousTower.gameObject.SetActive(false);
 		previousTower.constructionController.enabled = false;
 		previousTower.Transform.position = new Vector3(1000, 1000, 1000);
 
-
+		Debug.Log(tower);	
 		tower.gameObject.SetActive(true);
 		tower.constructionController.enabled = true;
 		tower.constructionController.Reset();

@@ -11,10 +11,8 @@ public class TowerPoolManager : MonoBehaviour
     {
 		if (_index >= GetTowerNumberMax())
 			return null;
-		Debug.Log(_index);
         var tower = _towers[_index];
         _index++;
-		Debug.Log(_index);
 		return tower;
     }
 

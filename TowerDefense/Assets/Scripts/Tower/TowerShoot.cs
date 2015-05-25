@@ -33,7 +33,6 @@ public class TowerShoot : MonoBehaviour
     {
         if (col.gameObject.tag == "ennemy")
         {
-			Debug.Log(col.transform.position);
             _enemiesTransform.Add(col.transform);
 			if (LevelStart.instance.modeMulti == false || Network.isServer)
 			{
@@ -45,8 +44,6 @@ public class TowerShoot : MonoBehaviour
 						StartCoroutine("TryToShoot");
 				}
 			}
-           
-                
         }
     }
 
@@ -83,7 +80,9 @@ public class TowerShoot : MonoBehaviour
             var ps = _projectilePoolManager.GetSpell();
             ps.gameObject.SetActive(true);
             ps.newtransform.position = SpawnPoint.position;
-            ps.newrigidbody.AddForce((_enemiesTransform[0].position - SpawnPoint.position).normalized * _projectileSpeed);
+			//Fix
+			if(_enemiesTransform[0] != null)
+				ps.newrigidbody.AddForce((_enemiesTransform[0].position - SpawnPoint.position).normalized * _projectileSpeed);
 
             yield return new WaitForSeconds(_shootDelay);
         }

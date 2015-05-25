@@ -4,7 +4,7 @@ using System.Collections;
 public class ConstructionController : MonoBehaviour
 {
     public int RangeTower = 6;
-    private uint _hitCounter;
+    private int _hitCounter;
 	private bool _construction;
 
     void Update()
@@ -14,9 +14,8 @@ public class ConstructionController : MonoBehaviour
             Vector3 pos = new Vector3(Screen.width/2.0f, Screen.height/2.0f, 0.0f);
             Ray ray = Camera.main.ScreenPointToRay(pos);
             RaycastHit hitTower;
-            transform.position = new Vector3(1000, 1000, 1000);
 
-            int layerMask = (1 << 8 | 1 << 9);
+            int layerMask = (1 << 8 | 1 << 9 | 1 << 10);
 			layerMask = ~layerMask;
 
             if (Physics.Raycast(ray, out hitTower, 100, layerMask))
@@ -40,9 +39,14 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
+			Debug.Log("ontriggerexit");
              _hitCounter--;
-             if (_hitCounter == 0)
+			 Debug.Log(_hitCounter);
+             if (_hitCounter <= 0)
+			 {
+				 _hitCounter = 0;
 				 SetColorChild(Color.green);
+			 }
         }
     }
 
@@ -50,7 +54,6 @@ public class ConstructionController : MonoBehaviour
     {
         _hitCounter = 0;
 		SetColorChild(Color.green);
-		
     }
 
 	public void SetColorChild(Color color)
@@ -68,7 +71,7 @@ public class ConstructionController : MonoBehaviour
 		_construction = construction;
 	}
 
-	public uint GetHitCounter()
+	public int GetHitCounter()
 	{
 		return _hitCounter;
 	}

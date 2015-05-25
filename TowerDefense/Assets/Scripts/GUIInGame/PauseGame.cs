@@ -11,30 +11,32 @@ public class PauseGame : MonoBehaviour
 
 	void Update () 
 	{
-		if(_pause == true)
+		if(LevelStart.instance.modeMulti == false)
 		{
-			ImagePause.gameObject.SetActive(true);
-			Time.timeScale = 0.0f;
-			InfoText.text = "Pause";
-			if(Input.GetKeyDown(KeyCode.Escape))
+			if (_pause == true)
 			{
-				Debug.Log("Input");
-				_pause = false;
+				ImagePause.gameObject.SetActive(true);
+				Time.timeScale = 0.0f;
+				InfoText.text = "Pause";
+				if (Input.GetKeyDown(KeyCode.Escape))
+				{
+					Debug.Log("Input");
+					_pause = false;
+				}
+
 			}
-				
-		}
-		else 
-		{
-			ImagePause.gameObject.SetActive(false);
-			Time.timeScale = 1;
-			InfoText.text = "";
-			if (Input.GetKeyDown(KeyCode.Escape))
+			else
 			{
+				ImagePause.gameObject.SetActive(false);
+				Time.timeScale = 1;
+				InfoText.text = "";
+				if (Input.GetKeyDown(KeyCode.Escape))
+				{
 
-				Debug.Log("Input");
-				_pause = true;
+					Debug.Log("Input");
+					_pause = true;
+				}
 			}
-
 		}
 	}
 }

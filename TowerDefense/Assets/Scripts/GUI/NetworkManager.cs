@@ -28,18 +28,19 @@ public class NetworkManager : MonoBehaviour
 	private int _nbPlayersMax;
 	public MenuManager _menuManager;
 	public LevelLoader LevelLoader;
+	private bool _register;
 
     void Start()
     {
         _players = new List<NetworkPlayer>();
         _playerCount = 0;
+		_register = false;
 		_menuManager = canvas.GetComponent<MenuManager>();
 		StartCoroutine("RefreshHostList");
     }
 
 	void Awake()
 	{
-		//DontDestroyOnLoad (this.gameObject);
         MasterServer.ipAddress = "gp-raveh.com";
         MasterServer.port = 23466;
         Network.natFacilitatorIP = "gp-raveh.com";
@@ -48,14 +49,11 @@ public class NetworkManager : MonoBehaviour
 
     public void QuitLobby()
     {
+		_playerCount = 0;
 		Network.Disconnect();
 		if (Network.isServer)
-		{
 			MasterServer.UnregisterHost();
-			_playerCount--;
-			LevelLoader.SetPlayerCount(_playerCount);
-		}
-			
+		LevelLoader.SetPlayerCount(_playerCount);
     }
 
 	public void StartServer() 
@@ -65,6 +63,7 @@ public class NetworkManager : MonoBehaviour
 			 return;
 		 else
 		 {
+			 _register = true;
 			 Debug.Log("Success");
 			 if (serverName.text != "" && nbPlayersInput.text != "")
 			 {
@@ -75,29 +74,24 @@ public class NetworkManager : MonoBehaviour
 				 Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
 				 MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
 
-				 _hostList = null;
 				 _menuManager.ShowMenu(LobbyMenu);
 			 }
 		 }
        
 	}
 
-    public void RefreshPlayersCount()
-    {
-		nbPlayersConnected.text = LevelLoader.GetPlayerCount() + "/" + LevelLoader.GetPlayerMax();
-    }
-
 	IEnumerator RefreshHostList()
 	{
 		while (true)
 		{
+			nbPlayersConnected.text = LevelLoader.GetPlayerCount() + "/" + LevelLoader.GetPlayerMax();
 			for (int i = 0; i < serverList.transform.childCount; i++)
 				Destroy(serverList.transform.GetChild(i).gameObject);
-			MasterServer.RequestHostList(_typeName);
+			if(_register == false)
+				MasterServer.RequestHostList(_typeName);
 			if (_hostList != null)
 			{
-				//serverList.SetActive(true);
-				Debug.Log("Nb Host:" + _hostList.Length);
+				Debug.Log("Nb host" + _hostList.Length);
 				for (int i = 0; i < _hostList.Length; i++)
 				{
 					RectTransform rectTransform;
@@ -116,6 +110,7 @@ public class NetworkManager : MonoBehaviour
 						JoinServer(host);
 					});
 				}
+				MasterServer.ClearHostList();
 				_hostList = null;
 			}
 			yield return new WaitForSeconds(0.25f);
@@ -123,10 +118,10 @@ public class NetworkManager : MonoBehaviour
 	}
     public void JoinServer(HostData hostData)
     {
-		_hostList = null;
         Network.Connect(hostData);
         _hostConnected = hostData;
 		_playerCount = 1;
+		LevelLoader.SetPlayerCount(_playerCount);
     }
 
 
@@ -135,7 +130,11 @@ public class NetworkManager : MonoBehaviour
         if (msEvent == MasterServerEvent.HostListReceived)
         {
             _hostList = MasterServer.PollHostList();
+			if (_hostList.Length == 0)
+				_hostList = null;
         }
+		if (msEvent == MasterServerEvent.RegistrationSucceeded)
+			_register = false;
         Debug.Log(msEvent.ToString());
     }
 
@@ -164,12 +163,18 @@ public class NetworkManager : MonoBehaviour
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
 	{
-		_playerCount--;
+		_playerCount = 0;
 		LevelLoader.SetPlayerCount(_playerCount);
 		_menuManager.ShowMenu(ServerMenu);
 	}
 
 	//Debug;
+
+	private void OnServerInitialized()
+	{
+		Debug.Log("Server initialized and ready");
+	}
+
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
         Debug.Log("Could not connect to master server: " + error);

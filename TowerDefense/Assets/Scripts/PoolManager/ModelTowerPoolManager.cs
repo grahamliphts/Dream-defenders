@@ -18,12 +18,10 @@ public class ModelTowerPoolManager : MonoBehaviour
         {
             for (int i = 0; i < _modelTowers.Length; i++)
             {
-                if (_modelTowers[i] != null && _modelTowers[i].ConstructionController.GetConstruction() == true)
-                {
                     _modelTowers[i].constructionController.SetConstruction(false);
+					_modelTowers[i].constructionController.enabled = false;
                     _modelTowers[i].newtransform.position = new Vector3(1000, 1000, 1000);
                     _modelTowers[i].gameObject.SetActive(false);
-                }
             }
         }
         else

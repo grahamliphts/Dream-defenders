@@ -1,9 +1,0 @@
-Player
-
-networkView synchronisé sur Transform du player (15 FPS)
-networkView synchronisé sur CharacterController 
-	=> Accés a la fonction OnNetworkSerialize() : quelles variables vont etres serialisé et synchronisé entre clients 
-	
-Script Player 
-
-Projectile pool

@@ -8,6 +8,8 @@ public class LoopManager : MonoBehaviour
 	public RawImage ImageClose;
 	public Text CloseInfo;
 	public Text Tuto;
+	public Text ConstructionTime;
+
 	//Infos du jeu
 	public Text GameInfo;
 
@@ -68,10 +70,17 @@ public class LoopManager : MonoBehaviour
 
 		if (_lifeManager == null)
 			return;
+
 		if (LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			 if(_lose == false)
-			{			
+			{		
+				if(modeConstruction == true)
+				{
+					int constructionTime = _constructionTime - (int)(Time.time - _startTime) % 60;
+					ConstructionTime.text = constructionTime.ToString();
+				}
+
 				//Temps de construction fini
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction == true)
 				{
@@ -79,14 +88,15 @@ public class LoopManager : MonoBehaviour
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
 						SetConstruction(false);
-					
+
+					ConstructionTime.text = "None";
 					_ennemyManager.Spawn();
 				}
 
 				//Ennemis morts / wave actuelle < waves totale
 				else if (_ennemyManager.AllDied() == true && _actualWave < _waveNumber && modeConstruction == false)
 				{
-					//_actualWave++;
+					_actualWave++;
 					//Ajout d'ennemis a spawn
 					_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
 					_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
@@ -101,20 +111,39 @@ public class LoopManager : MonoBehaviour
 					_startTime = Time.time;
 				}
 
-			
 				if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
 				{
-					StartCoroutine("CloseParty","You Win");
-					_win = true;
+					if(LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncEndGame", RPCMode.All, "You win");
+					else
+					{
+						StartCoroutine("CloseParty","You Win");
+						_win = true;
+					}
 				}
+
+				
 			}
 
-			 if (_lifeManager.GetLife() <= 0)
-				StartCoroutine("CloseParty","You died");
+			 if (_lifeManager.GetLife() <= 0 && Network.isServer)
+				 _networkView.RPC("SyncEndGame", RPCMode.All, "Server Player has died");
+			 else if (_lifeManager.GetLife() <= 0)
+				 StartCoroutine("CloseParty", "You died");
+
+			 if (LifeNexus.GetLife() <= 0 && Network.isServer)
+				 _networkView.RPC("SyncEndGame", RPCMode.All, "Nexus has been destroyed");
 			 else if (LifeNexus.GetLife() <= 0)
 				 StartCoroutine("CloseParty", "Nexus has been destroyed");
         }
     }
+
+	[RPC]
+	private void SyncEndGame(string text)
+	{
+		if(text == "You win")
+			_win = true;
+		StartCoroutine("CloseParty", text);
+	}
 
 	[RPC]
 	private void SyncConstruction(bool construction)
@@ -128,12 +157,9 @@ public class LoopManager : MonoBehaviour
 		modeConstruction = construction;
 
 		if (construction == false)
-			GameInfo.text = "Wave " + (_actualWave + 1);
+			GameInfo.text = "Wave " + (_actualWave + 1) + "/" + _waveNumber;
 		else
-		{
-			_actualWave++;
 			GameInfo.text = "Poser des Tours";
-		}
 	}
 
 	IEnumerator CloseParty(string text)
@@ -160,6 +186,10 @@ public class LoopManager : MonoBehaviour
 		}
 		else
 		{
+			Destroy(GuiManager._instance.gameObject);
+			GuiManager._instance = null;
+			Destroy(LevelLoader._instance.gameObject);
+			LevelLoader._instance = null;
 			Application.LoadLevel("MenuScene");
 		}
 		
@@ -172,6 +202,10 @@ public class LoopManager : MonoBehaviour
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
 	{
+		Destroy(GuiManager._instance.gameObject);
+		GuiManager._instance = null;
+		Destroy(LevelLoader._instance.gameObject);
+		LevelLoader._instance = null;
 		Application.LoadLevel("MenuScene");
 	}
 }

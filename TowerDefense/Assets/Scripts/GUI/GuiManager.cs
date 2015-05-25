@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GuiManager : MonoBehaviour 
 {
-	private static GuiManager _instance;
+	public static GuiManager _instance;
 
 	void Start()
 	{
 		if (!_instance)
+		{
 			_instance = this;
-		else
-			Destroy(this.gameObject);
-		DontDestroyOnLoad(this.gameObject);
+			DontDestroyOnLoad(this.gameObject);
+		}
+		
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 	}
