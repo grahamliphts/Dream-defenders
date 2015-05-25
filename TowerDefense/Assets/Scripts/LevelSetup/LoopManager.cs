@@ -104,16 +104,15 @@ public class LoopManager : MonoBehaviour
 			
 				if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
 				{
-					CloseParty("You Win");
+					StartCoroutine("CloseParty","You Win");
 					_win = true;
 				}
 			}
 
 			 if (_lifeManager.GetLife() <= 0)
-				 CloseParty("You died");
-
+				StartCoroutine("CloseParty","You died");
 			 else if (LifeNexus.GetLife() <= 0)
-				 CloseParty("Nexus has been destroyed");
+				 StartCoroutine("CloseParty", "Nexus has been destroyed");
         }
     }
 
@@ -137,21 +136,20 @@ public class LoopManager : MonoBehaviour
 		}
 	}
 
-	private void CloseParty(string text)
+	IEnumerator CloseParty(string text)
 	{
-		_closingParty = true;
-
 		GameInfo.text = "";
 		Tuto.text = "";
 
 		ImageClose.gameObject.SetActive(true);
 		CloseInfo.text = text;
-		
 		_lose = true;
-		_timer += Time.deltaTime;
-		if (_timer >= 3)
+		SetConstruction(false);
+
+		yield return new WaitForSeconds(3);
+		if(LevelStart.instance.modeMulti)
 		{
-			if(Network.isServer)
+			if (Network.isServer)
 			{
 				MasterServer.UnregisterHost();
 				Network.Disconnect();
@@ -160,6 +158,11 @@ public class LoopManager : MonoBehaviour
 			else
 				Network.Disconnect();
 		}
+		else
+		{
+			Application.LoadLevel("MenuScene");
+		}
+		
 	}
 
 	public bool GetClosingParty()
@@ -169,7 +172,6 @@ public class LoopManager : MonoBehaviour
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
 	{
-		Debug.Log("OnDisconnectedFromServer - Load Menu Scene");
 		Application.LoadLevel("MenuScene");
 	}
 }

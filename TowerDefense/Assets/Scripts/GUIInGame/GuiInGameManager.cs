@@ -15,10 +15,6 @@ public class GuiInGameManager : MonoBehaviour
 	void Start () 
     {
 		_shadowTarget = action1;
-		/* _nbFireTower = ElectricPool.GetTowerNumberMax();
-		_nbElectricTower = FirePool.GetTowerNumberMax();*/
-		//ValueElectricTower.text = (_nbElectricTower - ElectricPool.GetTowersNumber()).ToString();
-		//ValueFireTower.text = (_nbFireTower - FirePool.GetTowersNumber()).ToString();
 	}
 	
 	void Update () 
@@ -31,8 +27,6 @@ public class GuiInGameManager : MonoBehaviour
 			SetColor(_shadowTarget, action3);
 		else if (Input.GetKey("4"))
 			SetColor(_shadowTarget, action4);
-
-		//int life = nexusLife.GetLifeNexus();
 	}
 
 	void SetColor(Shadow previous, Shadow current)

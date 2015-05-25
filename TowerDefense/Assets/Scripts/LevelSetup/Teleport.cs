@@ -34,26 +34,18 @@ public class Teleport : MonoBehaviour
 
         else if(other.tag == "ennemy")
         {
-			NetworkView networkView = other.GetComponent<NetworkView>();
-			Debug.Log(networkView.viewID);
-
-			if (LevelStart.instance.modeMulti == false)
+			if (LevelStart.instance.modeMulti == false || Network.isServer)
 			{
-				Debug.Log("Before tp " + other.transform.position);
 				NavMeshAgent agent;
 				agent = other.transform.GetComponent<NavMeshAgent>();
 
-				
 				other.gameObject.SetActive(false);
 				if (nextPoint != null)
 					other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;
 				other.gameObject.SetActive(true);
 				if (nextPoint != null && nextPointDest != null)
 					agent.SetDestination(nextPointDest.transform.position);
-
-				Debug.Log("After tp " + other.transform.position);
 			}
-
 		}
     }
 

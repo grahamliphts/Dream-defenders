@@ -23,7 +23,6 @@ public class MonsterLifeManager : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-		Debug.Log(col.gameObject.tag);
         int count = 0;
         foreach (string element in _tag)
         {

@@ -44,7 +44,8 @@ public class IAEnemy : MonoBehaviour
     {
 		bool bShoot = false;
 		Vector3 posToShoot = new Vector3(0, 0, 0);
-
+		if (Network.isClient)
+			_agent.enabled = false;
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			if (_agent == null)

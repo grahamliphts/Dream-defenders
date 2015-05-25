@@ -80,7 +80,7 @@ public class EnnemyManager : MonoBehaviour
 		enemy.newtransform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);
 		enemy.iaEnemy.SetArrivalP(ArrivalP);
-		if(Network.isServer)
+		if(LevelStart.instance.modeMulti == false || Network.isServer)
 			enemy.agent.SetDestination(ArrivalP.position);
 	}
 
