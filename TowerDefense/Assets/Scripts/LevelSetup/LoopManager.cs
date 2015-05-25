@@ -182,7 +182,11 @@ public class LoopManager : MonoBehaviour
 			}
 
 			else
+			{
 				Network.Disconnect();
+				Network.Destroy(Player);
+			}
+				
 		}
 		else
 		{

@@ -32,8 +32,6 @@ public class PauseGame : MonoBehaviour
 				InfoText.text = "";
 				if (Input.GetKeyDown(KeyCode.Escape))
 				{
-
-					Debug.Log("Input");
 					_pause = true;
 				}
 			}

@@ -80,8 +80,7 @@ public class TowerShoot : MonoBehaviour
             var ps = _projectilePoolManager.GetSpell();
             ps.gameObject.SetActive(true);
             ps.newtransform.position = SpawnPoint.position;
-			//Fix
-			if(_enemiesTransform[0] != null)
+			if(_enemiesTransform != null && _enemiesTransform[0] != null && _enemiesTransform.Count > 0)
 				ps.newrigidbody.AddForce((_enemiesTransform[0].position - SpawnPoint.position).normalized * _projectileSpeed);
 
             yield return new WaitForSeconds(_shootDelay);

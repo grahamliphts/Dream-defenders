@@ -39,9 +39,7 @@ public class ConstructionController : MonoBehaviour
     {
         if (other.gameObject.tag != "ground")
         {
-			Debug.Log("ontriggerexit");
              _hitCounter--;
-			 Debug.Log(_hitCounter);
              if (_hitCounter <= 0)
 			 {
 				 _hitCounter = 0;

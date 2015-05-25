@@ -14,6 +14,7 @@ public class MonsterLifeManager : MonoBehaviour
     public GameObject healthBar;
 
 	private NetworkView _networkView;
+	private bool _died;
 
     void Start()
     {
@@ -22,10 +23,13 @@ public class MonsterLifeManager : MonoBehaviour
 		_matHeathBar.SetFloat("_HP", _lifeMax);
 		_life = _lifeMax;
 		_networkView = GetComponent<NetworkView>();
+		_died = false;
     }
 
     void OnCollisionEnter(Collision col)
     {
+		if (_died)
+			return;
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			int count = 0;
@@ -42,10 +46,7 @@ public class MonsterLifeManager : MonoBehaviour
 			{
 				_networkView.RPC("SyncLifeEnemy", RPCMode.All, _life);
 				if (_life <= 0)
-				{
-					transform.position = new Vector3(1000, 1000, 1000);
-					gameObject.SetActive(false);
-				}
+					_died = true;
 			}
 			else
 			{
@@ -69,7 +70,7 @@ public class MonsterLifeManager : MonoBehaviour
 		_matHeathBar.SetFloat("_HP", _life);
 		SetColorLife(_life);
 
-		if (_life <= 0 && Network.isClient)
+		if (_life <= 0)
 		{
 			transform.position = new Vector3(1000, 1000, 1000);
 			gameObject.SetActive(false);

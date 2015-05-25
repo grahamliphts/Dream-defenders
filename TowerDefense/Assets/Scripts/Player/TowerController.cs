@@ -66,8 +66,6 @@ public class TowerController : MonoBehaviour
 		_target.constructionController.enabled = true;
 
 		_type = 0;
-
-		Debug.Log("CALL TO RESET HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE");
 	}
 
 	void ChangeTower(Type type)
