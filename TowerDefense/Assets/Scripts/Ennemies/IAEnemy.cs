@@ -43,7 +43,9 @@ public class IAEnemy : MonoBehaviour
 	void Update()
     {
 		bool bShoot = false;
-		Vector3 posToShoot = new Vector3(0, 0, 0);
+		int indexLeader;
+		Vector3 posToShoot = Vector3.zero;
+
 		if (Network.isClient)
 			_agent.enabled = false;
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
@@ -51,22 +53,37 @@ public class IAEnemy : MonoBehaviour
 			if (_agent == null)
 				return;
 			_rangeNexus = Vector3.Distance(transform.position, ArrivalP.position);
+
+			//set premier leader par défaut
 			_range = Vector3.Distance(transform.position, _leader[0].position);
+			indexLeader = 0;
+
+			if(LevelStart.instance.modeMulti)
+			{
+				for (int i = 0; i < _leader.Count; i++)
+				{
+					float rangeTmp = Vector3.Distance(transform.position, _leader[i].position);
+					if (_range > rangeTmp)
+					{
+						_range = rangeTmp;
+						indexLeader = i;
+					}
+				}
+			}		
 
 			if (_range < backrange)
 				transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
 			else if (_range < minRange)
 			{
-				posToShoot = _leader[0].position;
+				posToShoot = _leader[indexLeader].position;
 				bShoot = true;
-				transform.LookAt(_leader[0]);
+				transform.LookAt(_leader[indexLeader]);
 			}
-
 			else if (_range <= chaseRange)
 			{
 				_agent.Stop();
 				bShoot = false;
-				transform.LookAt(_leader[0]);
+				transform.LookAt(_leader[indexLeader]);
 				transform.Translate(_speed * Vector3.forward * Time.deltaTime);
 			}
 			else

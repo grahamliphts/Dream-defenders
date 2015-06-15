@@ -7,6 +7,7 @@ public class MonsterLifeManager : MonoBehaviour
 	[SerializeField]
 	private float _lifeMax;
 
+	private Color _healthBarColor;
     public string[] _tag;
     public int[] _damage;
     public Material materialModel;
@@ -21,6 +22,7 @@ public class MonsterLifeManager : MonoBehaviour
 		healthBar.GetComponent<Renderer>().material.CopyPropertiesFromMaterial(materialModel);
 		_matHeathBar = healthBar.GetComponent<Renderer>().material;
 		_matHeathBar.SetFloat("_HP", _lifeMax);
+		_healthBarColor = _matHeathBar.GetColor("_Color");
 		_life = _lifeMax;
 		_networkView = GetComponent<NetworkView>();
 		_died = false;
@@ -55,8 +57,7 @@ public class MonsterLifeManager : MonoBehaviour
 
 				if (_life <= 0)
 				{
-					transform.position = new Vector3(1000, 1000, 1000);
-					gameObject.SetActive(false);
+					ResetEnemy();
 				}
 			}
 		}
@@ -72,16 +73,28 @@ public class MonsterLifeManager : MonoBehaviour
 
 		if (_life <= 0)
 		{
-			transform.position = new Vector3(1000, 1000, 1000);
-			gameObject.SetActive(false);
+			ResetEnemy();
 		}
 
 	}
+
+	private void ResetEnemy()
+	{
+		transform.position = new Vector3(1000, 1000, 1000);
+		gameObject.SetActive(false);
+		_matHeathBar.SetFloat("_HP", _lifeMax);
+		_life = _lifeMax;
+		SetColorLife(_life);
+		_died = false;
+	}
+
 	private void SetColorLife(float life)
 	{
-		if(life <= _lifeMax/2 && life >= _lifeMax/4)
+		if(_life > _lifeMax/2)
+			_matHeathBar.SetColor("_Color", _healthBarColor);
+		else if(life <= _lifeMax/2 && life >= _lifeMax/4)
 			_matHeathBar.SetColor("_Color", Color.yellow);
-		if (life <= _lifeMax / 4)
+		else if (life < _lifeMax/4)
 			_matHeathBar.SetColor("_Color", Color.red);
 	}
 }

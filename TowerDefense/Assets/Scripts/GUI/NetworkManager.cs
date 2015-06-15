@@ -64,7 +64,6 @@ public class NetworkManager : MonoBehaviour
 		 else
 		 {
 			 _register = true;
-			 Debug.Log("Success");
 			 if (serverName.text != "" && nbPlayersInput.text != "")
 			 {
 				 _nbPlayersMax = int.Parse(nbPlayersInput.text);
