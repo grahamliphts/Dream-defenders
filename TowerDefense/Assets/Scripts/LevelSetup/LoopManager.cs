@@ -71,7 +71,7 @@ public class LoopManager : MonoBehaviour
 		if (_lifeManager == null)
 			return;
 
-		if (LevelStart.instance.modeMulti == false || Network.isServer)
+		if (!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			 if(_lose == false)
 			{		

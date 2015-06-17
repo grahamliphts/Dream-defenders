@@ -20,13 +20,13 @@ public class SpellController : MonoBehaviour
 	}
     void Update()
     {
-		if (LoopManager.modeConstruction == false)
+		if (!LoopManager.modeConstruction)
 		{
-			if (LevelStart.instance.modeMulti == false || _networkView.isMine)
+			if (!LevelStart.instance.modeMulti || _networkView.isMine)
 			{
-				if (Input.GetMouseButtonDown(0))// && (LevelStart.instance.modeMulti == false || _networkView.isMine))
+				if (Input.GetMouseButtonDown(0))
 				{
-					if (LevelStart.instance.modeMulti == false)
+					if (!LevelStart.instance.modeMulti)
 						TryToShoot(_type);
 					else
 						_networkView.RPC("SyncShoot", RPCMode.All, _type);

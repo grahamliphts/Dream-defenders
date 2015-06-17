@@ -46,9 +46,7 @@ public class IAEnemy : MonoBehaviour
 		int indexLeader;
 		Vector3 posToShoot = Vector3.zero;
 
-		if (Network.isClient)
-			_agent.enabled = false;
-		if(LevelStart.instance.modeMulti == false || Network.isServer)
+		if(!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			if (_agent == null)
 				return;

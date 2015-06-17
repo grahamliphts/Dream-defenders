@@ -8,6 +8,7 @@ public class EnemyPoolManager : MonoBehaviour {
 
     public EnemyScript GetEnemy()
     {
+		Debug.Log(_index + " index de enemy");
         var enemy = enemies[_index];
         _index++;
 
@@ -29,7 +30,7 @@ public class EnemyPoolManager : MonoBehaviour {
 
     public void ResetIndex()
     {
-        _index = 0;
+        //_index = 0;
     }
 }
 

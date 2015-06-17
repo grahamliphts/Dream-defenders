@@ -30,7 +30,7 @@ public class MonsterLifeManager : MonoBehaviour
 		if (_died)
 			return;
 		
-		if(LevelStart.instance.modeMulti == false || Network.isServer)
+		if(!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			int count = 0;
 			foreach (string element in _tag)
@@ -84,7 +84,6 @@ public class MonsterLifeManager : MonoBehaviour
 	{
 		transform.position = new Vector3(1000, 1000, 1000);
 		gameObject.SetActive(false);
-		//_networkView.stateSynchronization = NetworkStateSynchronization.Off;
 	}
 
 	private void SetColorLife(float life)
@@ -101,7 +100,6 @@ public class MonsterLifeManager : MonoBehaviour
 	{
 		_matHeathBar.SetFloat("_HP", _lifeMax);
 		_died = false;
-		//_networkView.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
 		_life = _lifeMax;
 		SetColorLife(_life);
 	}

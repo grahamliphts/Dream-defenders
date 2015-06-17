@@ -34,7 +34,7 @@ public class Teleport : MonoBehaviour
 
         else if(other.tag == "ennemy")
         {
-			if (LevelStart.instance.modeMulti == false || Network.isServer)
+			if (!LevelStart.instance.modeMulti || Network.isServer)
 			{
 				NavMeshAgent agent;
 				agent = other.transform.GetComponent<NavMeshAgent>();

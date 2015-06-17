@@ -18,7 +18,7 @@ public class NexusLife : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col)
 	{
-		if(LevelStart.instance.modeMulti == false || Network.isServer)
+		if(!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			if (_life > 0)
 			{
