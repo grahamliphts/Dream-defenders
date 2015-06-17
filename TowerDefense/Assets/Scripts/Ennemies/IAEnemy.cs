@@ -62,6 +62,7 @@ public class IAEnemy : MonoBehaviour
 			{
 				for (int i = 0; i < _leader.Count; i++)
 				{
+					//Debug.Log(_leader[i]);
 					float rangeTmp = Vector3.Distance(transform.position, _leader[i].position);
 					if (_range > rangeTmp)
 					{

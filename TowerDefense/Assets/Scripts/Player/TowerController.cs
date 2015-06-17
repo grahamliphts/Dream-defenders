@@ -31,10 +31,7 @@ public class TowerController : MonoBehaviour
 				if (LevelStart.instance.modeMulti == false)
 					PlaceTower(_constructionController.transform.position, _type);
 				else
-				{
-					Debug.Log("Send RPC with " + _type);
 					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);
-				}
 			}
 
 			if (Input.GetKey("1"))

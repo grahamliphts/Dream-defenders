@@ -13,16 +13,9 @@ public class Tuto : MonoBehaviour
 	void Update () 
 	{
 		if (Input.GetKeyDown(KeyCode.O))
-		{
 			StartCoroutine("LoadTuto");
-			Debug.Log("StartCoroutine");
-		}
-			
 		else if (Input.GetKeyDown(KeyCode.N))
-		{
-			tutoMessage.enabled = false;
-		}
-			
+			tutoMessage.enabled = false;	
 	}
 
 	IEnumerator LoadTuto()

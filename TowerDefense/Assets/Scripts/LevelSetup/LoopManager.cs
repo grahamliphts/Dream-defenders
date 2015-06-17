@@ -120,9 +120,7 @@ public class LoopManager : MonoBehaviour
 						StartCoroutine("CloseParty","You Win");
 						_win = true;
 					}
-				}
-
-				
+				}	
 			}
 
 			 if (_lifeManager.GetLife() <= 0 && Network.isServer)

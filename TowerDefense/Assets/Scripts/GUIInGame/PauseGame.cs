@@ -19,10 +19,7 @@ public class PauseGame : MonoBehaviour
 				Time.timeScale = 0.0f;
 				InfoText.text = "Pause";
 				if (Input.GetKeyDown(KeyCode.Escape))
-				{
-					Debug.Log("Input");
 					_pause = false;
-				}
 
 			}
 			else
