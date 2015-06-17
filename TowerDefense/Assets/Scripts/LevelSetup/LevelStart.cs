@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class LevelStart : MonoBehaviour 
 {
@@ -9,8 +10,10 @@ public class LevelStart : MonoBehaviour
 
 	//Prefab player
     public GameObject netPlayer;
+	public GameObject[] netPlayers;
 	public GameObject playerSolo;
 
+	private List<NetworkPlayer> _netPLayers;
 	//Pools
 	public SpellPoolManager[] spellPool;
 	public SpellPoolManager currentSpellPool;
@@ -28,6 +31,7 @@ public class LevelStart : MonoBehaviour
 	public ModelTowerPoolManager modelTowerManager;
 	//Debug network
 	public bool network;
+	private NetworkView _networkView;
 
 	void Start()
 	{
@@ -35,25 +39,36 @@ public class LevelStart : MonoBehaviour
 		currentSpellPool = spellPool[0];
 		currentTowerPool = towerPool[0];
 		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
+		_networkView = GetComponent<NetworkView>();
 	}
 
-    public void OnLoadedLevel(bool network)
+    public void OnLoadedLevel(bool network, int id, int nbPlayers)
     {
 		GameObject player;
-		NetworkView networkView;
+		Debug.Log("LevelStart: "+id);
 		if (network)
 		{
+
+			/*player = netPlayers[id];
+			NetworkViewID viewId;
+			viewId = Network.AllocateViewID();
+			player.GetComponents<NetworkView>()[0].viewID = viewId;
+			viewId = Network.AllocateViewID();
+			player.GetComponents<NetworkView>()[1].viewID = viewId;
+
+			Debug.Log("Send rp with id:" + id + " from networkview 1");
+			_networkView.RPC("SetPlayerActive", RPCMode.All, id);*/
 			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 1) as GameObject;
-			networkView = player.GetComponent<NetworkView>();
-			//GetComponent<EnnemyManager>().SetNetworkView(networkView);
+			//GetComponent<EnnemyManager>()._players.Add(player.transform);
 			modeMulti = true;
+			
 		}
 		else
 		{
 			player = Instantiate(playerSolo, _spawnPosition.position, Quaternion.identity) as GameObject;
 			modeMulti = false;
 		}
-
+		
 		player.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 		Transform targetCamera = null;
 		for (int i = 0; i < player.transform.childCount; i++)
@@ -69,7 +84,8 @@ public class LevelStart : MonoBehaviour
 		Camera.main.gameObject.GetComponent<CameraController>().SetPlayer(player);
 
 		/*Enemies Set*/
-		GetComponent<EnnemyManager>().players.Add(player.transform);
+		//_networkView.RPC("AddLeaderEnemies", RPCMode.All, id);
+		GetComponent<EnnemyManager>().Players.Add(player.transform);
 
 		/*Life Set*/
 		_lifeBarPlayer.SetPlayer(player);
@@ -80,4 +96,20 @@ public class LevelStart : MonoBehaviour
 		loopManager.Player = player;
 		loopManager.Init(player.GetComponent<PlayerLifeManager>());
     }
+
+	[RPC]
+	private void AddLeaderEnemies(int id)
+	{
+		GetComponent<EnnemyManager>().Players.Add(netPlayers[id].transform);
+	}
+
+	[RPC]
+	private void SetPlayerActive(int id)
+	{
+		netPlayers[id].SetActive(true);
+		Debug.Log("Set active " + id);
+	}
+
 }
+
+

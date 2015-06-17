@@ -9,7 +9,6 @@ public class NetworkManager : MonoBehaviour
     public GameObject serverList;
     public Text serverName;
     public Text nbPlayersInput;
-    public Canvas canvas;
     public Menu LobbyMenu;
 	public Menu ServerMenu;
     public Text nbPlayersConnected;
@@ -22,20 +21,22 @@ public class NetworkManager : MonoBehaviour
     private const string _typeName = "TowerDefense";
     private string _gameName;
     private HostData[] _hostList;
-    List<NetworkPlayer> _players;
+
+	[SerializeField]
+    public List<NetworkPlayer> _players;
+
     private HostData _hostConnected;
 	private int _playerCount;
 	private int _nbPlayersMax;
-	public MenuManager _menuManager;
+	public MenuManager MenuManager;
 	public LevelLoader LevelLoader;
 	private bool _register;
 
     void Start()
     {
-        _players = new List<NetworkPlayer>();
+		_players = new List<NetworkPlayer>();
         _playerCount = 0;
 		_register = false;
-		_menuManager = canvas.GetComponent<MenuManager>();
 		StartCoroutine("RefreshHostList");
     }
 
@@ -73,7 +74,7 @@ public class NetworkManager : MonoBehaviour
 				 Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
 				 MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
 
-				 _menuManager.ShowMenu(LobbyMenu);
+				 MenuManager.ShowMenu(LobbyMenu);
 			 }
 		 }
        
@@ -90,7 +91,6 @@ public class NetworkManager : MonoBehaviour
 				MasterServer.RequestHostList(_typeName);
 			if (_hostList != null)
 			{
-				Debug.Log("Nb host" + _hostList.Length);
 				for (int i = 0; i < _hostList.Length; i++)
 				{
 					RectTransform rectTransform;
@@ -105,7 +105,7 @@ public class NetworkManager : MonoBehaviour
 					HostData host = _hostList[i];
 					button.GetComponent<Button>().onClick.AddListener(() =>
 					{
-						_menuManager.ShowMenu(LobbyMenu);
+						MenuManager.ShowMenu(LobbyMenu);
 						JoinServer(host);
 					});
 				}
@@ -134,7 +134,7 @@ public class NetworkManager : MonoBehaviour
         }
 		if (msEvent == MasterServerEvent.RegistrationSucceeded)
 			_register = false;
-        Debug.Log(msEvent.ToString());
+        //Debug.Log(msEvent.ToString());
     }
 
     private void OnPlayerConnected(NetworkPlayer player) //Server
@@ -155,7 +155,6 @@ public class NetworkManager : MonoBehaviour
 	{
 		_playerCount--;
 		LevelLoader.SetPlayerCount(_playerCount);
-		Debug.Log("Clean up after player " +  player);
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
 	}
@@ -164,7 +163,7 @@ public class NetworkManager : MonoBehaviour
 	{
 		_playerCount = 0;
 		LevelLoader.SetPlayerCount(_playerCount);
-		_menuManager.ShowMenu(ServerMenu);
+		MenuManager.ShowMenu(ServerMenu);
 	}
 
 	//Debug;

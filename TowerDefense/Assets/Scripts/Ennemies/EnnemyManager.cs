@@ -23,7 +23,8 @@ public class EnnemyManager : MonoBehaviour
 
     public EnemyPoolManager[] EnemyPools;
    
-	public List<Transform> players;
+	[SerializeField]
+	public List<Transform> Players;
 	private int _nbTotalEnemies;
 	enum Type {Elec, Fire, Ice, Poison};
 
@@ -49,22 +50,19 @@ public class EnnemyManager : MonoBehaviour
 			InitEnemy((int)Type.Ice);
 		for (int i = 0; i < _numberPoison; i++)
 			InitEnemy((int)Type.Poison);
-
-		for(int i = 0; i < 4; i++)
-			EnemyPools[i].ResetIndex();
 	}
 
 	public void InitEnemy(int index)
 	{
-		if(LevelStart.instance.modeMulti == false || Network.isServer)
+		if (LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			if (LevelStart.instance.modeMulti)
 				_networkView.RPC("SetEnemy", RPCMode.All, (index));
 			else
-				SpawnEnemies(index);
+				SpawnEnemies(index);	
 		}
-		
 	}
+
 	[RPC]
 	private void SetEnemy(int index)
 	{
@@ -74,14 +72,19 @@ public class EnnemyManager : MonoBehaviour
 	private void SpawnEnemies(int index)
 	{
 		var enemy = EnemyPools[index].GetEnemy();
-		for (int j = 0; j < players.Count; j++)
-			enemy.iaEnemy.AddLeader(players[j]);
+		for (int j = 0; j < Players.Count; j++)
+			enemy.iaEnemy.AddLeader(Players[j]);
 
 		enemy.newtransform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);
 		enemy.iaEnemy.SetArrivalP(ArrivalP);
+		//enemy.agent.Set
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
 			enemy.agent.SetDestination(ArrivalP.position);
+
+		Debug.Log(enemy.agent.isActiveAndEnabled);
+		for (int i = 0; i < 4; i++)
+			EnemyPools[i].ResetIndex();
 	}
 
     public bool AllDied()

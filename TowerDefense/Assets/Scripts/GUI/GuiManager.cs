@@ -33,6 +33,6 @@ public class GuiManager : MonoBehaviour
 	{
 		Application.LoadLevel("MainScene");
 		yield return null;
-		LevelStart.instance.OnLoadedLevel(false);
+		LevelStart.instance.OnLoadedLevel(false, 0, 1);
 	}
 }

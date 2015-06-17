@@ -17,21 +17,19 @@ public class MonsterLifeManager : MonoBehaviour
 	private NetworkView _networkView;
 	private bool _died;
 
-    void Start()
-    {
+	void Awake()
+	{
 		healthBar.GetComponent<Renderer>().material.CopyPropertiesFromMaterial(materialModel);
 		_matHeathBar = healthBar.GetComponent<Renderer>().material;
-		_matHeathBar.SetFloat("_HP", _lifeMax);
 		_healthBarColor = _matHeathBar.GetColor("_Color");
-		_life = _lifeMax;
 		_networkView = GetComponent<NetworkView>();
-		_died = false;
-    }
+	}
 
     void OnCollisionEnter(Collision col)
     {
 		if (_died)
 			return;
+		
 		if(LevelStart.instance.modeMulti == false || Network.isServer)
 		{
 			int count = 0;
@@ -48,7 +46,10 @@ public class MonsterLifeManager : MonoBehaviour
 			{
 				_networkView.RPC("SyncLifeEnemy", RPCMode.All, _life);
 				if (_life <= 0)
+				{
 					_died = true;
+				}
+					
 			}
 			else
 			{
@@ -57,7 +58,8 @@ public class MonsterLifeManager : MonoBehaviour
 
 				if (_life <= 0)
 				{
-					ResetEnemy();
+					DestroyEnemy();
+					_died = true;
 				}
 			}
 		}
@@ -73,19 +75,16 @@ public class MonsterLifeManager : MonoBehaviour
 
 		if (_life <= 0)
 		{
-			ResetEnemy();
+			DestroyEnemy();
 		}
 
 	}
 
-	private void ResetEnemy()
+	private void DestroyEnemy()
 	{
 		transform.position = new Vector3(1000, 1000, 1000);
 		gameObject.SetActive(false);
-		_matHeathBar.SetFloat("_HP", _lifeMax);
-		_life = _lifeMax;
-		SetColorLife(_life);
-		_died = false;
+		//_networkView.stateSynchronization = NetworkStateSynchronization.Off;
 	}
 
 	private void SetColorLife(float life)
@@ -96,5 +95,14 @@ public class MonsterLifeManager : MonoBehaviour
 			_matHeathBar.SetColor("_Color", Color.yellow);
 		else if (life < _lifeMax/4)
 			_matHeathBar.SetColor("_Color", Color.red);
+	}
+
+	void OnEnable ()
+	{
+		_matHeathBar.SetFloat("_HP", _lifeMax);
+		_died = false;
+		//_networkView.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
+		_life = _lifeMax;
+		SetColorLife(_life);
 	}
 }
