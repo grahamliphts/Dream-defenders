@@ -8,7 +8,6 @@ public class EnemyPoolManager : MonoBehaviour {
 
     public EnemyScript GetEnemy()
     {
-		Debug.Log(_index + " index de enemy");
         var enemy = enemies[_index];
         _index++;
 

@@ -13,7 +13,6 @@ public class LevelStart : MonoBehaviour
 	public GameObject[] netPlayers;
 	public GameObject playerSolo;
 
-	private List<NetworkPlayer> _netPLayers;
 	//Pools
 	public SpellPoolManager[] spellPool;
 	public SpellPoolManager currentSpellPool;
@@ -48,25 +47,19 @@ public class LevelStart : MonoBehaviour
 		Debug.Log("LevelStart: "+id);
 		if (network)
 		{
-
-			/*player = netPlayers[id];
-			NetworkViewID viewId;
-			viewId = Network.AllocateViewID();
-			player.GetComponents<NetworkView>()[0].viewID = viewId;
-			viewId = Network.AllocateViewID();
-			player.GetComponents<NetworkView>()[1].viewID = viewId;
-
-			Debug.Log("Send rp with id:" + id + " from networkview 1");
-			_networkView.RPC("SetPlayerActive", RPCMode.All, id);*/
-			player = Network.Instantiate(netPlayer, _spawnPosition.position, Quaternion.identity, 1) as GameObject;
-			//GetComponent<EnnemyManager>()._players.Add(player.transform);
+			player = netPlayers[id];
+			player.GetComponent<CharacController>().isMine = true;
+			_networkView.RPC("SetPlayerActive", RPCMode.All, id);
 			modeMulti = true;
-			
+			/*Enemies Set*/
+			_networkView.RPC("AddLeaderEnemies", RPCMode.All, id);
 		}
 		else
 		{
 			player = Instantiate(playerSolo, _spawnPosition.position, Quaternion.identity) as GameObject;
 			modeMulti = false;
+			/*Enemies Set*/
+			GetComponent<EnnemyManager>().Players.Add(player.transform);
 		}
 		
 		player.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
@@ -82,10 +75,6 @@ public class LevelStart : MonoBehaviour
 		if(targetCamera != null)
 			Camera.main.gameObject.GetComponent<CameraController>().target = targetCamera;
 		Camera.main.gameObject.GetComponent<CameraController>().SetPlayer(player);
-
-		/*Enemies Set*/
-		//_networkView.RPC("AddLeaderEnemies", RPCMode.All, id);
-		GetComponent<EnnemyManager>().Players.Add(player.transform);
 
 		/*Life Set*/
 		_lifeBarPlayer.SetPlayer(player);
@@ -107,9 +96,7 @@ public class LevelStart : MonoBehaviour
 	private void SetPlayerActive(int id)
 	{
 		netPlayers[id].SetActive(true);
-		Debug.Log("Set active " + id);
 	}
-
 }
 
 

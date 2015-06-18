@@ -24,11 +24,11 @@ public class TowerController : MonoBehaviour
 
 	void Update()
 	{
-		if ((LevelStart.instance.modeMulti == false || _networkView.isMine) && LoopManager.modeConstruction == true)
+		if ((!LevelStart.instance.modeMulti || _networkView.isMine) && LoopManager.modeConstruction == true)
 		{
 			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction)
 			{
-				if (LevelStart.instance.modeMulti == false)
+				if (!LevelStart.instance.modeMulti)
 					PlaceTower(_constructionController.transform.position, _type);
 				else
 					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);

@@ -13,6 +13,20 @@ public class CharacController : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _direction;
 
+	private bool _isMine;
+
+	public bool isMine
+	{
+		set
+		{
+			_isMine = value;
+		}
+		get
+		{
+			return _isMine;
+		}
+	}
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -35,7 +49,7 @@ public class CharacController : MonoBehaviour
 
     void FixedUpdate()
     {
-		if (LevelStart.instance.modeMulti == false || _networkView.isMine)
+		if (!LevelStart.instance.modeMulti || _isMine)
 		{
 			_direction = Vector3.zero;
 			if (Input.GetKey("z"))

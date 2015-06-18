@@ -87,7 +87,6 @@ public class EnnemyManager : MonoBehaviour
 	private void SpawnEnemies(int index)
 	{
 		var enemy = EnemyPools[index].GetEnemy();
-		Debug.Log(enemy + " spawn");
 		for (int j = 0; j < Players.Count; j++)
 			enemy.iaEnemy.AddLeader(Players[j]);
 

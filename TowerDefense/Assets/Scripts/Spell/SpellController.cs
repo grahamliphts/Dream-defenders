@@ -10,9 +10,12 @@ public class SpellController : MonoBehaviour
 	private Transform _firePoint;
 	private int _type;
 
+	private bool _isMine;
+
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView>();
+		_isMine = GetComponent<CharacController>().isMine;
 		_firePoint = transform.GetChild(2);
 		_spellPoolManager = LevelStart.instance.spellPool;
 		_currentSpellPool = LevelStart.instance.currentSpellPool;
@@ -22,7 +25,7 @@ public class SpellController : MonoBehaviour
     {
 		if (!LoopManager.modeConstruction)
 		{
-			if (!LevelStart.instance.modeMulti || _networkView.isMine)
+			if (!LevelStart.instance.modeMulti || _isMine)
 			{
 				if (Input.GetMouseButtonDown(0))
 				{
