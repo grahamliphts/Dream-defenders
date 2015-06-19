@@ -7,6 +7,8 @@ public class TowerController : MonoBehaviour
 	private TowerPoolManager []_towerPool;
 	private TowerPoolManager _currentTowerPool;
 	private ConstructionController _constructionController;
+	private int[] _towerAvailables;
+
 	private NetworkView _networkView;
 
 	private TowerConstructionScript _target;
@@ -16,34 +18,57 @@ public class TowerController : MonoBehaviour
 	private int _type;
 	private bool _reset;
 	private bool _isMine;
+	[SerializeField]
+	private int _nbtowerAvailables;
 
 	void Start()
 	{
 		_isMine = GetComponent<CharacController>().isMine;
 		_networkView = GetComponent<NetworkView>();
+		_towerAvailables = LevelStart.instance.towerAvailables;
+		_nbtowerAvailables = _towerAvailables[0];
 		Reset();
 	}
 
 	void Update()
 	{
-		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction == true)
+		Debug.Log(_nbtowerAvailables);
+		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction)
 		{
-			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction)
+			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && _nbtowerAvailables > 0)
 			{
 				if (!LevelStart.instance.modeMulti)
 					PlaceTower(_constructionController.transform.position, _type);
 				else
 					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);
+
+				_nbtowerAvailables--;
+				_towerAvailables[(int)_type]--;
 			}
 
 			if (Input.GetKey("1"))
+			{
 				ChangeTower(Type.Fire);
+				_nbtowerAvailables = _towerAvailables[(int)Type.Fire];
+			}
+				
 			else if (Input.GetKey("2"))
+			{
 				ChangeTower(Type.Elec);
+				_nbtowerAvailables = _towerAvailables[(int)Type.Elec];
+			}
 			else if (Input.GetKey("3"))
+			{
 				ChangeTower(Type.Poison);
+				_nbtowerAvailables = _towerAvailables[(int)Type.Poison];
+			}
+				
 			else if (Input.GetKey("4"))
+			{
 				ChangeTower(Type.Ice);
+				_nbtowerAvailables = _towerAvailables[(int)Type.Ice];
+			}
+				
 
 			_constructionController = _target.constructionController;
 		}

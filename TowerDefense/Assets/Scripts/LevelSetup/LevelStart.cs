@@ -8,17 +8,20 @@ public class LevelStart : MonoBehaviour
 	public static LevelStart instance = null;
 	public bool modeMulti;
 
-	//Prefab player
-    public GameObject netPlayer;
+	//Players
 	public GameObject[] netPlayers;
 	public GameObject playerSolo;
 
-	//Pools
+	//Pools Spell et Tower
 	public SpellPoolManager[] spellPool;
 	public SpellPoolManager currentSpellPool;
 	public TowerPoolManager[] towerPool;
 	public TowerPoolManager currentTowerPool;
 
+	//Availables Towers
+	public int[] towerAvailables;
+
+	//LifeBarSet
 	public GameObject guiManager;
 	public Image LifeBar;
 	private LifeBarManager _lifeBarPlayer;
@@ -28,6 +31,7 @@ public class LevelStart : MonoBehaviour
 
 	//Variables utiles
 	public ModelTowerPoolManager modelTowerManager;
+
 	//Debug network
 	public bool network;
 	private NetworkView _networkView;
