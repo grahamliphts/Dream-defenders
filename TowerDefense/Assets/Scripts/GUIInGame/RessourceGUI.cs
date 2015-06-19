@@ -5,18 +5,18 @@ using UnityEngine.UI;
 public class RessourceGUI : MonoBehaviour 
 {
 	public Text[] valueTower;
-	private TowerPoolManager[] _towerPool;
+	private int[] _towerAvailables;
 
 	void Start ()
 	{
-		_towerPool = LevelStart.instance.towerPool;
+		_towerAvailables = LevelStart.instance.towerAvailables;
 	}
 	
 	void Update () 
 	{
 		for(int i = 0; i < valueTower.Length; i++)
 		{
-			int value = _towerPool[i].GetTowerNumberMax() - _towerPool[i].GetTowersNumber();
+			int value = _towerAvailables[i];
 			valueTower[i].text = value.ToString();
 		}
 	}
