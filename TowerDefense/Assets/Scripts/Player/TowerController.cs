@@ -15,16 +15,18 @@ public class TowerController : MonoBehaviour
 
 	private int _type;
 	private bool _reset;
+	private bool _isMine;
 
 	void Start()
 	{
+		_isMine = GetComponent<CharacController>().isMine;
 		_networkView = GetComponent<NetworkView>();
 		Reset();
 	}
 
 	void Update()
 	{
-		if ((!LevelStart.instance.modeMulti || _networkView.isMine) && LoopManager.modeConstruction == true)
+		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction == true)
 		{
 			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && LoopManager.modeConstruction)
 			{
