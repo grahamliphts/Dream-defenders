@@ -105,12 +105,10 @@ public class TowerController : MonoBehaviour
 
 	void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)
 	{
-		Debug.Log(previousTower);
 		previousTower.gameObject.SetActive(false);
 		previousTower.constructionController.enabled = false;
 		previousTower.Transform.position = new Vector3(1000, 1000, 1000);
 
-		Debug.Log(tower);	
 		tower.gameObject.SetActive(true);
 		tower.constructionController.enabled = true;
 		tower.constructionController.Reset();
