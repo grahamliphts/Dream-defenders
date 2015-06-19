@@ -27,6 +27,7 @@ public class TowerController : MonoBehaviour
 		_networkView = GetComponent<NetworkView>();
 		_towerAvailables = LevelStart.instance.towerAvailables;
 		_nbtowerAvailables = _towerAvailables[0];
+
 		Reset();
 	}
 
@@ -35,7 +36,7 @@ public class TowerController : MonoBehaviour
 		Debug.Log(_nbtowerAvailables);
 		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction)
 		{
-			if (Input.GetMouseButtonDown(0) && _target.constructionController.GetHitCounter() == 0 && _nbtowerAvailables > 0)
+			if (Input.GetMouseButtonDown(0) && _target.constructionController.hitCounter == 0 && _nbtowerAvailables > 0)
 			{
 				if (!LevelStart.instance.modeMulti)
 					PlaceTower(_constructionController.transform.position, _type);
@@ -139,7 +140,6 @@ public class TowerController : MonoBehaviour
 		tower.gameObject.SetActive(true);
 		tower.constructionController.enabled = true;
 		tower.constructionController.Reset();
-		tower.constructionController.SetConstruction(true);
 	}
 }
 

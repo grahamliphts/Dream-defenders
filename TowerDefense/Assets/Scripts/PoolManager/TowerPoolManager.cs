@@ -9,26 +9,14 @@ public class TowerPoolManager : MonoBehaviour
 
     public TowerScript GetTower()
     {
-		if (_index >= GetTowerNumberMax())
+		if (_index >= _towers.Length)
+		{
+			Debug.Log("DEBUG: too much Tower availables in LevelStart Script");
 			return null;
+		}
+
         var tower = _towers[_index];
         _index++;
 		return tower;
-    }
-
-    public int GetTowersNumber()
-    {
-        int number = 0;
-        for (int i = 0; i < _towers.Length; i++)
-        {
-            if(_towers[i].gameObject.activeSelf == true)
-                number++;
-        }
-        return number;
-    }
-
-    public int GetTowerNumberMax()
-    {
-        return _towers.Length;
     }
 }
