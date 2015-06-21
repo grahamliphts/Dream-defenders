@@ -33,7 +33,6 @@ public class TowerController : MonoBehaviour
 
 	void Update()
 	{
-		Debug.Log(_nbtowerAvailables);
 		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction)
 		{
 			if (Input.GetMouseButtonDown(0) && _target.constructionController.hitCounter == 0 && _nbtowerAvailables > 0)
@@ -97,10 +96,8 @@ public class TowerController : MonoBehaviour
 	{
 		_type = (int)type;
 		_currentTowerPool = _towerPool[(int)type];
-		//Debug.Log("avant if " + _target == null ? "NULL" : _target.name);
 		if (_target != _modelTowerManager.GetTower((int)type))
 		{
-			//Debug.Log("if");
 			_newTarget = _modelTowerManager.GetTower((int)type);
 			SetTower(_target, _newTarget);
 			_target = _newTarget;

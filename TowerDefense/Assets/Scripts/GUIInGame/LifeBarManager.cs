@@ -8,26 +8,49 @@ public class LifeBarManager : MonoBehaviour
 	public Scrollbar LifeNexusValue;
 	public Image lifeBarNexus;
 
+	//color/value of life
     private Color _lifeBarColor;
     private float _life;
     private float _lifeBarValue;
-    private PlayerLifeManager _lifeManager;
+ 
 	public NexusLife LifeNexus;
+	public Image lifeBar;
 
-    private Image _lifeBar;
-
-	//set the lifeBar to the player
+	private PlayerLifeManager _lifeManager;
+	public PlayerLifeManager lifeManager
+	{
+		set
+		{
+			_lifeManager = value;
+		}
+		get
+		{
+			return _lifeManager;
+		}
+	}
 	private GameObject _player;
+	public GameObject player
+	{
+		set
+		{
+			_player = value;
+		}
+		get
+		{
+			return _player;
+		}
+	}
+
 	void Update () 
     {
 		if (_lifeManager == null)
 			return;
-        if (_lifeManager.GetLife() >= 0)
+        if (_lifeManager.life >= 0)
         {
-			_lifeBarValue = _lifeManager.GetLife() / 100;
+			_lifeBarValue = _lifeManager.life / 100;
 			LifePlayerValue.size = _lifeBarValue;
             SetColorLife();
-            _lifeBar.color = _lifeBarColor;
+			lifeBar.color = _lifeBarColor;
         }
 
 		if (LifeNexus.GetLife() >= 0)
@@ -48,19 +71,4 @@ public class LifeBarManager : MonoBehaviour
         else if (_lifeBarValue < 0.25)
             _lifeBarColor = Color.red;
     }
-
-	public void SetLifeManager(PlayerLifeManager lifeManager)
-	{
-		_lifeManager = lifeManager;
-	}
-
-	public void SetLifeBar(Image lifeBar)
-	{
-		_lifeBar = lifeBar;
-	}
-
-	public void SetPlayer(GameObject player)
-	{
-		_player = player;
-	}
 }

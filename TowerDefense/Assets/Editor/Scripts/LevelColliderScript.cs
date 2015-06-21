@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class LevelColliderScript : EditorWindow
 {
 	Object tpPrefab;
+	Object lightPrefab;
 	Object sablierPrefab;
+	GameObject level;
 	string nameLevel;
 
     // Add menu item named "My Window" to the Window menu
@@ -20,19 +22,19 @@ public class LevelColliderScript : EditorWindow
     {
         GUILayout.Label ("Settings", EditorStyles.boldLabel);
 		EditorGUILayout.BeginVertical();
-		nameLevel = EditorGUILayout.TextField("Name of Level", nameLevel);
+		level = EditorGUILayout.ObjectField("Level", level, typeof(Object), true) as GameObject;
+		lightPrefab = EditorGUILayout.ObjectField("Prefab Light", lightPrefab, typeof(Object), true);
 		tpPrefab = EditorGUILayout.ObjectField("Prefab Tp", tpPrefab, typeof(Object), true);
 		sablierPrefab = EditorGUILayout.ObjectField("Prefab Nexus", sablierPrefab, typeof(Object), true);
 		EditorGUILayout.EndVertical();
 
 		if (GUILayout.Button("OK"))
-			Init(sablierPrefab, tpPrefab, nameLevel);
+			Init(sablierPrefab, tpPrefab, lightPrefab, level);
 		
     }
 
-    static void Init(Object sablierPrefab, Object tpPrefab, string nameLevel)
+	static void Init(Object sablierPrefab, Object tpPrefab, Object lightPrefab, GameObject level)
     {
-        GameObject level = GameObject.Find(nameLevel);
         if (level != null)
         {
 			//Add the point Manager with script
@@ -54,35 +56,37 @@ public class LevelColliderScript : EditorWindow
 			{
 				Transform child = level.transform.GetChild(i);
 				child.gameObject.AddComponent<BoxCollider>();
-				if (child.gameObject.name.StartsWith("Point"))
+
+				if (child.gameObject.name.StartsWith("tp"))
 				{
 					manager.point_list.Add(child.gameObject);
 					child.gameObject.tag = "tp";
 				}
-				if (child.gameObject.GetComponent<Renderer>() != null)
+				else if(child.gameObject.name.StartsWith("main_light"))
 				{
-					if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "ground")
-					{
-						child.gameObject.tag = "ground";
-						child.gameObject.name = "ground";
-					}
-					else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall")
-					{
-						child.gameObject.tag = "wall";
-						child.gameObject.name = "wall";
-					}
+					GameObject ligthMain = PrefabUtility.InstantiatePrefab(lightPrefab) as GameObject;
+					ligthMain.transform.position = child.gameObject.transform.position;
+				}
 
-					else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "cap")
-					{
-						child.gameObject.tag = "cap";
-						child.gameObject.name = "cap";
-					}
-
-					else if (child.gameObject.GetComponent<Renderer>().sharedMaterial.name == "wall_inside")
-					{
-						child.gameObject.tag = "wall_inside";
-						child.gameObject.name = "wall_inside";
-					}
+				else if (child.gameObject.name.StartsWith("ground"))
+				{
+					child.gameObject.tag = "ground";
+					child.gameObject.name = "ground";
+				}
+				else if (child.gameObject.name.StartsWith("wall_inside"))
+				{
+					child.gameObject.tag = "wall_inside";
+					child.gameObject.name = "wall_inside";
+				}
+				else if (child.gameObject.name.StartsWith("wall"))
+				{
+					child.gameObject.tag = "wall";
+					child.gameObject.name = "wall";
+				}
+				else if (child.gameObject.name.StartsWith("cap"))
+				{
+					child.gameObject.tag = "cap";
+					child.gameObject.name = "cap";
 				}
 			}
 

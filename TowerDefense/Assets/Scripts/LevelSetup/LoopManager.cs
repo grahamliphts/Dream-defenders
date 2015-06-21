@@ -26,7 +26,19 @@ public class LoopManager : MonoBehaviour
     private int _actualWave;
     private float _startTime;
 
-	public GameObject Player;
+	private GameObject _player;
+	public GameObject player
+	{
+		set
+		{
+			_player = value;
+		}
+		get
+		{
+			return _player;
+		}
+	}
+
     public static bool modeConstruction;
 
     private bool _win;
@@ -73,9 +85,9 @@ public class LoopManager : MonoBehaviour
 
 		if (!LevelStart.instance.modeMulti || Network.isServer)
 		{
-			 if(_lose == false)
-			{		
-				if(modeConstruction == true)
+			if (_lose == false)
+			{
+				if (modeConstruction == true)
 				{
 					int constructionTime = _constructionTime - (int)(Time.time - _startTime) % 60;
 					ConstructionTime.text = constructionTime.ToString();
@@ -113,27 +125,53 @@ public class LoopManager : MonoBehaviour
 
 				if (_actualWave == _waveNumber && _ennemyManager.AllDied() == true && _win == false)
 				{
-					if(LevelStart.instance.modeMulti)
+					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncEndGame", RPCMode.All, "You win");
 					else
 					{
-						StartCoroutine("CloseParty","You Win");
+						StartCoroutine("CloseParty", "You Win");
 						_win = true;
 					}
-				}	
+				}
 			}
+		}
 
-			 if (_lifeManager.GetLife() <= 0 && Network.isServer)
-				 _networkView.RPC("SyncEndGame", RPCMode.All, "Server Player has died");
-			 else if (_lifeManager.GetLife() <= 0)
-				 StartCoroutine("CloseParty", "You died");
+		if(_lifeManager.life <= 0)
+		{
+			//Deco all clients
+			if(Network.isServer)
+				_networkView.RPC("SyncEndGame", RPCMode.All, "Server Player has died");
+			else if(Network.isClient)
+			{
+				NetworkPlayer player = Network.player;
+				_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
+				//StartCoroutine("CloseParty", "You died");
 
-			 if (LifeNexus.GetLife() <= 0 && Network.isServer)
-				 _networkView.RPC("SyncEndGame", RPCMode.All, "Nexus has been destroyed");
-			 else if (LifeNexus.GetLife() <= 0)
-				 StartCoroutine("CloseParty", "Nexus has been destroyed");
-        }
+				
+			}
+				
+			else
+				StartCoroutine("CloseParty", "You died");
+		}
+			
+
+		if (LifeNexus.GetLife() <= 0 && Network.isServer)
+			_networkView.RPC("SyncEndGame", RPCMode.All, "Nexus has been destroyed");
+		else if (LifeNexus.GetLife() <= 0)
+			StartCoroutine("CloseParty", "Nexus has been destroyed");
+        
     }
+
+	[RPC]
+	private void PlayerLeft(int id)
+	{
+		LevelStart.instance.netPlayers[id].SetActive(false);
+		NetworkPlayer player = Network.player;
+		if (int.Parse(player.ToString()) == id)
+			StartCoroutine("CloseParty", "You died");
+		else
+			StartCoroutine("PopupMessage", "Player has left");
+	}
 
 	[RPC]
 	private void SyncEndGame(string text)
@@ -160,6 +198,16 @@ public class LoopManager : MonoBehaviour
 			GameInfo.text = "Poser des Tours";
 	}
 
+	IEnumerator PopupMessage(string text)
+	{
+		Tuto.text = "";
+		ImageClose.gameObject.SetActive(true);
+		CloseInfo.text = text;
+		yield return new WaitForSeconds(3);
+		CloseInfo.text = "";
+		ImageClose.gameObject.SetActive(false);
+	}
+
 	IEnumerator CloseParty(string text)
 	{
 		GameInfo.text = "";
@@ -170,6 +218,7 @@ public class LoopManager : MonoBehaviour
 		_lose = true;
 		SetConstruction(false);
 
+		player.SetActive(false);
 		yield return new WaitForSeconds(3);
 		if(LevelStart.instance.modeMulti)
 		{
@@ -180,11 +229,7 @@ public class LoopManager : MonoBehaviour
 			}
 
 			else
-			{
-				Network.Disconnect();
-				Network.Destroy(Player);
-			}
-				
+				Network.Disconnect();	
 		}
 		else
 		{
@@ -195,11 +240,6 @@ public class LoopManager : MonoBehaviour
 			Application.LoadLevel("MenuScene");
 		}
 		
-	}
-
-	public bool GetClosingParty()
-	{
-		return _closingParty;
 	}
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)

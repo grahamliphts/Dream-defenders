@@ -23,7 +23,6 @@ public class LevelStart : MonoBehaviour
 
 	//LifeBarSet
 	public GameObject guiManager;
-	public Image LifeBar;
 	private LifeBarManager _lifeBarPlayer;
 
 	[SerializeField]
@@ -36,6 +35,11 @@ public class LevelStart : MonoBehaviour
 	public bool network;
 	private NetworkView _networkView;
 
+	//Components
+	private CameraController _camera;
+	private EnnemyManager _enemiesManager;
+	private LoopManager _loopManager;
+
 	void Start()
 	{
 		instance = this;
@@ -43,30 +47,33 @@ public class LevelStart : MonoBehaviour
 		currentTowerPool = towerPool[0];
 		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
 		_networkView = GetComponent<NetworkView>();
+		_camera = Camera.main.gameObject.GetComponent<CameraController>();
+		_enemiesManager = GetComponent<EnnemyManager>();
+		_loopManager = GetComponent<LoopManager>();
 	}
 
     public void OnLoadedLevel(bool network, int id, int nbPlayers)
     {
 		GameObject player;
-		Debug.Log("LevelStart: "+id);
 		if (network)
 		{
 			player = netPlayers[id];
 			player.GetComponent<CharacController>().isMine = true;
-			_networkView.RPC("SetPlayerActive", RPCMode.All, id);
+			var viewID1 = Network.AllocateViewID();
+			var viewID2 = Network.AllocateViewID();
+			_networkView.RPC("SetPlayerActive", RPCMode.All, id, viewID1, viewID2);
 			modeMulti = true;
 			/*Enemies Set*/
 			_networkView.RPC("AddLeaderEnemies", RPCMode.All, id);
 		}
 		else
 		{
-			player = Instantiate(playerSolo, _spawnPosition.position, Quaternion.identity) as GameObject;
+			player = playerSolo;
+			player.SetActive(true);
 			modeMulti = false;
 			/*Enemies Set*/
-			GetComponent<EnnemyManager>().Players.Add(player.transform);
+			_enemiesManager.players.Add(player.transform);
 		}
-		
-		player.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 		Transform targetCamera = null;
 		for (int i = 0; i < player.transform.childCount; i++)
 		{
@@ -76,31 +83,31 @@ public class LevelStart : MonoBehaviour
 		}
 
 		/*Camera Set*/
-		if(targetCamera != null)
-			Camera.main.gameObject.GetComponent<CameraController>().target = targetCamera;
-		Camera.main.gameObject.GetComponent<CameraController>().SetPlayer(player);
+		_camera.target = targetCamera;
+		_camera.player = player;
 
 		/*Life Set*/
-		_lifeBarPlayer.SetPlayer(player);
-		_lifeBarPlayer.SetLifeBar(LifeBar);
-		_lifeBarPlayer.SetLifeManager(player.GetComponent<PlayerLifeManager>());
+		PlayerLifeManager _lifeManager = player.GetComponent<PlayerLifeManager>();
+		_lifeBarPlayer.player = player;
+		_lifeBarPlayer.lifeManager = _lifeManager;
 
-		LoopManager loopManager = GetComponent<LoopManager>();
-		loopManager.Player = player;
-		loopManager.Init(player.GetComponent<PlayerLifeManager>());
+		_loopManager.player = player;
+		_loopManager.Init(_lifeManager);
     }
 
 	[RPC]
 	private void AddLeaderEnemies(int id)
 	{
-		GetComponent<EnnemyManager>().Players.Add(netPlayers[id].transform);
+		_enemiesManager.players.Add(netPlayers[id].transform);
 	}
 
 	[RPC]
-	private void SetPlayerActive(int id)
+	private void SetPlayerActive(int id, NetworkViewID viewID1, NetworkViewID viewID2)
 	{
+		NetworkView []nView = netPlayers[id].gameObject.GetComponents<NetworkView>();
+		nView[0].viewID = viewID1;
+		nView[1].viewID = viewID2;
 		netPlayers[id].SetActive(true);
 	}
 }
-
 

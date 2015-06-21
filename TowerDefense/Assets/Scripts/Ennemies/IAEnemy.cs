@@ -31,7 +31,7 @@ public class IAEnemy : MonoBehaviour
 
 	private NetworkView _networkView;
 	private float _range;
-	
+	private int _indexLeader;
 
 	void Start()
     {
@@ -43,7 +43,6 @@ public class IAEnemy : MonoBehaviour
 	void Update()
     {
 		bool bShoot = false;
-		int indexLeader;
 		Vector3 posToShoot = Vector3.zero;
 
 		if(!LevelStart.instance.modeMulti || Network.isServer)
@@ -51,38 +50,46 @@ public class IAEnemy : MonoBehaviour
 			if (_agent == null)
 				return;
 			_rangeNexus = Vector3.Distance(transform.position, ArrivalP.position);
-
-			//set premier leader par défaut
-			_range = Vector3.Distance(transform.position, _leader[0].position);
-			indexLeader = 0;
-
-			if(LevelStart.instance.modeMulti)
+			if (!LevelStart.instance.modeMulti)
+			{
+				_range = Vector3.Distance(transform.position, _leader[0].position);
+				_indexLeader = 0;
+			}
+				
+			else
 			{
 				for (int i = 0; i < _leader.Count; i++)
 				{
-					//Debug.Log(_leader[i]);
-					float rangeTmp = Vector3.Distance(transform.position, _leader[i].position);
-					if (_range > rangeTmp)
+					if (_leader[i].gameObject.activeSelf == false)
 					{
-						_range = rangeTmp;
-						indexLeader = i;
+						_leader.Remove(_leader[i]);
+						_indexLeader = 0;
+						break;
+					}
+						
+					if (_indexLeader != i)
+					{
+						float rangeTmp = Vector3.Distance(transform.position, _leader[i].position);
+						if (_range > rangeTmp)
+							_indexLeader = i;
 					}
 				}
-			}		
+				_range = Vector3.Distance(transform.position, _leader[_indexLeader].position);
+			}
 
 			if (_range < backrange)
 				transform.Translate(_backSpeed * Vector3.forward * Time.deltaTime);
 			else if (_range < minRange)
 			{
-				posToShoot = _leader[indexLeader].position;
+				posToShoot = _leader[_indexLeader].position;
 				bShoot = true;
-				transform.LookAt(_leader[indexLeader]);
+				transform.LookAt(_leader[_indexLeader]);
 			}
 			else if (_range <= chaseRange)
 			{
 				_agent.Stop();
 				bShoot = false;
-				transform.LookAt(_leader[indexLeader]);
+				transform.LookAt(_leader[_indexLeader]);
 				transform.Translate(_speed * Vector3.forward * Time.deltaTime);
 			}
 			else
@@ -125,7 +132,7 @@ public class IAEnemy : MonoBehaviour
 		Shooting(posToShoot);
 	}
 
-	void Shooting(Vector3 posToShoot)
+	private void Shooting(Vector3 posToShoot)
 	{
 		if (!_recharging)
 		{
@@ -143,7 +150,7 @@ public class IAEnemy : MonoBehaviour
 
 
 
-	void TryToShoot(Vector3 posToShoot)
+	private void TryToShoot(Vector3 posToShoot)
     {
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);

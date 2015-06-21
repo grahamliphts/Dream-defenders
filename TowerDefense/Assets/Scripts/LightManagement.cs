@@ -1,40 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LightManagement : MonoBehaviour {
-	[SerializeField] Light m_light;
-	private float m_new_intensity;
-	private float timmer = 0;
+public class LightManagement : MonoBehaviour
+{
+	private Light _light;
+	private float _timer = 0;
+	private float _intensity;
+	private bool _lighting = false;
 
-	// Use this for initialization
-	void Start () {
-	
+	void Start()
+	{
+		_light = GetComponent<Light>();
+		_intensity = _light.intensity;
+		_timer = 0;
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-		//m_light.intensity = 0;
-
-		timmer += Time.deltaTime;
-		if (timmer >= 1 || m_light.intensity / 10 == m_new_intensity) {
-			//Debug.Log (timmer);
-			timmer = 0;
-
-			//Debug.Log(m_new_intensity);
-			//Debug.Log(m_light.intensity/10);
-			m_new_intensity = Random.value;
-			while(m_new_intensity > 0.4)
-				m_new_intensity = Random.value;
-			//m_light.intensity = rand;
+	void Update()
+	{
+		float _newIntensity = 0;
+		//Debug.Log("Light intensity " + _light.intensity + " _intensity " + _intensity + " new intensity " + _newIntensity);
+		//Debug.Log("Lighting " + _lighting);
+		if (_light.intensity == 8)
+		{
+			_lighting = false;
+			_newIntensity = Random.Range(1, 8);
+			Debug.Log(_newIntensity);
+			while (_newIntensity > 5)
+				_newIntensity = Random.Range(1, 8);
 		}
-		if (m_light.intensity / 10 > m_new_intensity) {
-			m_light.intensity -= 0.01f;
+		if (_light.intensity > _newIntensity && _lighting == false)
+			_light.intensity -= 0.05f;
+		else if (_intensity > _light.intensity && _lighting == true)
+			_light.intensity += 0.05f;
 
-		} else {
-
-			m_light.intensity += 0.01f;
-			//m_light.intensity = m_light.intensity/2;
-		}
+		if (_light.intensity == _newIntensity)
+			_lighting = true;
 	}
 }

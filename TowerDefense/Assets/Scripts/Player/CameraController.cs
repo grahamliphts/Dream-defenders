@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour 
 {
-	public Transform target;
     public float distCamera;
     public float cameraSpeed = 1f;
     public float smoothTime = 0.3f;
@@ -17,17 +16,41 @@ public class CameraController : MonoBehaviour
     private int _yMaxLimit = 70;
 
     private Vector3 _smoothTarget;
+
+	private Transform _target;
+	public Transform target
+	{
+		set
+		{
+			_target = value;
+		}
+		get
+		{
+			return _target;
+		}
+	}
 	private GameObject _player;
+	public GameObject player
+	{
+		set
+		{
+			_player = value;
+		}
+		get
+		{
+			return _player;
+		}
+	}
 
 	void AdjustCamera()
 	{
 		RaycastHit hit;
-		Vector3 dir = transform.position - target.position;
-		dir.Normalize ();
+		Vector3 dir = transform.position - _target.position;
+		dir.Normalize();
         //Debug.DrawRay(target.position, dir * -distCamera, Color.red);
         int layerMask = ((1 << 8) | (1 << 9) | (1 << 10));
         layerMask = ~layerMask;
-        if (Physics.Raycast(target.position, dir, out hit, -distCamera, layerMask))
+		if (Physics.Raycast(_target.position, dir, out hit, -distCamera, layerMask))
             _offset.z = -hit.distance;
         else
             _offset.z = distCamera;
@@ -61,7 +84,7 @@ public class CameraController : MonoBehaviour
 		Quaternion rotation = Quaternion.Euler(actualEuler);
         transform.rotation = rotation;
 
-        Vector3 position = transform.forward * _offset.z + target.position;
+		Vector3 position = transform.forward * _offset.z + _target.position;
         position.y += _offset.y;
         transform.position = position;
 	}
@@ -73,10 +96,5 @@ public class CameraController : MonoBehaviour
 		if (angle > 360)
 			angle -= 360;
 		return Mathf.Clamp (angle, min, max);
-	}
-
-	public void SetPlayer(GameObject player)
-	{
-		_player = player;
 	}
 }

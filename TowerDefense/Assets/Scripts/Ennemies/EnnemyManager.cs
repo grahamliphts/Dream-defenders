@@ -24,7 +24,18 @@ public class EnnemyManager : MonoBehaviour
     public EnemyPoolManager[] EnemyPools;
    
 	[SerializeField]
-	public List<Transform> Players;
+	private List<Transform> _players;
+	public List<Transform> players
+	{
+		set
+		{
+			_players = value;
+		}
+		get
+		{
+			return _players;
+		}
+	}
 	private int _nbTotalEnemies;
 	enum Type {Elec, Fire, Ice, Poison};
 
@@ -87,8 +98,8 @@ public class EnnemyManager : MonoBehaviour
 	private void SpawnEnemies(int index)
 	{
 		var enemy = EnemyPools[index].GetEnemy();
-		for (int j = 0; j < Players.Count; j++)
-			enemy.iaEnemy.AddLeader(Players[j]);
+		for (int j = 0; j < _players.Count; j++)
+			enemy.iaEnemy.AddLeader(_players[j]);
 
 		enemy.newtransform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);

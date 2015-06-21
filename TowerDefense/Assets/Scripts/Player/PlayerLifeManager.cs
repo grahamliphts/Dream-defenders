@@ -4,6 +4,17 @@ using System.Collections;
 public class PlayerLifeManager : MonoBehaviour
 {
     private float _life;
+	public float life
+	{
+		set
+		{
+			_life = value;
+		}
+		get
+		{
+			return _life;
+		}
+	}
     public string[] Tag;
     public int[] Damage;
 
@@ -25,10 +36,5 @@ public class PlayerLifeManager : MonoBehaviour
                 count++;
             }
         }
-    }
-
-    public float GetLife()
-    {
-        return _life;
     }
 }

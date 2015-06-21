@@ -1,60 +1,108 @@
 fileFormatVersion: 2
 guid: 6540660e88e452749949e987bd6899c2
-timeCreated: 1432072998
+timeCreated: 1434728478
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: Camera
-    100002: Cube
-    100004: Cube.001
-    100006: Cube.002
-    100008: Cube.003
-    100010: Cube.004
-    100012: Cube.005
-    100014: Cube.006
-    100016: Cube.007
-    100018: Cube.008
-    100020: Cube.009
-    100022: Cube.010
-    100024: Cube.011
-    100026: Cube.012
-    100028: Cube.013
-    100030: Cube.014
-    100032: Cube.015
-    100034: Cube.016
-    100036: Cube.017
-    100038: //RootNode
-    100040: Light
-    100042: Point
-    100044: Point.001
-    100046: Point.002
-    100048: Point.003
-    400000: Camera
-    400002: Cube
-    400004: Cube.001
-    400006: Cube.002
-    400008: Cube.003
-    400010: Cube.004
-    400012: Cube.005
-    400014: Cube.006
-    400016: Cube.007
-    400018: Cube.008
-    400020: Cube.009
-    400022: Cube.010
-    400024: Cube.011
-    400026: Cube.012
-    400028: Cube.013
-    400030: Cube.014
-    400032: Cube.015
-    400034: Cube.016
-    400036: Cube.017
-    400038: //RootNode
-    400040: Light
-    400042: Point
-    400044: Point.001
-    400046: Point.002
-    400048: Point.003
+    100000: Cube
+    100002: Cube.001
+    100004: Cube.002
+    100006: Cube.003
+    100008: Cube.004
+    100010: Cube.005
+    100012: Cube.006
+    100014: Cube.007
+    100016: Cube.008
+    100018: Cube.009
+    100020: Cube.010
+    100022: Cube.011
+    100024: Cube.012
+    100026: Cube.013
+    100028: Cube.014
+    100030: Cube.015
+    100032: Cube.016
+    100034: Cube.017
+    100036: //RootNode
+    100038: Point
+    100040: Point.001
+    100042: Point.002
+    100044: Point.003
+    100046: cap
+    100048: cap.001
+    100050: ground
+    100052: ground.001
+    100054: main_light
+    100056: main_light.001
+    100058: main_light.002
+    100060: main_light.003
+    100062: tp
+    100064: tp.001
+    100066: tp.002
+    100068: tp.003
+    100070: wall
+    100072: wall.001
+    100074: wall.002
+    100076: wall.003
+    100078: wall.004
+    100080: wall.005
+    100082: wall.006
+    100084: wall.007
+    100086: wall_inside
+    100088: wall_inside.001
+    100090: wall_inside.002
+    100092: wall_inside.003
+    100094: wall_inside.004
+    100096: wall_inside.005
+    400000: Cube
+    400002: Cube.001
+    400004: Cube.002
+    400006: Cube.003
+    400008: Cube.004
+    400010: Cube.005
+    400012: Cube.006
+    400014: Cube.007
+    400016: Cube.008
+    400018: Cube.009
+    400020: Cube.010
+    400022: Cube.011
+    400024: Cube.012
+    400026: Cube.013
+    400028: Cube.014
+    400030: Cube.015
+    400032: Cube.016
+    400034: Cube.017
+    400036: //RootNode
+    400038: Point
+    400040: Point.001
+    400042: Point.002
+    400044: Point.003
+    400046: cap
+    400048: cap.001
+    400050: ground
+    400052: ground.001
+    400054: main_light
+    400056: main_light.001
+    400058: main_light.002
+    400060: main_light.003
+    400062: tp
+    400064: tp.001
+    400066: tp.002
+    400068: tp.003
+    400070: wall
+    400072: wall.001
+    400074: wall.002
+    400076: wall.003
+    400078: wall.004
+    400080: wall.005
+    400082: wall.006
+    400084: wall.007
+    400086: wall_inside
+    400088: wall_inside.001
+    400090: wall_inside.002
+    400092: wall_inside.003
+    400094: wall_inside.004
+    400096: wall_inside.005
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002
@@ -73,6 +121,25 @@ ModelImporter:
     2300030: Cube.015
     2300032: Cube.016
     2300034: Cube.017
+    2300036: //RootNode
+    2300038: cap
+    2300040: cap.001
+    2300042: ground
+    2300044: ground.001
+    2300046: wall
+    2300048: wall.001
+    2300050: wall.002
+    2300052: wall.003
+    2300054: wall.004
+    2300056: wall.005
+    2300058: wall.006
+    2300060: wall.007
+    2300062: wall_inside
+    2300064: wall_inside.001
+    2300066: wall_inside.002
+    2300068: wall_inside.003
+    2300070: wall_inside.004
+    2300072: wall_inside.005
     3300000: Cube
     3300002: Cube.001
     3300004: Cube.002
@@ -91,6 +158,25 @@ ModelImporter:
     3300030: Cube.015
     3300032: Cube.016
     3300034: Cube.017
+    3300036: //RootNode
+    3300038: cap
+    3300040: cap.001
+    3300042: ground
+    3300044: ground.001
+    3300046: wall
+    3300048: wall.001
+    3300050: wall.002
+    3300052: wall.003
+    3300054: wall.004
+    3300056: wall.005
+    3300058: wall.006
+    3300060: wall.007
+    3300062: wall_inside
+    3300064: wall_inside.001
+    3300066: wall_inside.002
+    3300068: wall_inside.003
+    3300070: wall_inside.004
+    3300072: wall_inside.005
     4300000: Cube.017
     4300002: Cube.016
     4300004: Cube.015
@@ -109,6 +195,24 @@ ModelImporter:
     4300030: Cube.002
     4300032: Cube.001
     4300034: Cube
+    4300036: cap
+    4300038: wall_inside.005
+    4300040: wall_inside.004
+    4300042: wall_inside.003
+    4300044: wall.007
+    4300046: wall.006
+    4300048: wall.005
+    4300050: wall.004
+    4300052: ground.001
+    4300054: cap.001
+    4300056: wall_inside.002
+    4300058: wall_inside.001
+    4300060: wall_inside
+    4300062: wall.003
+    4300064: wall.002
+    4300066: wall.001
+    4300068: wall
+    4300070: ground
   materials:
     importMaterials: 1
     materialName: 0
