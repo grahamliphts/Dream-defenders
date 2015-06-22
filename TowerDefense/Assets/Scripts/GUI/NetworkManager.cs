@@ -73,8 +73,6 @@ public class NetworkManager : MonoBehaviour
 				 LevelLoader.SetPlayerCount(_playerCount);
 				 Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
 				 MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
-
-				 MenuManager.ShowMenu(LobbyMenu);
 			 }
 		 }
        
