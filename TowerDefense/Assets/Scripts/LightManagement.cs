@@ -24,7 +24,6 @@ public class LightManagement : MonoBehaviour
 		{
 			_lighting = false;
 			_newIntensity = Random.Range(1, 8);
-			Debug.Log(_newIntensity);
 			while (_newIntensity > 5)
 				_newIntensity = Random.Range(1, 8);
 		}

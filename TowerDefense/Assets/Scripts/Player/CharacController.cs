@@ -5,6 +5,7 @@ public class CharacController : MonoBehaviour
 {
     public float movementSpeed = 4.0f;
     public float jumpSpeed = 4.0f;
+	public Chat chat;
 
     private bool _wantToJump = false;
     private Rigidbody _rigidbody;
@@ -39,17 +40,21 @@ public class CharacController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            _wantToJump = true;
-		if(Input.GetKey(KeyCode.LeftShift))
-			movementSpeed = 10.0f;
-		else
-			movementSpeed = 6.0f;
+		if ((!LevelStart.instance.modeMulti || _isMine) && !chat.focus)
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+				_wantToJump = true;
+			if (Input.GetKey(KeyCode.LeftShift))
+				movementSpeed = 10.0f;
+			else
+				movementSpeed = 6.0f;
+		}
+       
     }
 
     void FixedUpdate()
     {
-		if (!LevelStart.instance.modeMulti || _isMine)
+		if ((!LevelStart.instance.modeMulti || _isMine) && !chat.focus)
 		{
 			_direction = Vector3.zero;
 			if (Input.GetKey("z"))
