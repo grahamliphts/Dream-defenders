@@ -173,7 +173,7 @@ public class NetworkManager : MonoBehaviour
 
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
-       &
+       //&
     }
 
     private void OnFailedToConnect(NetworkConnectionError error)
