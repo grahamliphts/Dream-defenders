@@ -64,7 +64,6 @@ public class NetworkManager : MonoBehaviour
 			 return;
 		 else
 		 {
-			 _register = true;
 			 if (serverName.text != "" && nbPlayersInput.text != "")
 			 {
 				 _nbPlayersMax = int.Parse(nbPlayersInput.text);
@@ -85,7 +84,7 @@ public class NetworkManager : MonoBehaviour
 			nbPlayersConnected.text = LevelLoader.GetPlayerCount() + "/" + LevelLoader.GetPlayerMax();
 			for (int i = 0; i < serverList.transform.childCount; i++)
 				Destroy(serverList.transform.GetChild(i).gameObject);
-			if(_register == false)
+			if(!_register)
 				MasterServer.RequestHostList(_typeName);
 			if (_hostList != null)
 			{
@@ -115,7 +114,8 @@ public class NetworkManager : MonoBehaviour
 	}
     public void JoinServer(HostData hostData)
     {
-        Network.Connect(hostData);
+		//Network.Connect(hostData);
+		Network.Connect("127.0.0.1", 4242);
         _hostConnected = hostData;
 		_playerCount = 1;
 		LevelLoader.SetPlayerCount(_playerCount);
@@ -131,7 +131,7 @@ public class NetworkManager : MonoBehaviour
 				_hostList = null;
         }
 		if (msEvent == MasterServerEvent.RegistrationSucceeded)
-			_register = false;
+			_register = true;
         //Debug.Log(msEvent.ToString());
     }
 
@@ -173,7 +173,7 @@ public class NetworkManager : MonoBehaviour
 
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
-        Debug.Log("Could not connect to master server: " + error);
+       &
     }
 
     private void OnFailedToConnect(NetworkConnectionError error)

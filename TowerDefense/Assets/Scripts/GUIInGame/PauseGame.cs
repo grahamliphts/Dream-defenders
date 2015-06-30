@@ -8,6 +8,11 @@ public class PauseGame : MonoBehaviour
 	public Text InfoText;
 
 	private bool _pause = false;
+	private CameraController _camera;
+	void Start()
+	{
+		_camera = Camera.main.gameObject.GetComponent<CameraController>();
+	}
 
 	void Update () 
 	{
@@ -17,6 +22,7 @@ public class PauseGame : MonoBehaviour
 			{
 				ImagePause.gameObject.SetActive(true);
 				Time.timeScale = 0.0f;
+				_camera.enabled = false;
 				InfoText.text = "Pause";
 				if (Input.GetKeyDown(KeyCode.Escape))
 					_pause = false;
@@ -26,6 +32,7 @@ public class PauseGame : MonoBehaviour
 			{
 				ImagePause.gameObject.SetActive(false);
 				Time.timeScale = 1;
+				_camera.enabled = true;
 				InfoText.text = "";
 				if (Input.GetKeyDown(KeyCode.Escape))
 				{

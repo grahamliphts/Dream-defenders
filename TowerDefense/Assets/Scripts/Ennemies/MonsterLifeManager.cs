@@ -1,15 +1,38 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class MonsterLifeManager : MonoBehaviour 
 {
     private float _life;
 	[SerializeField]
 	private float _lifeMax;
+	private int _xpMax;
+	private int _xpMin;
 
 	private Color _healthBarColor;
-    public string[] _tag;
-    public int[] _damage;
+
+	[System.Serializable]
+	public struct Damages
+	{
+		public string tag;
+		public int damage;
+	}
+	[SerializeField]
+	private Damages[] _damages;
+	public Damages[] damages
+	{
+		set
+		{
+			_damages = value;
+		}
+		get
+		{
+			return _damages;
+		}
+	}
+
+	public LevelManager levelManager;
+
     public Material materialModel;
 	private Material _matHeathBar;
     public GameObject healthBar;
@@ -23,6 +46,9 @@ public class MonsterLifeManager : MonoBehaviour
 		_matHeathBar = healthBar.GetComponent<Renderer>().material;
 		_healthBarColor = _matHeathBar.GetColor("_Color");
 		_networkView = GetComponent<NetworkView>();
+		_xpMax = 20;
+		_xpMin = 10;
+
 	}
 
     void OnCollisionEnter(Collision col)
@@ -33,23 +59,17 @@ public class MonsterLifeManager : MonoBehaviour
 		if(!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			int count = 0;
-			foreach (string element in _tag)
+			for (int i = 0; i < _damages.Length; i++)
 			{
-				if (col.gameObject.tag == element)
-					_life = _life - _damage[count];
+				if (col.gameObject.tag == _damages[i].tag)
+					_life = _life - _damages[i].damage;
 				count++;
 			}
-			if (col.gameObject.tag == "proj_friend")
-				_life = _life - 2;
-
 			if (LevelStart.instance.modeMulti)
 			{
 				_networkView.RPC("SyncLifeEnemy", RPCMode.All, _life);
 				if (_life <= 0)
-				{
-					_died = true;
-				}
-					
+					_died = true;	
 			}
 			else
 			{
@@ -84,6 +104,7 @@ public class MonsterLifeManager : MonoBehaviour
 	{
 		transform.position = new Vector3(1000, 1000, 1000);
 		gameObject.SetActive(false);
+		levelManager.xpGained += Random.Range(_xpMin, _xpMax);
 	}
 
 	private void SetColorLife(float life)

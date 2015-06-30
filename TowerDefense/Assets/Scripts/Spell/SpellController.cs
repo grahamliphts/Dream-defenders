@@ -11,7 +11,9 @@ public class SpellController : MonoBehaviour
 	private int _type;
 
 	private bool _isMine;
-
+	private Stats _stats;
+	[SerializeField]
+	private int _costSpell;
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView>();
@@ -20,6 +22,7 @@ public class SpellController : MonoBehaviour
 		_spellPoolManager = LevelStart.instance.spellPool;
 		_currentSpellPool = LevelStart.instance.currentSpellPool;
 		_type = 0; //FirePool
+		_stats = GetComponent<Stats>();
 	}
     void Update()
     {
@@ -27,12 +30,13 @@ public class SpellController : MonoBehaviour
 		{
 			if (!LevelStart.instance.modeMulti || _isMine)
 			{
-				if (Input.GetMouseButtonDown(0))
+				if (Input.GetMouseButtonDown(0) && _stats.mana >= _costSpell)
 				{
 					if (!LevelStart.instance.modeMulti)
 						TryToShoot(_type);
 					else
 						_networkView.RPC("SyncShoot", RPCMode.All, _type);
+					_stats.mana -= _costSpell;
 				}
 
 				if (Input.GetKey("1"))
@@ -43,9 +47,7 @@ public class SpellController : MonoBehaviour
 					_type = 2;
 				else if (Input.GetKey("4"))
 					_type = 3;
-
 			}
-			
 		}
     }
 
@@ -61,8 +63,8 @@ public class SpellController : MonoBehaviour
 		_currentSpellPool = _spellPoolManager[type];
 		var spell = _currentSpellPool.GetSpell();
         spell.gameObject.SetActive(true);
-        spell.newtransform.position = _firePoint.position;
-        spell.newrigidbody.AddForce(_firePoint.forward * 1500);
+        spell.mtransform.position = _firePoint.position;
+		spell.mrigidbody.AddForce(_firePoint.forward * 1500);
 
 		// Script Mouse Spell
 		/*Vector3 mousePos;

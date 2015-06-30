@@ -154,8 +154,8 @@ public class IAEnemy : MonoBehaviour
     {
         var ps = ProjectilePool.GetSpell();
         ps.gameObject.SetActive(true);
-        ps.newtransform.position = SpawnPoint.position;
-		ps.newrigidbody.AddForce((posToShoot - transform.position).normalized * _projectileSpeed);
+        ps.mtransform.position = SpawnPoint.position;
+		ps.mrigidbody.AddForce((posToShoot - transform.position).normalized * _projectileSpeed);
     }
 }
 

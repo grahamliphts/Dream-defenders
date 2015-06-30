@@ -25,6 +25,9 @@ public class LevelStart : MonoBehaviour
 	public GameObject guiManager;
 	private LifeBarManager _lifeBarPlayer;
 
+	//ManaBar
+	private ManaBarManager _manaBar;
+
 	[SerializeField]
 	private Transform _spawnPosition;
 
@@ -39,6 +42,7 @@ public class LevelStart : MonoBehaviour
 	private CameraController _camera;
 	private EnnemyManager _enemiesManager;
 	private LoopManager _loopManager;
+	private EndGame _endGame;
 
 	void Start()
 	{
@@ -46,10 +50,12 @@ public class LevelStart : MonoBehaviour
 		currentSpellPool = spellPool[0];
 		currentTowerPool = towerPool[0];
 		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
+		_manaBar = guiManager.GetComponent<ManaBarManager>();
 		_networkView = GetComponent<NetworkView>();
 		_camera = Camera.main.gameObject.GetComponent<CameraController>();
 		_enemiesManager = GetComponent<EnnemyManager>();
 		_loopManager = GetComponent<LoopManager>();
+		_endGame = GetComponent<EndGame>();
 	}
 
     public void OnLoadedLevel(bool network, int id, int nbPlayers)
@@ -87,12 +93,16 @@ public class LevelStart : MonoBehaviour
 		_camera.player = player;
 
 		/*Life Set*/
-		PlayerLifeManager _lifeManager = player.GetComponent<PlayerLifeManager>();
+		Stats stats = player.GetComponent<Stats>();
 		_lifeBarPlayer.player = player;
-		_lifeBarPlayer.lifeManager = _lifeManager;
+		_lifeBarPlayer.stats = stats;
+		_manaBar.player = player;
+		_manaBar.stats = stats;
 
-		_loopManager.player = player;
-		_loopManager.Init(_lifeManager);
+		_endGame.player = player;
+		_endGame.stats = stats;
+
+		_loopManager.Init();
     }
 
 	[RPC]

@@ -3,50 +3,70 @@ using System.Collections;
 
 public class SpellScript : MonoBehaviour 
 {
-    public Transform newtransform;
-    public Rigidbody newrigidbody;
-	public ParticleSystem particle;
-
-    public Transform Transform
+	[SerializeField]
+	private Transform _transform;
+	public Transform mtransform
     {
         get
         {
-            return newtransform;
+			return _transform;
         }
         set
         {
-            newtransform = value;
+			_transform = value;
         }
     }
-    public Rigidbody Rigidbody
+	[SerializeField]
+	private Rigidbody _rigidbody;
+	public Rigidbody mrigidbody
     {
         get
         {
-            return newrigidbody;
+			return _rigidbody;
         }
         set
         {
-            newrigidbody = value;
+			_rigidbody = value;
         }
     }
+	[SerializeField]
+	private ParticleSystem _particle;
+	[SerializeField]
+	private float _degats;
+	public float degats
+	{
+		set
+		{
+			_degats = value;
+		}
+		get
+		{
+			return _degats;
+		}
+	}
 
-	public ParticleSystem Particle
+	private SpellScript _spellScript;
+	public SpellScript spellScript
 	{
 		get
 		{
-			return particle;
+			return _spellScript;
 		}
 		set
 		{
-			particle = value;
+			_spellScript = value;
 		}
+	}
+
+	void Start()
+	{
+		_spellScript = this;
 	}
     void OnCollisionEnter(Collision col)
     {
-
-		newrigidbody.velocity = new Vector3(0, 0, 0);
-		newtransform.localPosition = new Vector3(0, 0, 0);
-		if (particle != null)
+		_rigidbody.velocity = new Vector3(0, 0, 0);
+		_transform.localPosition = new Vector3(0, 0, 0);
+		if (_particle != null)
 			StartCoroutine("Disable");
 		else
 			transform.gameObject.SetActive(false);
@@ -55,7 +75,7 @@ public class SpellScript : MonoBehaviour
 
 	IEnumerator Disable()
 	{
-		yield return new WaitForSeconds(particle.duration);
+		yield return new WaitForSeconds(_particle.duration);
 		transform.gameObject.SetActive(false);
 	}
 }

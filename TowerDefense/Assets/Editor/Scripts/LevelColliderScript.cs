@@ -119,8 +119,8 @@ public class LevelColliderScript : EditorWindow
 			gameManager.GetComponent<EnnemyManager>().SpawnEnemy = manager.point_list[0].transform;
 			gameManager.GetComponent<EnnemyManager>().ArrivalP = nexusPos;
 			EditorUtility.SetDirty(gameManager.GetComponent<EnnemyManager>());
-			gameManager.GetComponent<LoopManager>().LifeNexus = sablier.GetComponent<NexusLife>();
-
+			gameManager.GetComponent<EndGame>().lifeNexus = sablier.GetComponent<NexusLife>();
+				
 			EditorUtility.SetDirty(gameManager.GetComponent<LoopManager>());
 
 			GameObject guiManager = GameObject.Find("GuiInGameManager");

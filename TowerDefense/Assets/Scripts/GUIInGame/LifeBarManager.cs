@@ -16,16 +16,16 @@ public class LifeBarManager : MonoBehaviour
 	public NexusLife LifeNexus;
 	public Image lifeBar;
 
-	private PlayerLifeManager _lifeManager;
-	public PlayerLifeManager lifeManager
+	private Stats _stats;
+	public Stats stats
 	{
 		set
 		{
-			_lifeManager = value;
+			_stats = value;
 		}
 		get
 		{
-			return _lifeManager;
+			return _stats;
 		}
 	}
 	private GameObject _player;
@@ -43,11 +43,11 @@ public class LifeBarManager : MonoBehaviour
 
 	void Update () 
     {
-		if (_lifeManager == null)
+		if (_stats == null)
 			return;
-        if (_lifeManager.life >= 0)
+		if (_stats.life >= 0)
         {
-			_lifeBarValue = _lifeManager.life / 100;
+			_lifeBarValue = _stats.life / _stats.lifeMax;
 			LifePlayerValue.size = _lifeBarValue;
             SetColorLife();
 			lifeBar.color = _lifeBarColor;
