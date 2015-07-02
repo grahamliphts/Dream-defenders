@@ -7,6 +7,7 @@ public class LevelStart : MonoBehaviour
 {
 	public static LevelStart instance = null;
 	public bool modeMulti;
+	public bool modeTuto;
 
 	//Players
 	public GameObject[] netPlayers;
@@ -16,7 +17,6 @@ public class LevelStart : MonoBehaviour
 	public SpellPoolManager[] spellPool;
 	public SpellPoolManager currentSpellPool;
 	public TowerPoolManager[] towerPool;
-	public TowerPoolManager currentTowerPool;
 
 	//Availables Towers
 	public int[] towerAvailables;
@@ -47,8 +47,8 @@ public class LevelStart : MonoBehaviour
 	void Start()
 	{
 		instance = this;
+		modeTuto = false;
 		currentSpellPool = spellPool[0];
-		currentTowerPool = towerPool[0];
 		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
 		_manaBar = guiManager.GetComponent<ManaBarManager>();
 		_networkView = GetComponent<NetworkView>();
@@ -83,6 +83,7 @@ public class LevelStart : MonoBehaviour
 
 		else
 		{
+			modeTuto = true;
 			player = playerSolo;
 			player.SetActive(true);
 			modeMulti = false;

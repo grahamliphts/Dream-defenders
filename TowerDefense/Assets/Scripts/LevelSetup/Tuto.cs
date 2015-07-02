@@ -15,12 +15,17 @@ public class Tuto : MonoBehaviour
 	private EnnemyManager _ennemyManager;
 
 	int _type;
-	void Start() 
+	bool _run = false;
+
+	void Update()
 	{
-		StartCoroutine("LoadTuto");
-		Debug.Log("Start");
-		_type = 0;
-		_ennemyManager = GetComponent<EnnemyManager>();
+		if (LevelStart.instance.modeTuto && _run == false)
+		{
+			_run = true;
+			StartCoroutine("LoadTuto");
+			_type = 0;
+			_ennemyManager = GetComponent<EnnemyManager>();
+		}
 	}
 
 	IEnumerator LoadTuto()

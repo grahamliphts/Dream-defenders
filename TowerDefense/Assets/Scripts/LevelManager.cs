@@ -4,6 +4,19 @@ using System;
 
 public class LevelManager : MonoBehaviour 
 {
+	private int _money;
+	public int money
+	{
+		set
+		{
+			_money = value;
+		}
+		get
+		{
+			return _money;
+		}
+	}
+
 	private double _xpGained;
 	public double xpGained
 	{
@@ -41,6 +54,7 @@ public class LevelManager : MonoBehaviour
 
 	void Start () 
 	{
+		_money = 0;
 		_level = 1;
 		CalculateXpNeed(_level);
 		CalculatePower(_level);
@@ -52,8 +66,6 @@ public class LevelManager : MonoBehaviour
 
 	void Update()
 	{
-		//Afficher GUI
-		Debug.Log(_xpGained + "/" + _xpNeed + " Power : " + _power);
 		if (_xpGained >= _xpNeed)
 			Upgrade();
 	}
@@ -66,7 +78,6 @@ public class LevelManager : MonoBehaviour
 	void CalculatePower(int level)
 	{
 		_power =  (int) Math.Round(100 - 100 * Math.Exp(-0.05 * level));
-		Debug.Log(_power);
 	}
 
 	void Upgrade()

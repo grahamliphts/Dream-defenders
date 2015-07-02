@@ -69,7 +69,12 @@ public class MonsterLifeManager : MonoBehaviour
 			{
 				_networkView.RPC("SyncLifeEnemy", RPCMode.All, _life);
 				if (_life <= 0)
+				{
+					levelManager.xpGained += Random.Range(_xpMin, _xpMax);
+					levelManager.money += 20;
 					_died = true;	
+				}
+					
 			}
 			else
 			{
@@ -79,6 +84,8 @@ public class MonsterLifeManager : MonoBehaviour
 				if (_life <= 0)
 				{
 					DestroyEnemy();
+					levelManager.xpGained += Random.Range(_xpMin, _xpMax);
+					levelManager.money += 20;
 					_died = true;
 				}
 			}
@@ -89,22 +96,17 @@ public class MonsterLifeManager : MonoBehaviour
 	private void SyncLifeEnemy(float life)
 	{
 		_life = life;
-
 		_matHeathBar.SetFloat("_HP", _life);
 		SetColorLife(_life);
 
 		if (_life <= 0)
-		{
 			DestroyEnemy();
-		}
-
 	}
 
 	private void DestroyEnemy()
 	{
 		transform.position = new Vector3(1000, 1000, 1000);
 		gameObject.SetActive(false);
-		levelManager.xpGained += Random.Range(_xpMin, _xpMax);
 	}
 
 	private void SetColorLife(float life)
