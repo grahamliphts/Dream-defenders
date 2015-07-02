@@ -4,14 +4,61 @@ using System.Collections;
 public class Stats : MonoBehaviour 
 {
 	[SerializeField]
-	float intelligence;
+	private float _intelligence;
 	[SerializeField]
-	float robustesse;
+	private float _robustesse;
 	[SerializeField]
-	float endurance;
+	private float _endurance;
 	[SerializeField]
-	float esprit;
+	private float _esprit;
 	private float _regen;
+
+	public float regen
+	{
+		set
+		{
+			_regen = value;
+		}
+		get
+		{
+			return _regen;
+		}
+	}
+
+	public float esprit
+	{
+		set
+		{
+			_esprit = value;
+		}
+		get
+		{
+			return _esprit;
+		}
+	}
+
+	public float robustesse
+	{
+		set
+		{
+			_robustesse = value;
+		}
+		get
+		{
+			return _robustesse;
+		}
+	}
+	public float endurance
+	{
+		set
+		{
+			_endurance = value;
+		}
+		get
+		{
+			return _endurance;
+		}
+	}
 
 	private float _mana;
 	public float mana
@@ -77,7 +124,7 @@ public class Stats : MonoBehaviour
 	{
 		while (true)
 		{
-			Debug.Log(_mana + " < " + manaMax);
+			//Debug.Log(_mana + " < " + manaMax);
 			if (_mana < manaMax)
 			{
 				_mana = _mana + _regen;
