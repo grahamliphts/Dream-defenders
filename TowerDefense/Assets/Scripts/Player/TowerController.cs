@@ -48,37 +48,34 @@ public class TowerController : MonoBehaviour
 
 			if (Input.GetKey("1"))
 			{
-				ChangeTower(Type.Fire);
+				ChangeTower((int)Type.Fire);
 				_nbtowerAvailables = _towerAvailables[(int)Type.Fire];
 			}
 				
 			else if (Input.GetKey("2"))
 			{
-				ChangeTower(Type.Elec);
+				ChangeTower((int)Type.Elec);
 				_nbtowerAvailables = _towerAvailables[(int)Type.Elec];
 			}
 			else if (Input.GetKey("3"))
 			{
-				ChangeTower(Type.Poison);
+				ChangeTower((int)Type.Poison);
 				_nbtowerAvailables = _towerAvailables[(int)Type.Poison];
 			}
 				
 			else if (Input.GetKey("4"))
 			{
-				ChangeTower(Type.Ice);
+				ChangeTower((int)Type.Ice);
 				_nbtowerAvailables = _towerAvailables[(int)Type.Ice];
 			}
 				
-
 			_constructionController = _target.constructionController;
 		}
 		else if (LoopManager.modeConstruction == false && _reset == false)
-		{
 			Reset();
-		}
 	}
 
-	private void Reset()
+	public void Reset()
 	{
 		_reset = true;
 		_towerPool = LevelStart.instance.towerPool;
@@ -92,13 +89,12 @@ public class TowerController : MonoBehaviour
 		_type = 0;
 	}
 
-	void ChangeTower(Type type)
+	public void ChangeTower(int type)
 	{
-		_type = (int)type;
-		_currentTowerPool = _towerPool[(int)type];
-		if (_target != _modelTowerManager.GetTower((int)type))
+		_currentTowerPool = _towerPool[type];
+		if (_target != _modelTowerManager.GetTower(type))
 		{
-			_newTarget = _modelTowerManager.GetTower((int)type);
+			_newTarget = _modelTowerManager.GetTower(type);
 			SetTower(_target, _newTarget);
 			_target = _newTarget;
 		}
@@ -113,11 +109,15 @@ public class TowerController : MonoBehaviour
 
 	public void PlaceTower(Vector3 position, int type)
 	{
+		Debug.Log(_towerPool);
+		Debug.Log(type);
 		var tower = _towerPool[type].GetTower();
 		if (tower != null)
 		{
 			tower.gameObject.SetActive(true);
 			tower.newtransform.position = position;
+			Debug.Log(position);
+			Debug.Log(tower.transform.position);
 			//add box collider for shoot range
 			tower.RangeCollider.enabled = true;
 			tower.RangeCollider.isTrigger = true;

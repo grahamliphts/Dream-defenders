@@ -33,7 +33,7 @@ public class SpellController : MonoBehaviour
 				if (Input.GetMouseButtonDown(0) && _stats.mana >= _costSpell)
 				{
 					if (!LevelStart.instance.modeMulti)
-						TryToShoot(_type);
+						StartCoroutine("TryToShoot",_type);
 					else
 						_networkView.RPC("SyncShoot", RPCMode.All, _type);
 					_stats.mana -= _costSpell;
@@ -55,23 +55,31 @@ public class SpellController : MonoBehaviour
 	[RPC]
 	void SyncShoot(int type)
 	{
-		TryToShoot(type);
+		StartCoroutine("TryToShoot",type);
 	}
 
-	void TryToShoot(int type)
+	/*void TryToShoot(int type)
     {
 		_currentSpellPool = _spellPoolManager[type];
 		var spell = _currentSpellPool.GetSpell();
+		spell.mtransform.position = _firePoint.position;
         spell.gameObject.SetActive(true);
-        spell.mtransform.position = _firePoint.position;
+		spell.mrigidbody.isKinematic = false;
 		spell.mrigidbody.AddForce(_firePoint.forward * 1500);
+    }*/
 
-		// Script Mouse Spell
-		/*Vector3 mousePos;
-		mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 20);
-		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-		spell.newtransform.LookAt(mousePos);
-		spell.newrigidbody.AddForce(spell.newtransform.forward * 1500);*/
-    }
+
+	IEnumerator TryToShoot(int type)
+	{
+		Debug.Log("Try to Shoot");
+		yield return new WaitForFixedUpdate();
+		
+		_currentSpellPool = _spellPoolManager[type];
+		var spell = _currentSpellPool.GetSpell();
+		spell.mtransform.position = _firePoint.position;
+		spell.gameObject.SetActive(true);
+		spell.mrigidbody.isKinematic = false;
+		spell.mrigidbody.AddForce(_firePoint.forward * 1500);
+	}
 }
