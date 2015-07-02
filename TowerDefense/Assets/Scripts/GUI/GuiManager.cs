@@ -21,18 +21,26 @@ public class GuiManager : MonoBehaviour
 
 	public void LoadGame()
     {
-		StartCoroutine("LoadLevel");
+		StartCoroutine("LoadLevel", "MainScene");
     }
+
+	public void LoadTuto()
+	{
+		StartCoroutine("LoadLevel", "TutoScene");
+	}
 
 	public void QuitGame()
 	{
 		Application.Quit();
 	}
 
-	IEnumerator LoadLevel()
+	IEnumerator LoadLevel(string nameScene)
 	{
-		Application.LoadLevel("MainScene");
+		Application.LoadLevel(nameScene);
 		yield return null;
-		LevelStart.instance.OnLoadedLevel(false, 0, 1);
+		if(nameScene == "TutoScene")
+			LevelStart.instance.OnLoadedLevel("Tuto", 0);
+		else
+			LevelStart.instance.OnLoadedLevel("Solo", 0);
 	}
 }

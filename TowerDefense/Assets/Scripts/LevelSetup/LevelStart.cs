@@ -58,10 +58,10 @@ public class LevelStart : MonoBehaviour
 		_endGame = GetComponent<EndGame>();
 	}
 
-    public void OnLoadedLevel(bool network, int id, int nbPlayers)
+    public void OnLoadedLevel(string mode, int id)
     {
 		GameObject player;
-		if (network)
+		if (mode == "Reseau")
 		{
 			player = netPlayers[id];
 			player.GetComponent<CharacController>().isMine = true;
@@ -72,7 +72,7 @@ public class LevelStart : MonoBehaviour
 			/*Enemies Set*/
 			_networkView.RPC("AddLeaderEnemies", RPCMode.All, id);
 		}
-		else
+		else if (mode == "Solo")
 		{
 			player = playerSolo;
 			player.SetActive(true);
@@ -80,6 +80,14 @@ public class LevelStart : MonoBehaviour
 			/*Enemies Set*/
 			_enemiesManager.players.Add(player.transform);
 		}
+
+		else
+		{
+			player = playerSolo;
+			player.SetActive(true);
+			modeMulti = false;
+		}
+		
 		Transform targetCamera = null;
 		for (int i = 0; i < player.transform.childCount; i++)
 		{
@@ -87,7 +95,7 @@ public class LevelStart : MonoBehaviour
 			if (child.name == "TargetCamera")
 				targetCamera = child;
 		}
-
+		
 		/*Camera Set*/
 		_camera.target = targetCamera;
 		_camera.player = player;
@@ -99,10 +107,13 @@ public class LevelStart : MonoBehaviour
 		_manaBar.player = player;
 		_manaBar.stats = stats;
 
-		_endGame.player = player;
-		_endGame.stats = stats;
-
-		_loopManager.Init();
+		if (mode != "Tuto")
+		{
+			_endGame.player = player;
+			_endGame.stats = stats;
+			_loopManager.Init();
+		}
+		
     }
 
 	[RPC]

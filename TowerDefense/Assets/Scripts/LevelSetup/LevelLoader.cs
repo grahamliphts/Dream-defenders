@@ -14,8 +14,6 @@ public class LevelLoader : MonoBehaviour
 	private int _nbPlayerMax;
 
 	public static LevelLoader _instance;
-	[SerializeField]
-	private int _id;
 
     public void Start()
     {
@@ -27,7 +25,6 @@ public class LevelLoader : MonoBehaviour
         _lastLevelPrefix = 0;
         _networkView = GetComponent<NetworkView>();
         _networkView.group = 1;
-		_id = 0;
     }
 
 	public void LoadGame()
@@ -35,7 +32,6 @@ public class LevelLoader : MonoBehaviour
 		//Verification que tout les joueurs sont la 
 		if(_nbPlayerCount == _nbPlayerMax)
 		{
-			
 			Network.RemoveRPCsInGroup(0);
 			Network.RemoveRPCsInGroup(1);
 			_networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MainScene", _lastLevelPrefix + 1);
@@ -79,7 +75,7 @@ public class LevelLoader : MonoBehaviour
 
 		Network.isMessageQueueRunning = true;
 		Network.SetSendingEnabled(0, true);
-		LevelStart.instance.OnLoadedLevel(true, int.Parse(networkPlayer.ToString()), _nbPlayerCount);
+		LevelStart.instance.OnLoadedLevel("Network", int.Parse(networkPlayer.ToString()));
 
     }
 }
