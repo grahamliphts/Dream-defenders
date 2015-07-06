@@ -20,6 +20,7 @@ public class Teleport : MonoBehaviour
     {
         if (other.tag == "player")
         {
+			SoundManager.instance.PlayTpCrossing();
 			if (nextPoint != null)
 			{
 				other.transform.position = nextPoint.transform.position + nextPoint.transform.forward * 3;

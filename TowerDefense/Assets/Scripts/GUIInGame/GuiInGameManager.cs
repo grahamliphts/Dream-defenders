@@ -29,6 +29,11 @@ public class GuiInGameManager : MonoBehaviour
 			SetColor(_shadowTarget, action4);
 	}
 
+	public void Reset()
+	{
+		SetColor(_shadowTarget, action1);
+	}
+
 	void SetColor(Shadow previous, Shadow current)
 	{
 		previous.effectColor = Color.black;

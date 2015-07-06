@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class soundManager : MonoBehaviour {
-
+public class SoundManager : MonoBehaviour 
+{
+	public static SoundManager instance = null;
 	public AudioSource _source;
 	
 	public AudioClip _startCall;
@@ -10,32 +11,12 @@ public class soundManager : MonoBehaviour {
 	public AudioClip _tpCrossing;
 	public AudioClip _bearDie;
 	public AudioClip _nexusDie;
-	/*[SerializeField]
-	LoopManager m_LoopManager;*/
-	
-	void Start () {
-		//_source = GetComponents<AudioSource>();
-		//Debug.Log("tableau de sons 1 =  "+_source.Length);
-		/*_startCall = _source[0];
-		_endCall = _source[1];*/
-		//Debug.Log("tableau de sons 2 = "+_source.Length);
-	}
-	
 
-	void Update () {
-		/*Debug.Log("loopmanagerrrrrrrrrrrrrrr  = "+m_LoopManager.init);
-		if(result == true){
-			//_endCall.Play();
-			_source.clip = _startCall;
-			_source.Play();		
-		}
-		if(m_LoopManager.lose == true){
-			//_endCall.PlayOneShot;
-			_source.clip = _endCall;
-			_source.Play();	
-		}*/
+	void Start () 
+	{
+		instance = this;
 	}
-	
+
 	public void PlayStartCall(){
 		_source.clip = _startCall;
 		_source.Play();	

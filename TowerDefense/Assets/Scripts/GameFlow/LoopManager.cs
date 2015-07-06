@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LoopManager : MonoBehaviour 
 {
 	public Text ConstructionTime;
+	public GuiInGameManager guiInGame;
 
 	//Infos du jeu
 	public Text gameInfo;
@@ -106,6 +107,7 @@ public class LoopManager : MonoBehaviour
 
 					ConstructionTime.text = "None";
 					_ennemyManager.Spawn();
+					guiInGame.Reset();
 				}
 
 				//Ennemis morts / wave actuelle < waves totale
@@ -128,6 +130,7 @@ public class LoopManager : MonoBehaviour
 						SetConstruction(true);
 
 					_startTime = Time.time;
+					guiInGame.Reset();
 				}
 			}
 		}
