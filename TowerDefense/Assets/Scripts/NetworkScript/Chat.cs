@@ -24,7 +24,6 @@ public class Chat : MonoBehaviour
 	}
 	private ArrayList _log;
 	private int _maxMessages;
-	private int _lastLogLen;
 	private string _lastMsg;
 	private NetworkView _networkView;
 
@@ -34,7 +33,6 @@ public class Chat : MonoBehaviour
 		_networkView = GetComponent<NetworkView>();
 		_log = new ArrayList();
 		_maxMessages = 200;
-		_lastLogLen = 0;
 	}
 
 	void Update () 
@@ -105,7 +103,7 @@ public class Chat : MonoBehaviour
 		texte.SetActive(true);
 		texte.transform.SetParent(chat.transform, false);
 		texte.GetComponent<Text>().text = "Player " + id + " : " + txt;
-		if (_log.Count > 200)
+		if (_log.Count > _maxMessages)
 		{
 			Destroy((Object)_log[0]);
 			_log.RemoveAt(0);

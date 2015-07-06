@@ -58,23 +58,9 @@ public class SpellController : MonoBehaviour
 		StartCoroutine("TryToShoot",type);
 	}
 
-	/*void TryToShoot(int type)
-    {
-		_currentSpellPool = _spellPoolManager[type];
-		var spell = _currentSpellPool.GetSpell();
-		spell.mtransform.position = _firePoint.position;
-        spell.gameObject.SetActive(true);
-		spell.mrigidbody.isKinematic = false;
-		spell.mrigidbody.AddForce(_firePoint.forward * 1500);
-    }*/
-
-
-
-	IEnumerator TryToShoot(int type)
+	public IEnumerator TryToShoot(int type)
 	{
-		Debug.Log("Try to Shoot");
 		yield return new WaitForFixedUpdate();
-		
 		_currentSpellPool = _spellPoolManager[type];
 		var spell = _currentSpellPool.GetSpell();
 		spell.mtransform.position = _firePoint.position;

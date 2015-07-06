@@ -58,10 +58,6 @@ public class LevelManager : MonoBehaviour
 		_level = 1;
 		CalculateXpNeed(_level);
 		CalculatePower(_level);
-		CalculatePower(2);
-		CalculatePower(3);
-		CalculatePower(4);
-		CalculatePower(5);
 	}
 
 	void Update()

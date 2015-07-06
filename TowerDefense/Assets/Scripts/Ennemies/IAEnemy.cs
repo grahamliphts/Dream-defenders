@@ -136,7 +136,7 @@ public class IAEnemy : MonoBehaviour
 	{
 		if (!_recharging)
 		{
-			TryToShoot(posToShoot);
+			StartCoroutine("TryToShoot",posToShoot);
 			_recharging = true;
 			_shootTimer = _shootDelay;
 		}
@@ -146,16 +146,17 @@ public class IAEnemy : MonoBehaviour
 			if (_shootTimer <= 0.0f)
 				_recharging = false;
 		}
-	}
+	}	
 
+	IEnumerator TryToShoot(Vector3 posToShoot)
+	{
+		yield return new WaitForFixedUpdate();
 
-
-	private void TryToShoot(Vector3 posToShoot)
-    {
-        var ps = ProjectilePool.GetSpell();
-        ps.gameObject.SetActive(true);
-        ps.mtransform.position = SpawnPoint.position;
+		var ps = ProjectilePool.GetSpell();
+		ps.gameObject.SetActive(true);
+		ps.mtransform.position = SpawnPoint.position;
+		ps.mrigidbody.isKinematic = false;
 		ps.mrigidbody.AddForce((posToShoot - transform.position).normalized * _projectileSpeed);
-    }
+	}
 }
 

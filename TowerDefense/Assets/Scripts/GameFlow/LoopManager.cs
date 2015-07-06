@@ -8,12 +8,13 @@ public class LoopManager : MonoBehaviour
 
 	//Infos du jeu
 	public Text gameInfo;
-
 	[SerializeField]
 	private int _constructionTime;
 	public int waveNumber;
 	[SerializeField]
-	private int _ennemyAddedByWave;
+	private int _ennemyAddedByWaveMin;
+	[SerializeField]
+	private int _ennemyAddedByWaveMax;
 
     public ModelTowerPoolManager ModelTower;
 
@@ -36,9 +37,6 @@ public class LoopManager : MonoBehaviour
 	}
 
     private float _startTime;
-
-
-
     public static bool modeConstruction;
     private bool _win;
 	public bool win
@@ -60,8 +58,6 @@ public class LoopManager : MonoBehaviour
 			_lose = value;
 		}
 	}
-
-    private float _timer;
 	private bool _closingParty;
 	private NetworkView _networkView;
 	private bool _init;
@@ -83,7 +79,6 @@ public class LoopManager : MonoBehaviour
         ModelTower.SetConstruction(true);
         _win = false;
         _actualWave = 0;
-        _timer = 0;
 		_startTime = Time.time;
 		modeConstruction = true;
 		_init = true;
@@ -104,7 +99,6 @@ public class LoopManager : MonoBehaviour
 				//Temps de construction fini
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction)
 				{
-					Debug.Log("Construction Over");
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
@@ -120,10 +114,13 @@ public class LoopManager : MonoBehaviour
 					Debug.Log("All died");
 					_actualWave++;
 					//Ajout d'ennemis a spawn
-					_ennemyManager.AddEnemiesElec(_ennemyAddedByWave);
-					_ennemyManager.AddEnemiesFire(_ennemyAddedByWave);
-					_ennemyManager.AddEnemiesIce(_ennemyAddedByWave);
-					_ennemyManager.AddEnemiesPoison(_ennemyAddedByWave);
+					int nbMax = actualWave;
+					_ennemyManager.AddEnemiesElec(Random.Range(0, nbMax));
+					_ennemyManager.AddEnemiesFire(Random.Range(0, nbMax));
+					_ennemyManager.AddEnemiesIce(Random.Range(0, nbMax));
+					_ennemyManager.AddEnemiesPoison(Random.Range(0, nbMax));
+					if (_actualWave > 3)
+						nbMax = 2;
 
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, true);

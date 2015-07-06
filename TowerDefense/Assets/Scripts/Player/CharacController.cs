@@ -10,10 +10,8 @@ public class CharacController : MonoBehaviour
     private bool _wantToJump = false;
     private Rigidbody _rigidbody;
 
-    private NetworkView _networkView;
 	private Animator _animator;
 	private Vector3 _direction;
-
 	private bool _isMine;
 
 	public bool isMine
@@ -31,11 +29,7 @@ public class CharacController : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-		if (GetComponent<NetworkView>() != null)
-			_networkView = GetComponent<NetworkView>();
-
         transform.tag = "player";
-
 		_animator = GetComponent<Animator>();
     }
     void Update()
@@ -49,7 +43,6 @@ public class CharacController : MonoBehaviour
 			else
 				movementSpeed = 6.0f;
 		}
-       
     }
 
     void FixedUpdate()

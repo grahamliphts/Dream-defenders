@@ -80,6 +80,7 @@ public class TowerShoot : MonoBehaviour
             var ps = _projectilePoolManager.GetSpell();
             ps.gameObject.SetActive(true);
             ps.mtransform.position = SpawnPoint.position;
+			ps.mrigidbody.isKinematic = false;
 			if(_enemiesTransform.Count > 0 && _enemiesTransform[0] != null)
 				ps.mrigidbody.AddForce((_enemiesTransform[0].position - SpawnPoint.position).normalized * _projectileSpeed);
 

@@ -9,14 +9,14 @@ public class EnnemyManager : MonoBehaviour
 	private int _numberMaxIce;
 	private int _numberMaxElec;
 
+	[SerializeField]
+	private int _numberFire;
     [SerializeField]
 	private int _numberElec;
 	[SerializeField]
 	private int _numberPoison;
 	[SerializeField]
 	private int _numberIce;
-	[SerializeField]
-	private int _numberFire;
 
     public Transform SpawnEnemy;
 	public Transform ArrivalP;
@@ -37,7 +37,7 @@ public class EnnemyManager : MonoBehaviour
 		}
 	}
 	private int _nbTotalEnemies;
-	enum Type {Elec, Fire, Ice, Poison};
+	enum Type {Fire, Elec, Poison, Ice};
 
 	private NetworkView _networkView;
 

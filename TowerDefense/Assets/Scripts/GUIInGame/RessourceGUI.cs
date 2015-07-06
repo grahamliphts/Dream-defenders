@@ -10,6 +10,7 @@ public class RessourceGUI : MonoBehaviour
 	private int[] _towerAvailables;
 	public Text xp;
 	public Text level;
+	public Text money;
 
 	void Start ()
 	{
@@ -20,6 +21,7 @@ public class RessourceGUI : MonoBehaviour
 	{
 		xp.text = "XP : " + levelManager.xpGained + "/" + levelManager.xpNeed;
 		level.text = "Level : " + levelManager.level.ToString();
+		money.text = "Money : " + levelManager.money.ToString();
 		for(int i = 0; i < valueTower.Length; i++)
 		{
 			int value = _towerAvailables[i];

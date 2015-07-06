@@ -62,10 +62,12 @@ public class SpellScript : MonoBehaviour
 	{
 		_spellScript = this;
 	}
+
     void OnCollisionEnter(Collision col)
     {
 		_rigidbody.velocity = new Vector3(0, 0, 0);
 		_transform.localPosition = new Vector3(0, 0, 0);
+		_rigidbody.isKinematic = true;
 		if (_particle != null)
 			StartCoroutine("Disable");
 		else
