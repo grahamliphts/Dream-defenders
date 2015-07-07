@@ -61,12 +61,13 @@ public class LevelStart : MonoBehaviour
     public void OnLoadedLevel(string mode, int id)
     {
 		GameObject player;
-		if (mode == "Reseau")
+		if (mode == "Network")
 		{
 			player = netPlayers[id];
 			player.GetComponent<CharacController>().isMine = true;
 			var viewID1 = Network.AllocateViewID();
 			var viewID2 = Network.AllocateViewID();
+			GetComponent<PauseGame>().isMine = true;
 			_networkView.RPC("SetPlayerActive", RPCMode.All, id, viewID1, viewID2);
 			modeMulti = true;
 			/*Enemies Set*/

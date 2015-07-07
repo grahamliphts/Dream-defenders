@@ -4,13 +4,11 @@ using System.Collections;
 public class LightManagement : MonoBehaviour
 {
 	private Light _light;
-	private bool _lighting;
 	private float _newIntensity;
 
 	void Start()
 	{
 		_light = GetComponent<Light>();
-		_lighting = false;
 	}
 
 	void Update()

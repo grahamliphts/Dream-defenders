@@ -9,36 +9,59 @@ public class PauseGame : MonoBehaviour
 
 	private bool _pause = false;
 	private CameraController _camera;
+	private NetworkView _networkView;
+
+	public bool isMine;
 	void Start()
 	{
 		_camera = Camera.main.gameObject.GetComponent<CameraController>();
+		_networkView = GetComponent<NetworkView>();
+		ImagePause.gameObject.SetActive(false);
 	}
 
 	void Update () 
 	{
-		if(LevelStart.instance.modeMulti == false)
+		if(!LevelStart.instance.modeMulti || isMine)
 		{
-			if (_pause == true)
+			if (Input.GetKeyDown(KeyCode.Escape) && !_pause)
 			{
-				ImagePause.gameObject.SetActive(true);
-				Time.timeScale = 0.0f;
-				_camera.enabled = false;
-				InfoText.text = "Pause";
-				if (Input.GetKeyDown(KeyCode.Escape))
-					_pause = false;
-
+				if (LevelStart.instance.modeMulti)
+					_networkView.RPC("SyncPause", RPCMode.All, true);
+				else
+					Pause(true);
 			}
-			else
+
+			else if(Input.GetKeyDown(KeyCode.Escape) && _pause)
 			{
-				ImagePause.gameObject.SetActive(false);
-				Time.timeScale = 1;
-				_camera.enabled = true;
-				InfoText.text = "";
-				if (Input.GetKeyDown(KeyCode.Escape))
-				{
-					_pause = true;
-				}
+				if (LevelStart.instance.modeMulti)
+					_networkView.RPC("SyncPause", RPCMode.All, false);
+				else
+					Pause(false);
 			}
 		}
 	}
+
+	[RPC]
+	void SyncPause(bool value)
+	{
+		Pause(value);
+	}
+
+	void Pause(bool value)
+	{
+		_pause = value;
+		ImagePause.gameObject.SetActive(value);
+		_camera.enabled = !value; 
+		if(value)
+		{
+			Time.timeScale = 0.0f;
+			InfoText.text = "Pause";
+		}
+		else
+		{
+			Time.timeScale = 1;
+			InfoText.text = "";
+		}
+	}
 }
+

@@ -20,7 +20,6 @@ public class Tuto : MonoBehaviour
 	private EndGame _endGame;
 	private EnnemyManager _ennemyManager;
 
-	int _type;
 	bool _run = false;
 
 	void Start()
@@ -34,7 +33,6 @@ public class Tuto : MonoBehaviour
 		{
 			_run = true;
 			StartCoroutine("LoadTuto");
-			_type = 0;
 			_ennemyManager = GetComponent<EnnemyManager>();
 		}
 	}

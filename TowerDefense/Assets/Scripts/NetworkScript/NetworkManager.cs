@@ -7,6 +7,7 @@ public class NetworkManager : MonoBehaviour
 {
     //Gui
     public GameObject serverList;
+	public Text ipInput;
     public Text serverName;
     public Text nbPlayersInput;
     public Menu LobbyMenu;
@@ -24,7 +25,6 @@ public class NetworkManager : MonoBehaviour
     private string _gameName;
     private HostData[] _hostList;
 
-    private HostData _hostConnected;
 	private int _nbPlayersMax;
 	public MenuManager MenuManager;
 	public LevelLoader LevelLoader;
@@ -65,7 +65,7 @@ public class NetworkManager : MonoBehaviour
 			 return;
 		 else
 		 {
-			 if (serverName.text != "" && nbPlayersInput.text != "")
+			 if (serverName.text != "" && nbPlayersInput.text != "" && _nbPlayersMax >= 1 && _nbPlayersMax <= 4)
 			 {
 				 _nbPlayersMax = int.Parse(nbPlayersInput.text);
 				 LevelLoader.nbPlayerMax = _nbPlayersMax;
@@ -120,12 +120,12 @@ public class NetworkManager : MonoBehaviour
     public void JoinServer(HostData hostData)
     {
 		Network.Connect(hostData);
-        _hostConnected = hostData;
     }
 
 	public void JoinLocal()
 	{
-		Network.Connect("127.0.0.1", _listenPort);
+		if(ipInput.text != "")
+			Network.Connect(ipInput.text, _listenPort);
 	}
 
 	[RPC]
