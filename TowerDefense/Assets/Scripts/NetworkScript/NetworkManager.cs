@@ -24,20 +24,16 @@ public class NetworkManager : MonoBehaviour
     private string _gameName;
     private HostData[] _hostList;
 
-	[SerializeField]
-    public List<NetworkPlayer> _players;
-
     private HostData _hostConnected;
-	private int _playerCount;
 	private int _nbPlayersMax;
 	public MenuManager MenuManager;
 	public LevelLoader LevelLoader;
 	private bool _register;
+	private NetworkView _networkView;
 
     void Start()
     {
-		_players = new List<NetworkPlayer>();
-        _playerCount = 0;
+		_networkView = GetComponent<NetworkView>();
 		_register = false;
 		StartCoroutine("RefreshHostList");
     }
@@ -56,11 +52,10 @@ public class NetworkManager : MonoBehaviour
 
     public void QuitLobby()
     {
-		_playerCount = 0;
 		Network.Disconnect();
 		if (Network.isServer)
 			MasterServer.UnregisterHost();
-		LevelLoader.SetPlayerCount(_playerCount);
+		LevelLoader.nbPlayerCount = 0;
     }
 
 	public void StartServer() 
@@ -73,14 +68,12 @@ public class NetworkManager : MonoBehaviour
 			 if (serverName.text != "" && nbPlayersInput.text != "")
 			 {
 				 _nbPlayersMax = int.Parse(nbPlayersInput.text);
-				 _playerCount++;
-				 LevelLoader.SetPlayerMax(_nbPlayersMax);
-				 LevelLoader.SetPlayerCount(_playerCount);
+				 LevelLoader.nbPlayerMax = _nbPlayersMax;
+				 LevelLoader.nbPlayerCount = 1;
 				 if (!local.isOn)
 				 {
 					 Network.InitializeServer(_nbPlayersMax, _listenPort, !Network.HavePublicAddress());
 					 MasterServer.RegisterHost(_typeName, serverName.text, "player" + serverName.text);
-					 Debug.Log("Register on master server");
 				 }
 				 else
 					 Network.InitializeServer(_nbPlayersMax, _listenPort, Network.HavePublicAddress());
@@ -92,7 +85,7 @@ public class NetworkManager : MonoBehaviour
 	{
 		while (true)
 		{
-			nbPlayersConnected.text = LevelLoader.GetPlayerCount() + "/" + LevelLoader.GetPlayerMax();
+			nbPlayersConnected.text = LevelLoader.nbPlayerCount+ "/" + LevelLoader.nbPlayerMax;
 			for (int i = 0; i < serverList.transform.childCount; i++)
 				Destroy(serverList.transform.GetChild(i).gameObject);
 			if(!_register)
@@ -128,62 +121,59 @@ public class NetworkManager : MonoBehaviour
     {
 		Network.Connect(hostData);
         _hostConnected = hostData;
-		_playerCount = 1;
-		LevelLoader.SetPlayerCount(_playerCount);
     }
 
 	public void JoinLocal()
 	{
 		Network.Connect("127.0.0.1", _listenPort);
-		//_hostConnected = hostData;
-		_playerCount = 1;
-		LevelLoader.SetPlayerCount(_playerCount);
 	}
 
-    private void OnMasterServerEvent(MasterServerEvent msEvent)
-    {
-        if (msEvent == MasterServerEvent.HostListReceived)
-        {
-            _hostList = MasterServer.PollHostList();
-			if (_hostList.Length == 0)
-				_hostList = null;
-        }
-		if (msEvent == MasterServerEvent.RegistrationSucceeded)
-			_register = true;
-        Debug.Log(msEvent.ToString());
-    }
-
-    private void OnPlayerConnected(NetworkPlayer player) //Server
+	[RPC]
+	void SyncNumberPlayer(int nb, int max)
 	{
-        _players.Add(player); 
-        _playerCount++;
-		LevelLoader.SetPlayerCount(_playerCount);
+		LevelLoader.nbPlayerCount = nb;
+		LevelLoader.nbPlayerMax = max;
 	}
 
-    private void OnConnectedToServer()  //Client 
-    {
-        _playerCount++;
-		if(!local.isOn)
-			LevelLoader.SetPlayerMax(_hostConnected.playerLimit - 1);
-		LevelLoader.SetPlayerCount(_playerCount);
-    }
+	private void OnPlayerConnected(NetworkPlayer player) //Server
+	{
+		int nbConnections = Network.connections.Length;
+		int max = Network.maxConnections;
+		_networkView.RPC("SyncNumberPlayer", RPCMode.All, nbConnections + 1, max);
+	}
 
 	private void OnPlayerDisconnected(NetworkPlayer player) //Server
 	{
-		_playerCount--;
-		LevelLoader.SetPlayerCount(_playerCount);
+		int nbConnections = Network.connections.Length;
+		int max = Network.maxConnections;
+		_networkView.RPC("SyncNumberPlayer", RPCMode.All, nbConnections + 1, max);
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
 	}
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
 	{
-		_playerCount = 0;
-		LevelLoader.SetPlayerCount(_playerCount);
+		LevelLoader.nbPlayerCount = 0;
 		MenuManager.ShowMenu(ServerMenu);
 	}
 
+	private void OnMasterServerEvent(MasterServerEvent msEvent)
+	{
+		if (msEvent == MasterServerEvent.HostListReceived)
+		{
+			_hostList = MasterServer.PollHostList();
+			if (_hostList.Length == 0)
+				_hostList = null;
+		}
+		if (msEvent == MasterServerEvent.RegistrationSucceeded)
+			_register = true;
+	}
+
 	//Debug
+	private void OnConnectedToServer()  //Client 
+	{
+		Debug.Log("Connected to server");
+	}
 
 	private void OnServerInitialized()
 	{
@@ -193,10 +183,12 @@ public class NetworkManager : MonoBehaviour
     private void OnFailedToConnectToMasterServer(NetworkConnectionError error)
     {
 		Debug.Log("On failed to connect to Master Server: " + error);
+		MenuManager.ShowMenu(ServerMenu);
     }
 
     private void OnFailedToConnect(NetworkConnectionError error)
     {
         Debug.Log("Could not connect to server: " + error);
+		MenuManager.ShowMenu(ServerMenu);
     }
 }

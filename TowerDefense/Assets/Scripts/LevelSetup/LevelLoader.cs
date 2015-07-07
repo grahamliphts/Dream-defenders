@@ -10,8 +10,30 @@ public class LevelLoader : MonoBehaviour
 
 	[SerializeField]
 	private int _nbPlayerCount;
+	public int nbPlayerCount
+	{
+		get
+		{
+			return _nbPlayerCount;
+		}
+		set
+		{
+			_nbPlayerCount = value;
+		}
+	}
 	[SerializeField]
 	private int _nbPlayerMax;
+	public int nbPlayerMax
+	{
+		get
+		{
+			return _nbPlayerMax;
+		}
+		set
+		{
+			_nbPlayerMax = value;
+		}
+	}
 
 	public static LevelLoader _instance;
 
@@ -38,26 +60,6 @@ public class LevelLoader : MonoBehaviour
 		}
 	}
 
-	public void SetPlayerCount(int nbPlayerCount)
-	{
-		_nbPlayerCount = nbPlayerCount;
-	}
-
-	public void SetPlayerMax(int nbPlayerMax)
-	{
-		_nbPlayerMax = nbPlayerMax;
-	}
-
-	public int GetPlayerCount()
-	{
-		return _nbPlayerCount;
-	}
-
-	public int GetPlayerMax()
-	{
-		return _nbPlayerMax;
-	}
-
     [RPC]
     IEnumerator LoadLevel(string level, int levelPrefix)
     {
@@ -76,6 +78,5 @@ public class LevelLoader : MonoBehaviour
 		Network.isMessageQueueRunning = true;
 		Network.SetSendingEnabled(0, true);
 		LevelStart.instance.OnLoadedLevel("Network", int.Parse(networkPlayer.ToString()));
-
     }
 }

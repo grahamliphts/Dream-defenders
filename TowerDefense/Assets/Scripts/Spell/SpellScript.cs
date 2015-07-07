@@ -31,19 +31,6 @@ public class SpellScript : MonoBehaviour
     }
 	[SerializeField]
 	private ParticleSystem _particle;
-	[SerializeField]
-	private float _degats;
-	public float degats
-	{
-		set
-		{
-			_degats = value;
-		}
-		get
-		{
-			return _degats;
-		}
-	}
 
 	private SpellScript _spellScript;
 	public SpellScript spellScript

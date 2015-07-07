@@ -7,15 +7,27 @@ public class Tuto : MonoBehaviour
 	public TowerController towerController;
 	public ConstructionController constructionControllerFire;
 	public ConstructionController constructionControllerElec;
+
+
+	//UI
 	public Text GameInfo;
 	public GameObject panelTower;
 	public GameObject panelActions;
-	public GameObject modelTower;
+	public ModelTowerPoolManager modelTower;
+	public GameObject playerInfos;
+	public GameObject generalInfos;
 	public SpellController spellController;
+	private EndGame _endGame;
 	private EnnemyManager _ennemyManager;
 
 	int _type;
 	bool _run = false;
+
+	void Start()
+	{
+		_endGame = GetComponent<EndGame>();
+	}
+
 	void Update()
 	{
 		if (LevelStart.instance.modeTuto && _run == false)
@@ -31,9 +43,15 @@ public class Tuto : MonoBehaviour
 	{
 		tutoMessage.text = "Bienvenue dans le tutoriel de DreamDefenders\n Appuyez sur entrée pour continuer";
 		yield return StartCoroutine(WaitForKeyPress());
+		tutoMessage.text = "Vous etes apparu a coté de votre nexus\n Vous devez le proteger des ennemis";
+		yield return StartCoroutine(WaitForKeyPress());
 		tutoMessage.text = "Pour vous déplacer utiliser les touches Z/S/Q/D \n Utilisez la touche left shift pour sprinter";
 		yield return StartCoroutine(WaitForKeyPress());
-		tutoMessage.text = "Vous etes apparu a coté de votre nexus\n Vous devez le proteger des ennemis";
+		tutoMessage.text = "Vos informations générales sont en haut de l'écran";
+		generalInfos.SetActive(true);
+		yield return StartCoroutine(WaitForKeyPress());
+		tutoMessage.text = "Vos points de vie et de mana sont affichés en haut à gauche";
+		playerInfos.SetActive(true);
 		yield return StartCoroutine(WaitForKeyPress());
 
 		/*Tower Construction*/
@@ -43,33 +61,21 @@ public class Tuto : MonoBehaviour
 		yield return StartCoroutine(WaitForKeyPress());
 		tutoMessage.text = "Des informations sur le nombre de tours restantes apparaissent à gauche";
 		yield return StartCoroutine(WaitForKeyPress());
-		towerController.Reset();
-		LoopManager.modeConstruction = true;
+		tutoMessage.text = "Vous pouvez changer de type de tour en utilisant les touches de 1 à 4";
+		yield return StartCoroutine(WaitForKeyPress());
 		tutoMessage.text = "Posez une tour avec le clic gauche";
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(2);
+		towerController.enabled = true;
+		LoopManager.modeConstruction = true;
 		tutoMessage.text = "";
 		GameInfo.text = "Objectif : Poser une tour";
-		yield return StartCoroutine(WaitForPlaceTower());
-		GameInfo.text = "";
-		tutoMessage.text = "Felicitations, vous avez poser une tour de feu";
-		yield return StartCoroutine(WaitForKeyPress());
-		tutoMessage.text = "Vous pouvez changer de types de tours en utilisant les touches de 1 à 4";
-		yield return StartCoroutine(WaitForKeyPress());
-		tutoMessage.text = "Appuyez sur la touche 3";
-		yield return new WaitForSeconds(1);
-		tutoMessage.text = "";
-		GameInfo.text = "Objectif : Changer de tour";
-		yield return StartCoroutine(WaitForChangeTower());
-		tutoMessage.text = "Felicitations, vous pouvez maintenant poser une tour poison";
-		yield return StartCoroutine(WaitForKeyPress());
-		tutoMessage.text = "";
-		GameInfo.text = "Objectif : Poser une deuxieme tour";
 		yield return StartCoroutine(WaitForPlaceTower());
 		GameInfo.text = "";
 		tutoMessage.text = "Nous allons maintenant passer en mode combat";
 		yield return StartCoroutine(WaitForKeyPress());
 		LoopManager.modeConstruction = false;
-		modelTower.SetActive(false);
+		towerController.enabled = false;
+		modelTower.SetConstruction(false);
 
 		/*Ennemies*/
 		tutoMessage.text = "Les ennemis peuvent etre de différents types : Feu, Electrique, Poison et Glace";
@@ -88,8 +94,9 @@ public class Tuto : MonoBehaviour
 		GameInfo.text = "Objectif : Tuer les ennemis";
 		yield return StartCoroutine(WaitForEnnemyDie());
 		tutoMessage.text = "Félicitations, vous avez tué tout les ennemis";
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(2);
 		tutoMessage.enabled = false;
+		_endGame.CloseGame("Fin du tuto");
 	}
 
 	IEnumerator WaitForEnnemyDie()
@@ -100,17 +107,13 @@ public class Tuto : MonoBehaviour
 
 	IEnumerator WaitForPlaceTower()
 	{
-		while (!Input.GetMouseButtonDown(0))
+		while ((!Input.GetMouseButtonDown(0)) || towerController.hitCounter != 0)
 			yield return null;
-		if(_type == 0)
-			towerController.PlaceTower(constructionControllerFire.transform.position, _type);
-		else
-			towerController.PlaceTower(constructionControllerElec.transform.position, _type);
 	}
 
 	IEnumerator WaitForKeyPress()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.2f);
 		while (!Input.GetKeyDown(KeyCode.Return))
 			yield return null;
 	}
@@ -119,7 +122,5 @@ public class Tuto : MonoBehaviour
 	{
 		while (!Input.GetKey("3"))
 			yield return null;
-		_type = 2;
-		towerController.ChangeTower(_type);
 	}
 }

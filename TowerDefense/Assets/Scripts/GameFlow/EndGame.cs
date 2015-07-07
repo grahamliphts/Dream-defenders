@@ -7,7 +7,6 @@ public class EndGame : MonoBehaviour
 	//Pour la fermeture de la partie
 	public RawImage imageClose;
 	public Text closeInfo;
-	public Text tuto;
 
 	public NexusLife lifeNexus;
 	
@@ -50,11 +49,10 @@ public class EndGame : MonoBehaviour
 		if (_stats == null)
 			return;
 
-		if (!LevelStart.instance.modeMulti || Network.isServer)
+		/*if (!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			if (_loopManager.actualWave == _loopManager.waveNumber && _loopManager.ennemyManager.AllDied() == true && _loopManager.win == false)
 			{
-				Debug.Log("WInner");
 				if (LevelStart.instance.modeMulti)
 					_networkView.RPC("SyncEndGame", RPCMode.All, "You win");
 				else
@@ -63,7 +61,7 @@ public class EndGame : MonoBehaviour
 					_loopManager.win = true;
 				}
 			}
-		}
+		}*/
 
 		if (_stats.life <= 0)
 		{
@@ -107,7 +105,6 @@ public class EndGame : MonoBehaviour
 
 	IEnumerator PopupMessage(string text)
 	{
-		tuto.text = "";
 		imageClose.gameObject.SetActive(true);
 		closeInfo.text = text;
 		yield return new WaitForSeconds(3);
@@ -115,15 +112,18 @@ public class EndGame : MonoBehaviour
 		imageClose.gameObject.SetActive(false);
 	}
 
+	public void CloseGame(string text)
+	{
+		StartCoroutine("CloseParty", text);
+	}
+
 	IEnumerator CloseParty(string text)
 	{
 		_loopManager.gameInfo.text = "";
-		tuto.text = "";
 
 		imageClose.gameObject.SetActive(true);
 		closeInfo.text = text;
 		_loopManager.lose = true;
-		_loopManager.SetConstruction(false);
 
 		player.SetActive(false);
 		yield return new WaitForSeconds(3);

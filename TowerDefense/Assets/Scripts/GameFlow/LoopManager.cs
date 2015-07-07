@@ -130,7 +130,6 @@ public class LoopManager : MonoBehaviour
 						SetConstruction(true);
 
 					_startTime = Time.time;
-					guiInGame.Reset();
 				}
 			}
 		}

@@ -108,13 +108,10 @@ public class LevelStart : MonoBehaviour
 		_manaBar.player = player;
 		_manaBar.stats = stats;
 
+		_endGame.player = player;
+		_endGame.stats = stats;
 		if (mode != "Tuto")
-		{
-			_endGame.player = player;
-			_endGame.stats = stats;
 			_loopManager.Init();
-		}
-		
     }
 
 	[RPC]

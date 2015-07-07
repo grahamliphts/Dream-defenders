@@ -19,6 +19,18 @@ public class TowerController : MonoBehaviour
 	private bool _isMine;
 	[SerializeField]
 	private int _nbtowerAvailables;
+	private int _hitCounter;
+	public int hitCounter
+	{
+		get
+		{
+			return _hitCounter;
+		}
+		set
+		{
+			_hitCounter = value;
+		}
+	}
 
 	void Start()
 	{
@@ -34,7 +46,8 @@ public class TowerController : MonoBehaviour
 	{
 		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction)
 		{
-			if (Input.GetMouseButtonDown(0) && _target.constructionController.hitCounter == 0 && _nbtowerAvailables > 0)
+			_hitCounter = _target.constructionController.hitCounter;
+			if (Input.GetMouseButtonDown(0) && _hitCounter == 0 && _nbtowerAvailables > 0)
 			{
 				if (!LevelStart.instance.modeMulti)
 					PlaceTower(_constructionController.transform.position, _type);
@@ -118,8 +131,6 @@ public class TowerController : MonoBehaviour
 			//add box collider to tower
 			tower.OwnCollider.enabled = true;
 		}
-		
-		
 	}
 
 	void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)
