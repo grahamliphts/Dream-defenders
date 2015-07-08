@@ -3,16 +3,7 @@ using System.Collections;
 
 public class Stats : MonoBehaviour 
 {
-	[SerializeField]
-	private float _intelligence;
-	[SerializeField]
-	private float _robustesse;
-	[SerializeField]
-	private float _endurance;
-	[SerializeField]
-	private float _esprit;
 	private float _regen;
-
 	public float regen
 	{
 		set
@@ -25,6 +16,11 @@ public class Stats : MonoBehaviour
 		}
 	}
 
+	[SerializeField]
+	private float _intelligence;
+
+	[SerializeField]
+	private float _esprit;
 	public float esprit
 	{
 		set
@@ -37,6 +33,8 @@ public class Stats : MonoBehaviour
 		}
 	}
 
+	[SerializeField]
+	private float _robustesse;
 	public float robustesse
 	{
 		set
@@ -48,6 +46,9 @@ public class Stats : MonoBehaviour
 			return _robustesse;
 		}
 	}
+
+	[SerializeField]
+	private float _endurance;
 	public float endurance
 	{
 		set
@@ -88,7 +89,6 @@ public class Stats : MonoBehaviour
 	public float manaMax;
 	public float lifeMax;
 
-
 	[System.Serializable]
 	public struct Damages
 	{
@@ -112,12 +112,26 @@ public class Stats : MonoBehaviour
 
 	[SerializeField]
 	private int _regenDelay;
+	private float _power;
+	public LevelManager levelManager;
+	private float _damageReduction;
+
 	void Start()
 	{
 		_life = lifeMax;
 		_mana = manaMax;
 		_regen = 3;
 		StartCoroutine("RegenMana");
+	}
+
+	void Update()
+	{
+		if(_power != levelManager.power)
+		{
+			_power = levelManager.power;
+			CalculateStat(_power);
+			IncreaseDamageEnemies(_power);
+		}
 	}
 
 	IEnumerator RegenMana()
@@ -133,6 +147,18 @@ public class Stats : MonoBehaviour
 			yield return new WaitForSeconds(_regenDelay);
 		}
 	}
+
+	void IncreaseDamageEnemies(float factor)
+	{
+		for (int i = 0; i < _damages.Length; i++)
+		{
+			if (_damages[i].tag == "proj_enemy")
+			{
+				_damages[i].damage = (int)factor;
+			}
+		}
+	}
+
 	void OnCollisionEnter(Collision col)
 	{
 		int count = 0;
@@ -141,22 +167,28 @@ public class Stats : MonoBehaviour
 			for (int i = 0; i < _damages.Length; i++)
 			{
 				if (col.gameObject.tag == _damages[i].tag)
-					_life = _life - (_damages[i].damage - robustesse);
+					_life = _life - (_damages[i].damage - _damageReduction);
 				count++;
 			}
 		}
 	}
 
-	private void CalculateStat(int _power)
+	private void CalculateStat(double _power)
 	{
-	
-		esprit = _power * 1.4f;
-		_regen = esprit * 0.4f;
 
-		endurance = _power * 1.5f;
+		_esprit = (float)_power * 1.4f;
+		_regen = _esprit * 0.4f;
+
+		_endurance = (float)_power * 1.5f;
 		lifeMax += endurance * 1.5f;
 		_life = lifeMax;
 
-		robustesse = _power * 1.3f;
+		_robustesse = (float)_power * 1.3f;
+		_damageReduction = _robustesse * 0.1f;
+
+		Debug.Log(_esprit);
+		Debug.Log(_regen);
+		Debug.Log(_endurance);
+		Debug.Log(_robustesse);
 	}
 }

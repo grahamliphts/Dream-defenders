@@ -42,7 +42,19 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	private double _power;
+	private float _power;
+	public float power
+	{
+		get
+		{
+			return _power;
+		}
+		set
+		{
+			_power = value;
+		}
+	}
+
 	private int _level;
 	public int level
 	{
@@ -73,7 +85,7 @@ public class LevelManager : MonoBehaviour
 
 	void CalculatePower(int level)
 	{
-		_power =  (int) Math.Round(100 - 100 * Math.Exp(-0.05 * level));
+		_power =  (float) Math.Round(100 - 100 * Math.Exp(-0.05 * level));
 	}
 
 	void Upgrade()
