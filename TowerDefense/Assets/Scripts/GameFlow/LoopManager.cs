@@ -136,25 +136,6 @@ public class LoopManager : MonoBehaviour
     }
 
 	[RPC]
-	private void PlayerLeft(int id)
-	{
-		LevelStart.instance.netPlayers[id].SetActive(false);
-		NetworkPlayer player = Network.player;
-		if (int.Parse(player.ToString()) == id)
-			StartCoroutine("CloseParty", "You died");
-		else
-			StartCoroutine("PopupMessage", "Player has left");
-	}
-
-	[RPC]
-	private void SyncEndGame(string text)
-	{
-		if(text == "You win")
-			_win = true;
-		StartCoroutine("CloseParty", text);
-	}
-
-	[RPC]
 	private void SyncConstruction(bool construction)
 	{
 		SetConstruction(construction);

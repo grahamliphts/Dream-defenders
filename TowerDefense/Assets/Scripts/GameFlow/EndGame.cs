@@ -66,13 +66,13 @@ public class EndGame : MonoBehaviour
 		if (_stats.life <= 0)
 		{
 			//Deco all clients
-			if (Network.isServer)
-				_networkView.RPC("SyncEndGame", RPCMode.All, "Server Player has died");
-			else if (Network.isClient)
+			if (LevelStart.instance.modeMulti)
 			{
 				NetworkPlayer player = Network.player;
-				_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
-				//StartCoroutine("CloseParty", "You died");
+				if (Network.isServer)
+					_networkView.RPC("SyncEndGame", RPCMode.All, "Server Player has died");
+				else
+					_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
 			}
 			else
 				StartCoroutine("CloseParty", "You died");
@@ -83,7 +83,6 @@ public class EndGame : MonoBehaviour
 		else if (lifeNexus.GetLife() <= 0)
 			StartCoroutine("CloseParty", "Nexus has been destroyed");
 	}
-
 	[RPC]
 	private void PlayerLeft(int id)
 	{
@@ -98,8 +97,6 @@ public class EndGame : MonoBehaviour
 	[RPC]
 	private void SyncEndGame(string text)
 	{
-		if (text == "You win")
-			_loopManager.win = true;
 		StartCoroutine("CloseParty", text);
 	}
 
@@ -156,5 +153,27 @@ public class EndGame : MonoBehaviour
 		Destroy(LevelLoader._instance.gameObject);
 		LevelLoader._instance = null;
 		Application.LoadLevel("MenuScene");
+	}
+
+	private void OnPlayerDisconnected(NetworkPlayer player) //Server
+	{
+		Network.RemoveRPCs(player);
+		//Time.timeScale = 1;
+		_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
+	}
+
+	public void QuitGame()
+	{
+		Time.timeScale = 1;
+		if(!LevelStart.instance.modeMulti)
+		{
+			Destroy(GuiManager._instance.gameObject);
+			GuiManager._instance = null;
+			Destroy(LevelLoader._instance.gameObject);
+			LevelLoader._instance = null;
+			Application.LoadLevel("MenuScene");
+		}
+		else
+			Network.Disconnect();
 	}
 }

@@ -43,6 +43,7 @@ public class LevelStart : MonoBehaviour
 	private EnnemyManager _enemiesManager;
 	private LoopManager _loopManager;
 	private EndGame _endGame;
+	private ShopManager _shop;
 
 	void Start()
 	{
@@ -56,6 +57,7 @@ public class LevelStart : MonoBehaviour
 		_enemiesManager = GetComponent<EnnemyManager>();
 		_loopManager = GetComponent<LoopManager>();
 		_endGame = GetComponent<EndGame>();
+		_shop = GetComponent<ShopManager>();
 	}
 
     public void OnLoadedLevel(string mode, int id)
@@ -111,6 +113,9 @@ public class LevelStart : MonoBehaviour
 
 		_endGame.player = player;
 		_endGame.stats = stats;
+
+		_shop.stats = stats;
+
 		if (mode != "Tuto")
 			_loopManager.Init();
     }

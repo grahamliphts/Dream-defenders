@@ -49,7 +49,6 @@ public class LifeBarManager : MonoBehaviour
         {
 			_lifeBarValue = _stats.life / _stats.lifeMax;
 			LifePlayerValue.size = _lifeBarValue;
-			Debug.Log(_lifeBarValue);
             SetColorLife();
 			lifeBar.color = _lifeBarColor;
         }

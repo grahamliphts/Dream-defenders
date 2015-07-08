@@ -21,12 +21,7 @@ public class NexusLife : MonoBehaviour {
 		if(!LevelStart.instance.modeMulti || Network.isServer)
 		{
 			if (_life > 0)
-			{
-				if (LevelStart.instance.modeMulti)
-					_networkView.RPC("SyncLifeNexus", RPCMode.All, (_life - damage));
-				else
-					_life = _life - damage;
-			}
+				_life = _life - damage;
 		}
 	}
 
@@ -39,5 +34,20 @@ public class NexusLife : MonoBehaviour {
 	public float GetLife()
 	{
 		return _life;
+	}
+
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		float life = _life;
+		if (stream.isWriting)
+		{
+			life = _life;
+			stream.Serialize(ref life);
+		}
+		else
+		{
+			stream.Serialize(ref life);
+			_life = life;
+		}
 	}
 }

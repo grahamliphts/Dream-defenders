@@ -55,10 +55,14 @@ public class PauseGame : MonoBehaviour
 		if(value)
 		{
 			Time.timeScale = 0.0f;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 			InfoText.text = "Pause";
 		}
 		else
 		{
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
 			Time.timeScale = 1;
 			InfoText.text = "";
 		}

@@ -125,32 +125,47 @@ public class NetworkManager : MonoBehaviour
 	public void JoinLocal()
 	{
 		if(ipInput.text != "")
+		{
 			Network.Connect(ipInput.text, _listenPort);
-	}
-
-	[RPC]
-	void SyncNumberPlayer(int nb, int max)
-	{
-		LevelLoader.nbPlayerCount = nb;
-		LevelLoader.nbPlayerMax = max;
+			MenuManager.ShowMenu(LobbyMenu);
+		}
 	}
 
 	private void OnPlayerConnected(NetworkPlayer player) //Server
 	{
 		int nbConnections = Network.connections.Length;
-		int max = Network.maxConnections;
-		_networkView.RPC("SyncNumberPlayer", RPCMode.All, nbConnections + 1, max);
+		LevelLoader.nbPlayerCount = nbConnections + 1;
+		LevelLoader.nbPlayerMax = Network.maxConnections;
 	}
 
 	private void OnPlayerDisconnected(NetworkPlayer player) //Server
 	{
 		int nbConnections = Network.connections.Length;
-		int max = Network.maxConnections;
-		_networkView.RPC("SyncNumberPlayer", RPCMode.All, nbConnections + 1, max);
+		LevelLoader.nbPlayerCount = nbConnections + 1;
+		LevelLoader.nbPlayerMax = Network.maxConnections;
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
 	}
 
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		int nb = LevelLoader.nbPlayerCount;
+		int nbMax = LevelLoader.nbPlayerMax;
+		if (stream.isWriting)
+		{
+			nb = LevelLoader.nbPlayerCount;
+			nbMax = LevelLoader.nbPlayerMax;
+			stream.Serialize(ref nb);
+			stream.Serialize(ref nbMax);
+		}
+		else
+		{
+			stream.Serialize(ref nb);
+			LevelLoader.nbPlayerCount = nb;
+			stream.Serialize(ref nbMax);
+			LevelLoader.nbPlayerMax = nbMax;
+		}
+	}
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
 	{
 		LevelLoader.nbPlayerCount = 0;

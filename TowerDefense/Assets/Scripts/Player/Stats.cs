@@ -124,7 +124,6 @@ public class Stats : MonoBehaviour
 	{
 		while (true)
 		{
-			//Debug.Log(_mana + " < " + manaMax);
 			if (_mana < manaMax)
 			{
 				_mana = _mana + _regen;
@@ -136,14 +135,13 @@ public class Stats : MonoBehaviour
 	}
 	void OnCollisionEnter(Collision col)
 	{
-		//Debug.Log(col.gameObject.name);
 		int count = 0;
 		if (_life > 0)
 		{
 			for (int i = 0; i < _damages.Length; i++)
 			{
 				if (col.gameObject.tag == _damages[i].tag)
-					_life = _life - _damages[i].damage;
+					_life = _life - (_damages[i].damage - robustesse);
 				count++;
 			}
 		}
