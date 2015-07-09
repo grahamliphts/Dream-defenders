@@ -4,6 +4,20 @@ using System;
 
 public class LevelManager : MonoBehaviour 
 {
+	[SerializeField]
+	private float[] _growFactors;
+	public float[] growFactors
+	{
+		get
+		{
+			return _growFactors;
+		}
+		set
+		{
+			_growFactors = value;
+		}
+	}
+
 	private int _money;
 	public int money
 	{
@@ -64,6 +78,9 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
+	private int _moneyEnemy;
+	private int _xpEnemy;
+
 	void Start () 
 	{
 		_money = 0;
@@ -74,8 +91,9 @@ public class LevelManager : MonoBehaviour
 
 	void Update()
 	{
+		//NextLevel
 		if (_xpGained >= _xpNeed)
-			Upgrade();
+			Upgrade();		
 	}
 
 	void CalculateXpNeed(int level)
@@ -85,7 +103,7 @@ public class LevelManager : MonoBehaviour
 
 	void CalculatePower(int level)
 	{
-		_power =  (float) Math.Round(100 - 100 * Math.Exp(-0.05 * level));
+		_power =  (float) Math.Round(100 - 100 * Math.Exp(-0.05 * level),2);
 	}
 
 	void Upgrade()

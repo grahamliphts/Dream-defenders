@@ -8,6 +8,8 @@ public class OpenShop : MonoBehaviour
 	public ShopManager shop;
 	private bool _shop;
 	private CameraController _camera;
+	public GameObject player;
+	//todo charccontroller + spell controller + tower controller enabled
 
 	void Start()
 	{

@@ -29,11 +29,9 @@ public class NetworkManager : MonoBehaviour
 	public MenuManager MenuManager;
 	public LevelLoader LevelLoader;
 	private bool _register;
-	private NetworkView _networkView;
 
     void Start()
     {
-		_networkView = GetComponent<NetworkView>();
 		_register = false;
 		StartCoroutine("RefreshHostList");
     }

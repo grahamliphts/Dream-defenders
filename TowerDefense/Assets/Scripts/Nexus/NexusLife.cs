@@ -8,12 +8,9 @@ public class NexusLife : MonoBehaviour {
 	[SerializeField]
 	private int damage;
 
-	private NetworkView _networkView;
-
 	void Start()
 	{
 		_life = 100;
-		_networkView = GetComponent<NetworkView>();
 	}
 
 	void OnCollisionEnter(Collision col)

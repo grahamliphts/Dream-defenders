@@ -17,6 +17,9 @@ public class MonsterLifeManager : MonoBehaviour
 		public string tag;
 		public int damage;
 	}
+
+	public int[] damagesBase;
+
 	[SerializeField]
 	private Damages[] _damages;
 	public Damages[] damages

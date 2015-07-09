@@ -97,24 +97,19 @@ public class Stats : MonoBehaviour
 	}
 
 	[SerializeField]
-	private Damages[] _damages;
-	public Damages[] damages
-	{
-		set
-		{
-			_damages = value;
-		}
-		get
-		{
-			return _damages;
-		}
-	}
+	private int _degatsRecus;
+	[SerializeField]
+	private int _degatsRecusBase;
 
 	[SerializeField]
 	private int _regenDelay;
 	private float _power;
 	public LevelManager levelManager;
 	private float _damageReduction;
+	private int _degatsAdd;
+
+	private float[] _growFactors;
+	public EnnemyManager enemyManager;
 
 	void Start()
 	{
@@ -129,8 +124,10 @@ public class Stats : MonoBehaviour
 		if(_power != levelManager.power)
 		{
 			_power = levelManager.power;
+			_growFactors = levelManager.growFactors;
 			CalculateStat(_power);
-			IncreaseDamageEnemies(_power);
+			IncreaseDamageEnemies(_power * 1.6f);
+			enemyManager.IncreaseDamageOnEnemies(_degatsAdd);
 		}
 	}
 
@@ -148,43 +145,31 @@ public class Stats : MonoBehaviour
 		}
 	}
 
-	void IncreaseDamageEnemies(float factor)
+	void IncreaseDamageEnemies(float value)
 	{
-		for (int i = 0; i < _damages.Length; i++)
-		{
-			if (_damages[i].tag == "proj_enemy")
-			{
-				_damages[i].damage = (int)factor;
-			}
-		}
+		_degatsRecus = (int)(_degatsRecusBase + value);
 	}
 
 	void OnCollisionEnter(Collision col)
 	{
-		int count = 0;
 		if (_life > 0)
-		{
-			for (int i = 0; i < _damages.Length; i++)
-			{
-				if (col.gameObject.tag == _damages[i].tag)
-					_life = _life - (_damages[i].damage - _damageReduction);
-				count++;
-			}
-		}
+			_life = _life - (_degatsRecus - _damageReduction);
 	}
 
 	private void CalculateStat(double _power)
 	{
+		_robustesse = (float)_power * _growFactors[0];
+		_damageReduction = _robustesse * 0.1f;
 
-		_esprit = (float)_power * 1.4f;
-		_regen = _esprit * 0.4f;
-
-		_endurance = (float)_power * 1.5f;
+		_endurance = (float)_power * _growFactors[1];
 		lifeMax += endurance * 1.5f;
 		_life = lifeMax;
 
-		_robustesse = (float)_power * 1.3f;
-		_damageReduction = _robustesse * 0.1f;
+		_esprit = (float)_power * _growFactors[2];
+		_regen = _esprit * 0.4f;
+
+		_intelligence = (float)_power * _growFactors[3];
+		_degatsAdd = (int)(_intelligence * 0.5f);
 
 		Debug.Log(_esprit);
 		Debug.Log(_regen);

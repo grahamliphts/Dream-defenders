@@ -38,36 +38,36 @@ public class ShopManager : MonoBehaviour {
 
 	public void SetStatsShop()
 	{
-		spirit.text = "Spirit : " + _stats.esprit;
+		spirit.text = "Esprit : " + _stats.esprit;
 		Regen.text = "Regen : " + _stats.regen;
-		_Add_Spirit.text = "Upgrade $" + SpiritCost;
+		_Add_Spirit.text = "Améliorer : " + SpiritCost + "$";
 		endu.text = "Endurance : " + _stats.endurance;
-		Life.text = "Life : " + _stats.lifeMax;
-		_Add_Endu.text = "Upgrade $" + EnduCost;
+		Life.text = "Vie : " + _stats.lifeMax;
+		_Add_Endu.text = "Améliorer : " + EnduCost + "$";
 		Robustesse.text = "Robustesse : " + _stats.robustesse;
-		_Add_Robu.text = "Upgrade $" + RobuCost;
+		_Add_Robu.text = "Améliorer : " + RobuCost + "$";
 	}
 
 	void refresh(uint toRefresh)
 	{
-		if (toRefresh == 0) {
-			spirit.text = "Spirit : " + _stats.esprit;
+		if (toRefresh == 0) 
+		{
+			spirit.text = "Esprit : " + _stats.esprit;
 			Regen.text = "Regen : " + _stats.regen;
-			_Add_Spirit.text = "Upgrade $" + SpiritCost;
+			_Add_Spirit.text = "Améliorer : " + SpiritCost + "$";
 		} else if (toRefresh == 1) {
 			endu.text = "Endurance : " + _stats.endurance;
-			Life.text = "Life : " + _stats.lifeMax;
-			_Add_Endu.text = "Upgrade $" + EnduCost;
+			Life.text = "Vie : " + _stats.lifeMax;
+			_Add_Endu.text = "Améliorer : " + EnduCost + "$";
 		} else if (toRefresh == 2) {
 			Robustesse.text = "Robustesse : " + _stats.robustesse;
-			_Add_Robu.text = "Upgrade $" + RobuCost;
+			_Add_Robu.text = "Améliorer : " + RobuCost + "$";
 		}
 
 	}
 
 	public void Add_Spirit(int amount)
 	{
-		Debug.Log ("Add_Spirit ");
 		_stats.esprit += 1;
 		SpiritCost = (int)(SpiritCost * CostIncrement);
 		refresh (0);
@@ -76,7 +76,6 @@ public class ShopManager : MonoBehaviour {
 
 	public void Add_Endu(int amount)
 	{
-		Debug.Log ("Add_Endu ");
 		_stats.endurance += 1;
 		EnduCost = (int)(EnduCost * CostIncrement);
 		refresh (1);
@@ -84,7 +83,6 @@ public class ShopManager : MonoBehaviour {
 
 	public void Add_Robu(int amount)
 	{
-		Debug.Log ("Add_Endu ");
 		_stats.robustesse += 1;
 		RobuCost = (int)(RobuCost * CostIncrement);
 		refresh (2);

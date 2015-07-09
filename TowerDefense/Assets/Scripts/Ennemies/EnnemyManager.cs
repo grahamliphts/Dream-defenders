@@ -61,14 +61,6 @@ public class EnnemyManager : MonoBehaviour
 			InitEnemy((int)Type.Ice);
 		for (int i = 0; i < _numberPoison; i++)
 			InitEnemy((int)Type.Poison);
-
-		if(LevelStart.instance.modeMulti)
-			_networkView.RPC("ResetIndexEnemies", RPCMode.All);
-		else
-		{
-			for (int i = 0; i < 4; i++)
-				EnemyPools[i].ResetIndex();
-		}
 	}
 
 	public void InitEnemy(int index)
@@ -83,13 +75,6 @@ public class EnnemyManager : MonoBehaviour
 	}
 
 	[RPC]
-	private void ResetIndexEnemies()
-	{
-		for (int i = 0; i < 4; i++)
-			EnemyPools[i].ResetIndex();
-	}
-
-	[RPC]
 	private void SetEnemy(int index)
 	{
 		SpawnEnemies(index);
@@ -101,7 +86,7 @@ public class EnnemyManager : MonoBehaviour
 		for (int j = 0; j < _players.Count; j++)
 			enemy.iaEnemy.AddLeader(_players[j]);
 
-		enemy.newtransform.position = SpawnEnemy.position;
+		enemy.mtransform.position = SpawnEnemy.position;
 		enemy.gameObject.SetActive(true);
 		enemy.iaEnemy.SetArrivalP(ArrivalP);
 
@@ -129,6 +114,12 @@ public class EnnemyManager : MonoBehaviour
             return false;
     }
 
+	public void IncreaseDamageOnEnemies(int value)
+	{
+		for (int i = 0; i < 4; i++)
+			EnemyPools[i].IncreaseDamageOnEnemies(value);
+	}
+	
     public void AddEnemiesElec(int number)
     {
         _numberElec += number;

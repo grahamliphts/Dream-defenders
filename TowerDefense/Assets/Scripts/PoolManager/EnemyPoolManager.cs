@@ -27,9 +27,18 @@ public class EnemyPoolManager : MonoBehaviour {
         return found;
     }
 
-    public void ResetIndex()
-    {
-        //_index = 0;
-    }
+	public void IncreaseDamageOnEnemies(int value)
+	{
+		for (int i = 0; i < enemies.Length; i++)
+		{
+			var damages = enemies[i].monsterLifeManager.damages;
+			var damagesBase = enemies[i].monsterLifeManager.damagesBase;
+			for(int j = 0; j < enemies[i].monsterLifeManager.damagesBase.Length; i++)
+			{
+				damages[i].damage = damagesBase[i] + value;
+				Debug.Log("newDamage" + damages[i].damage);
+			}
+		}
+	}
 }
 
