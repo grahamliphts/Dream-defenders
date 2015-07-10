@@ -18,73 +18,124 @@ public class ShopManager : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] Text spirit;
-	[SerializeField] Text endu;
-	[SerializeField] Text Robustesse;
+	[SerializeField] 
+	private Text spirit;
+	[SerializeField]
+	private Text endurance;
+	[SerializeField]
+	private Text robustesse;
+	[SerializeField]
+	private Text intelligence;
 
-	[SerializeField] Text Regen;
-	[SerializeField] Text Life;
-	[SerializeField] Text DamageReduc;
+	[SerializeField]
+	private Text regen;
+	[SerializeField]
+	private Text life;
+	[SerializeField]
+	private Text damageReduc;
+	[SerializeField]
+	private Text degats;
 
-	[SerializeField] Text _Add_Spirit;
-	[SerializeField] Text _Add_Endu;
-	[SerializeField] Text _Add_Robu;
+	[SerializeField] Text upSpirit;
+	[SerializeField] Text upEndu;
+	[SerializeField] Text upRobu;
+	[SerializeField] Text upIntel;
 
-	[SerializeField] public float CostIncrement = 1.15f;
+	private float costIncrement;
 
-	public int SpiritCost = 100;
-	public int EnduCost = 100;
-	public int RobuCost = 100;
+	private int spiritCost;
+	private int enduCost;
+	private int robuCost;
+	private int intelCost;
+
+	public void Start()
+	{
+		spiritCost = 100;
+		enduCost = 100;
+		robuCost = 100;
+		intelCost = 100;
+		costIncrement = 1.15f;
+	}
 
 	public void SetStatsShop()
 	{
+		//esprit
 		spirit.text = "Esprit : " + _stats.esprit;
-		Regen.text = "Regen : " + _stats.regen;
-		_Add_Spirit.text = "Améliorer : " + SpiritCost + "$";
-		endu.text = "Endurance : " + _stats.endurance;
-		Life.text = "Vie : " + _stats.lifeMax;
-		_Add_Endu.text = "Améliorer : " + EnduCost + "$";
-		Robustesse.text = "Robustesse : " + _stats.robustesse;
-		_Add_Robu.text = "Améliorer : " + RobuCost + "$";
+		regen.text = "Regen : " + _stats.regen;
+		upSpirit.text = "Améliorer : " + spiritCost + "$";
+
+		//endurance
+		endurance.text = "Endurance : " + _stats.endurance;
+		life.text = "Vie : " + _stats.lifeMax;
+		upEndu.text = "Améliorer : " + enduCost + "$";
+
+		//robustesse
+		robustesse.text = "Robustesse : " + _stats.robustesse;
+		upRobu.text = "Améliorer : " + robuCost + "$";
+
+		//intelligence
+		intelligence.text = "Robustesse : " + _stats.intelligence;
+		upIntel.text = "Améliorer : " + intelCost + "$";
 	}
 
 	void refresh(uint toRefresh)
 	{
+		//spirit
 		if (toRefresh == 0) 
 		{
 			spirit.text = "Esprit : " + _stats.esprit;
-			Regen.text = "Regen : " + _stats.regen;
-			_Add_Spirit.text = "Améliorer : " + SpiritCost + "$";
-		} else if (toRefresh == 1) {
-			endu.text = "Endurance : " + _stats.endurance;
-			Life.text = "Vie : " + _stats.lifeMax;
-			_Add_Endu.text = "Améliorer : " + EnduCost + "$";
-		} else if (toRefresh == 2) {
-			Robustesse.text = "Robustesse : " + _stats.robustesse;
-			_Add_Robu.text = "Améliorer : " + RobuCost + "$";
+			regen.text = "Regen : " + _stats.regen;
+			upSpirit.text = "Améliorer : " + spiritCost + "$";
+		} 
+		//endurance
+		else if (toRefresh == 1) 
+		{
+			endurance.text = "Endurance : " + _stats.endurance;
+			life.text = "Vie : " + _stats.lifeMax;
+			upEndu.text = "Améliorer : " + enduCost + "$";
+		} 
+		//robustesse
+		else if (toRefresh == 2)
+		{
+			robustesse.text = "Robustesse : " + _stats.robustesse;
+			damageReduc.text = "Reduction dommages : " + _stats.damageReduction;
+			upRobu.text = "Améliorer : " + robuCost + "$";
 		}
-
+		//intelligence
+		else if (toRefresh == 3)
+		{
+			intelligence.text = "Intelligence : " + _stats.intelligence;
+			degats.text = "Degats en plus : " + _stats.degatsAdd;
+			upIntel.text = "Améliorer : " + intelCost + "$";
+		}
 	}
 
-	public void Add_Spirit(int amount)
+	public void UpSpirit(int amount)
 	{
 		_stats.esprit += 1;
-		SpiritCost = (int)(SpiritCost * CostIncrement);
+		spiritCost = (int)(spiritCost * costIncrement);
 		refresh (0);
 
 	}
 
-	public void Add_Endu(int amount)
+	public void UpEndu(int amount)
 	{
 		_stats.endurance += 1;
-		EnduCost = (int)(EnduCost * CostIncrement);
+		enduCost = (int)(enduCost * costIncrement);
 		refresh (1);
 	}
 
-	public void Add_Robu(int amount)
+	public void UpRobu(int amount)
 	{
 		_stats.robustesse += 1;
-		RobuCost = (int)(RobuCost * CostIncrement);
+		robuCost = (int)(robuCost * costIncrement);
 		refresh (2);
+	}
+
+	public void UpIntel(int amount)
+	{
+		_stats.intelligence += 1;
+		intelCost = (int)(intelCost * costIncrement);
+		refresh(3);
 	}
 }

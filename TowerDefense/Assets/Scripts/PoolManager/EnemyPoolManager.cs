@@ -4,7 +4,18 @@ using System.Collections;
 public class EnemyPoolManager : MonoBehaviour {
 
     public EnemyScript[] enemies;
-    int _index = 0;
+    private int _index = 0;
+	public int index
+	{
+		get
+		{
+			return _index;
+		}
+		set
+		{
+			_index = value;
+		}
+	}
 
     public EnemyScript GetEnemy()
     {
@@ -33,10 +44,10 @@ public class EnemyPoolManager : MonoBehaviour {
 		{
 			var damages = enemies[i].monsterLifeManager.damages;
 			var damagesBase = enemies[i].monsterLifeManager.damagesBase;
-			for(int j = 0; j < enemies[i].monsterLifeManager.damagesBase.Length; i++)
+			for(int j = 0; j < enemies[i].monsterLifeManager.damagesBase.Length; j++)
 			{
-				damages[i].damage = damagesBase[i] + value;
-				Debug.Log("newDamage" + damages[i].damage);
+				damages[j].damage = damagesBase[j] + value;
+				Debug.Log("newDamage" + damages[j].damage);
 			}
 		}
 	}

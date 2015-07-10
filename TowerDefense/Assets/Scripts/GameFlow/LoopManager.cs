@@ -62,12 +62,15 @@ public class LoopManager : MonoBehaviour
 	private bool _closingParty;
 	private NetworkView _networkView;
 	private bool _init;
+	private bool _inter;
+	private float _interTimer;
 
 	void Start()
 	{
 		_init = false;
 		_ennemyManager = GetComponent<EnnemyManager>();
 		_networkView = GetComponent<NetworkView>();
+		_inter = false;
 	}
 
 	public void Init() 
@@ -83,6 +86,7 @@ public class LoopManager : MonoBehaviour
 		_startTime = Time.time;
 		modeConstruction = true;
 		_init = true;
+		_interTimer = 0.0f;
 	}
 	
 	void Update () 
@@ -98,8 +102,18 @@ public class LoopManager : MonoBehaviour
 				}
 
 				//Temps de construction fini
-				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction)
+				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction && !_inter)
 				{
+					modeConstruction = false;
+					_inter = true;
+					_interTimer = Time.time;
+					Debug.Log("Start: " + _interTimer);
+
+				}
+
+				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && modeConstruction)
+				{
+					Debug.Log("Spawn Enemies");
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
@@ -108,12 +122,18 @@ public class LoopManager : MonoBehaviour
 					ConstructionTime.text = "None";
 					_ennemyManager.Spawn();
 					guiInGame.Reset();
+					_inter = false;
 				}
 
 				//Ennemis morts / wave actuelle < waves totale
-				else if (_ennemyManager.AllDied() == true && _actualWave < waveNumber && !modeConstruction)
+				if (_ennemyManager.AllDied() == true && _actualWave < waveNumber && !modeConstruction)
 				{
-					Debug.Log("All died");
+					modeConstruction = true;
+					_inter = true;
+					_interTimer = Time.time;
+				}
+				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && !modeConstruction)
+				{
 					_actualWave++;
 					//Ajout d'ennemis a spawn
 					int nbMax = actualWave;
@@ -130,6 +150,7 @@ public class LoopManager : MonoBehaviour
 						SetConstruction(true);
 
 					_startTime = Time.time;
+					_inter = false;
 				}
 			}
 		}
@@ -144,8 +165,6 @@ public class LoopManager : MonoBehaviour
 	public void SetConstruction(bool construction)
 	{
 		ModelTower.SetConstruction(construction);
-		modeConstruction = construction;
-
 		if (construction == false)
 			gameInfo.text = "Wave " + (_actualWave + 1) + "/" + waveNumber;
 		else

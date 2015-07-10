@@ -61,6 +61,22 @@ public class EnnemyManager : MonoBehaviour
 			InitEnemy((int)Type.Ice);
 		for (int i = 0; i < _numberPoison; i++)
 			InitEnemy((int)Type.Poison);
+		if (LevelStart.instance.modeMulti)
+			_networkView.RPC("ResetIndexEnemies", RPCMode.All);
+		else
+		{
+			for (int i = 0; i < 4; i++)
+				EnemyPools[i].index = 0;
+		}
+
+	}
+
+
+	[RPC]
+	private void ResetIndexEnemies()
+	{
+		for (int i = 0; i < 4; i++)
+			EnemyPools[i].index = 0;
 	}
 
 	public void InitEnemy(int index)
@@ -94,8 +110,6 @@ public class EnnemyManager : MonoBehaviour
 			enemy.agent.SetDestination(ArrivalP.position);
 		else
 			enemy.agent.enabled = false;
-
-		
 	}
 
     public bool AllDied()

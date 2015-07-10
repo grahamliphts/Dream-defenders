@@ -18,6 +18,17 @@ public class Stats : MonoBehaviour
 
 	[SerializeField]
 	private float _intelligence;
+	public float intelligence
+	{
+		get
+		{
+			return _intelligence;
+		}
+		set
+		{
+			_intelligence = value;
+		}
+	}
 
 	[SerializeField]
 	private float _esprit;
@@ -58,6 +69,32 @@ public class Stats : MonoBehaviour
 		get
 		{
 			return _endurance;
+		}
+	}
+
+	private float _damageReduction;
+	public float damageReduction
+	{
+		get
+		{
+			return _damageReduction;
+		}
+		set
+		{
+			_damageReduction = value;
+		}
+	}
+
+	private int _degatsAdd;
+	public int degatsAdd
+	{
+		get
+		{
+			return _degatsAdd;
+		}
+		set
+		{
+			_degatsAdd = value;
 		}
 	}
 
@@ -105,8 +142,8 @@ public class Stats : MonoBehaviour
 	private int _regenDelay;
 	private float _power;
 	public LevelManager levelManager;
-	private float _damageReduction;
-	private int _degatsAdd;
+	
+	
 
 	private float[] _growFactors;
 	public EnnemyManager enemyManager;
@@ -117,6 +154,8 @@ public class Stats : MonoBehaviour
 		_mana = manaMax;
 		_regen = 3;
 		StartCoroutine("RegenMana");
+		_power = levelManager.power;
+		_growFactors = levelManager.growFactors;
 	}
 
 	void Update()
@@ -124,7 +163,6 @@ public class Stats : MonoBehaviour
 		if(_power != levelManager.power)
 		{
 			_power = levelManager.power;
-			_growFactors = levelManager.growFactors;
 			CalculateStat(_power);
 			IncreaseDamageEnemies(_power * 1.6f);
 			enemyManager.IncreaseDamageOnEnemies(_degatsAdd);
@@ -136,11 +174,7 @@ public class Stats : MonoBehaviour
 		while (true)
 		{
 			if (_mana < manaMax)
-			{
 				_mana = _mana + _regen;
-				Debug.Log("Add mana " + _regen);
-			}
-				
 			yield return new WaitForSeconds(_regenDelay);
 		}
 	}
@@ -170,10 +204,5 @@ public class Stats : MonoBehaviour
 
 		_intelligence = (float)_power * _growFactors[3];
 		_degatsAdd = (int)(_intelligence * 0.5f);
-
-		Debug.Log(_esprit);
-		Debug.Log(_regen);
-		Debug.Log(_endurance);
-		Debug.Log(_robustesse);
 	}
 }
