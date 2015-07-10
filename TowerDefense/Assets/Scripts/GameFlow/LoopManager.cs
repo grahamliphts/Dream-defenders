@@ -95,7 +95,7 @@ public class LoopManager : MonoBehaviour
 		{
 			if (_lose == false)
 			{
-				if (modeConstruction == true)
+				if (modeConstruction)
 				{
 					int constructionTime = _constructionTime - (int)(Time.time - _startTime) % 60;
 					ConstructionTime.text = constructionTime.ToString();
@@ -104,24 +104,23 @@ public class LoopManager : MonoBehaviour
 				//Temps de construction fini
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction && !_inter)
 				{
-					modeConstruction = false;
-					_inter = true;
-					_interTimer = Time.time;
-					Debug.Log("Start: " + _interTimer);
-
-				}
-
-				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && modeConstruction)
-				{
-					Debug.Log("Spawn Enemies");
+					guiInGame.Reset();
+					ConstructionTime.text = "None";
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
 						SetConstruction(false);
 
-					ConstructionTime.text = "None";
+					Debug.Log("Begin inter Time");
+					modeConstruction = false;
+					_inter = true;
+					_interTimer = Time.time;
+				}
+
+				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && modeConstruction)
+				{
+					Debug.Log("Spawn Enemies");
 					_ennemyManager.Spawn();
-					guiInGame.Reset();
 					_inter = false;
 				}
 
