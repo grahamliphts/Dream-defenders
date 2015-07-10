@@ -186,8 +186,11 @@ public class Stats : MonoBehaviour
 
 	void OnCollisionEnter(Collision col)
 	{
-		if (_life > 0)
-			_life = _life - (_degatsRecus - _damageReduction);
+		if(col.gameObject.tag == "proj_enemy")
+		{
+			if (_life > 0)
+				_life = _life - (_degatsRecus - _damageReduction);
+		}
 	}
 
 	private void CalculateStat(double _power)
