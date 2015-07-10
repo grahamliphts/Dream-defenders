@@ -95,7 +95,7 @@ public class LoopManager : MonoBehaviour
 		{
 			if (_lose == false)
 			{
-				if (modeConstruction)
+				if (modeConstruction && !_inter)
 				{
 					int constructionTime = _constructionTime - (int)(Time.time - _startTime) % 60;
 					ConstructionTime.text = constructionTime.ToString();
@@ -105,34 +105,36 @@ public class LoopManager : MonoBehaviour
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction && !_inter)
 				{
 					guiInGame.Reset();
+					gameInfo.text = "Inter Time";
 					ConstructionTime.text = "None";
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
 						SetConstruction(false);
-
-					Debug.Log("Begin inter Time");
 					modeConstruction = false;
+					_inter = true;
+					_interTimer = Time.time;
+				}
+
+				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && !modeConstruction)
+				{
+					gameInfo.text = "Tuer les ennemies";
+					_ennemyManager.Spawn();
+					_inter = false;
+				}
+
+				//Ennemis morts / wave actuelle < waves totale
+				if (_ennemyManager.AllDied() == true && _actualWave < waveNumber && !modeConstruction && !_inter)
+				{
+					gameInfo.text = "Inter Time";
+					modeConstruction = true;
 					_inter = true;
 					_interTimer = Time.time;
 				}
 
 				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && modeConstruction)
 				{
-					Debug.Log("Spawn Enemies");
-					_ennemyManager.Spawn();
-					_inter = false;
-				}
-
-				//Ennemis morts / wave actuelle < waves totale
-				if (_ennemyManager.AllDied() == true && _actualWave < waveNumber && !modeConstruction)
-				{
-					modeConstruction = true;
-					_inter = true;
-					_interTimer = Time.time;
-				}
-				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && !modeConstruction)
-				{
+					gameInfo.text = "Posez des tours";
 					_actualWave++;
 					//Ajout d'ennemis a spawn
 					int nbMax = actualWave;
@@ -164,9 +166,5 @@ public class LoopManager : MonoBehaviour
 	public void SetConstruction(bool construction)
 	{
 		ModelTower.SetConstruction(construction);
-		if (construction == false)
-			gameInfo.text = "Wave " + (_actualWave + 1) + "/" + waveNumber;
-		else
-			gameInfo.text = "Poser des Tours";
 	}
 }
