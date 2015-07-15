@@ -75,6 +75,7 @@ public class NetworkManager : MonoBehaviour
 				 }
 				 else
 					 Network.InitializeServer(_nbPlayersMax, _listenPort, Network.HavePublicAddress());
+				 MenuManager.ShowMenu(LobbyMenu);
 			 }
 		 }
 	}

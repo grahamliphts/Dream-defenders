@@ -157,6 +157,21 @@ public class LoopManager : MonoBehaviour
 		}
     }
 
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		bool modeConstructionS = modeConstruction;
+		if (stream.isWriting)
+		{
+			modeConstructionS = modeConstruction;
+			stream.Serialize(ref modeConstructionS);
+		}
+		else
+		{
+			stream.Serialize(ref modeConstructionS);
+			modeConstruction = modeConstructionS;
+		}
+	}
+
 	[RPC]
 	private void SyncConstruction(bool construction)
 	{
