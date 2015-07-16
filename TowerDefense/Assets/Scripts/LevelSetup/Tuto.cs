@@ -93,6 +93,15 @@ public class Tuto : MonoBehaviour
 		yield return StartCoroutine(WaitForEnnemyDie());
 		tutoMessage.text = "Félicitations, vous avez tué tout les ennemis";
 		yield return new WaitForSeconds(2);
+
+		//Additional infos
+		tutoMessage.text = "Dans une vraie partie, vous pouvez également afficher la boutique avec la touche E";
+		yield return StartCoroutine(WaitForKeyPress());
+		tutoMessage.text = "Pour utiliser le chat en mode multi, utilisez la touche TAB";
+		yield return StartCoroutine(WaitForKeyPress());
+		tutoMessage.text = "Le tutoriel est maintenant fini";
+		yield return StartCoroutine(WaitForKeyPress());
+
 		tutoMessage.enabled = false;
 		_endGame.CloseGame("Fin du tuto");
 	}

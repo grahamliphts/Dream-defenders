@@ -20,8 +20,8 @@ public class RessourceGUI : MonoBehaviour
 	void Update () 
 	{
 		xp.text = "XP : " + levelManager.xpGained + "/" + levelManager.xpNeed;
-		level.text = "Level : " + levelManager.level.ToString();
-		money.text = "Money : " + levelManager.money.ToString();
+		level.text = "Niveau : " + levelManager.level.ToString();
+		money.text = "Argent : " + levelManager.money.ToString();
 		for(int i = 0; i < valueTower.Length; i++)
 		{
 			int value = _towerAvailables[i];
