@@ -40,6 +40,7 @@ public class ShopManager : MonoBehaviour {
 	[SerializeField] Text upEndu;
 	[SerializeField] Text upRobu;
 	[SerializeField] Text upIntel;
+	[SerializeField] Text money;
 
 	private float costIncrement;
 
@@ -48,6 +49,8 @@ public class ShopManager : MonoBehaviour {
 	private int robuCost;
 	private int intelCost;
 
+	private LevelManager levelManager;
+
 	public void Start()
 	{
 		spiritCost = 100;
@@ -55,6 +58,8 @@ public class ShopManager : MonoBehaviour {
 		robuCost = 100;
 		intelCost = 100;
 		costIncrement = 1.15f;
+
+		levelManager = GetComponent<LevelManager>();
 	}
 
 	public void SetStatsShop()
@@ -62,20 +67,23 @@ public class ShopManager : MonoBehaviour {
 		//esprit
 		spirit.text = "Esprit : " + _stats.esprit;
 		regen.text = "Regen : " + _stats.regen;
-		upSpirit.text = "Améliorer : " + spiritCost + "$";
+		upSpirit.text = spiritCost + "$";
 
 		//endurance
 		endurance.text = "Endurance : " + _stats.endurance;
 		life.text = "Vie : " + _stats.lifeMax;
-		upEndu.text = "Améliorer : " + enduCost + "$";
+		upEndu.text = enduCost + "$";
 
 		//robustesse
 		robustesse.text = "Robustesse : " + _stats.robustesse;
-		upRobu.text = "Améliorer : " + robuCost + "$";
+		upRobu.text = robuCost + "$";
 
 		//intelligence
 		intelligence.text = "Robustesse : " + _stats.intelligence;
-		upIntel.text = "Améliorer : " + intelCost + "$";
+		upIntel.text = intelCost + "$";
+
+		//money 
+		money.text = levelManager.money.ToString();
 	}
 
 	void refresh(uint toRefresh)
@@ -85,57 +93,73 @@ public class ShopManager : MonoBehaviour {
 		{
 			spirit.text = "Esprit : " + _stats.esprit;
 			regen.text = "Regen : " + _stats.regen;
-			upSpirit.text = "Améliorer : " + spiritCost + "$";
+			upSpirit.text = spiritCost + "$";
 		} 
 		//endurance
 		else if (toRefresh == 1) 
 		{
 			endurance.text = "Endurance : " + _stats.endurance;
 			life.text = "Vie : " + _stats.lifeMax;
-			upEndu.text = "Améliorer : " + enduCost + "$";
+			upEndu.text = enduCost + "$";
 		} 
 		//robustesse
 		else if (toRefresh == 2)
 		{
 			robustesse.text = "Robustesse : " + _stats.robustesse;
 			damageReduc.text = "Reduction dommages : " + _stats.damageReduction;
-			upRobu.text = "Améliorer : " + robuCost + "$";
+			upRobu.text = robuCost + "$";
 		}
 		//intelligence
 		else if (toRefresh == 3)
 		{
 			intelligence.text = "Intelligence : " + _stats.intelligence;
 			degats.text = "Degats en plus : " + _stats.degatsAdd;
-			upIntel.text = "Améliorer : " + intelCost + "$";
+			upIntel.text = intelCost + "$";
 		}
+		money.text = levelManager.money.ToString();
 	}
 
 	public void UpSpirit(int amount)
 	{
-		_stats.esprit += 1;
-		spiritCost = (int)(spiritCost * costIncrement);
-		refresh (0);
-
+		if (spiritCost <= levelManager.money)
+		{
+			levelManager.money -= spiritCost;
+			_stats.esprit += 1;
+			spiritCost = (int)(spiritCost * costIncrement);
+			refresh(0);
+		}
 	}
 
 	public void UpEndu(int amount)
 	{
-		_stats.endurance += 1;
-		enduCost = (int)(enduCost * costIncrement);
-		refresh (1);
+		levelManager.money -= enduCost;
+		if (enduCost <= levelManager.money)
+		{
+			_stats.endurance += 1;
+			enduCost = (int)(enduCost * costIncrement);
+			refresh(1);
+		}
 	}
 
 	public void UpRobu(int amount)
 	{
-		_stats.robustesse += 1;
-		robuCost = (int)(robuCost * costIncrement);
-		refresh (2);
+		levelManager.money -= robuCost;
+		if (robuCost <= levelManager.money)
+		{
+			_stats.robustesse += 1;
+			robuCost = (int)(robuCost * costIncrement);
+			refresh(2);
+		}
 	}
 
 	public void UpIntel(int amount)
 	{
-		_stats.intelligence += 1;
-		intelCost = (int)(intelCost * costIncrement);
-		refresh(3);
+		levelManager.money -= intelCost;
+		if (intelCost <= levelManager.money)
+		{
+			_stats.intelligence += 1;
+			intelCost = (int)(intelCost * costIncrement);
+			refresh(3);
+		}
 	}
 }

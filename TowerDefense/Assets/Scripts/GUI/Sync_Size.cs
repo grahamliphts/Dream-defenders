@@ -6,10 +6,9 @@ public class Sync_Size : MonoBehaviour {
 
 	[SerializeField]Text[] TextTabSync; 
 	[SerializeField] Text TargetSync;
-	void Update () {
-	
-		for (int i = 0; i < TextTabSync.Length; i++) {
+	void Update () 
+	{
+		for (int i = 0; i < TextTabSync.Length; i++) 
 			TextTabSync [i].fontSize = TargetSync.cachedTextGenerator.fontSizeUsedForBestFit;
-		}
 	}
 }

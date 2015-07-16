@@ -52,10 +52,11 @@ public class TowerController : MonoBehaviour
 				if (!LevelStart.instance.modeMulti)
 					PlaceTower(_constructionController.transform.position, _type);
 				else
+				{
+					Debug.Log(_constructionController);
+					Debug.Log(_type);
 					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);
-
-				_nbtowerAvailables--;
-				_towerAvailables[(int)_type]--;
+				}
 			}
 
 			if (Input.GetKey("1"))
@@ -116,6 +117,7 @@ public class TowerController : MonoBehaviour
 	void SyncTowerPosition(Vector3 position, int type)
 	{
 		PlaceTower(position, type);
+
 	}
 
 	public void PlaceTower(Vector3 position, int type)
@@ -131,6 +133,8 @@ public class TowerController : MonoBehaviour
 			//add box collider to tower
 			tower.OwnCollider.enabled = true;
 		}
+		_nbtowerAvailables--;
+		_towerAvailables[(int)_type]--;
 	}
 
 	void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)

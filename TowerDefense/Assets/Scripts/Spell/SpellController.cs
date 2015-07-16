@@ -14,6 +14,8 @@ public class SpellController : MonoBehaviour
 	private Stats _stats;
 	[SerializeField]
 	private int _costSpell;
+	private bool _reset;
+
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView>();
@@ -40,17 +42,34 @@ public class SpellController : MonoBehaviour
 				}
 
 				if (Input.GetKey("1"))
+				{
 					_type = 0;
+					_reset = false;
+				}
+					
 				else if (Input.GetKey("2"))
+				{
 					_type = 1;
+					_reset = false;
+				}
 				else if (Input.GetKey("3"))
+				{
 					_type = 2;
+					_reset = false;
+				}
 				else if (Input.GetKey("4"))
+				{
 					_type = 3;
+					_reset = false;
+				}
 			}
 		}
+		else if (LoopManager.modeConstruction == true && _reset == false)
+		{
+			_type = 0;
+			_reset = true;
+		}
     }
-
 
 	[RPC]
 	void SyncShoot(int type)
