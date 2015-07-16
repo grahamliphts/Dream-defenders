@@ -52,11 +52,7 @@ public class TowerController : MonoBehaviour
 				if (!LevelStart.instance.modeMulti)
 					PlaceTower(_constructionController.transform.position, _type);
 				else
-				{
-					Debug.Log(_constructionController);
-					Debug.Log(_type);
 					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);
-				}
 			}
 
 			if (Input.GetKey("1"))

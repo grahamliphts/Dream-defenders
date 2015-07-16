@@ -65,14 +65,10 @@ public class EndGame : MonoBehaviour
 
 		if (_stats.life <= 0)
 		{
-			//Deco all clients
 			if (LevelStart.instance.modeMulti)
 			{
 				NetworkPlayer player = Network.player;
-				if (Network.isServer)
-					_networkView.RPC("SyncEndGame", RPCMode.All, "Server Player has died");
-				else
-					_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
+				_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()), Network.isServer);
 			}
 			else
 				StartCoroutine("CloseParty", "You died");
@@ -84,11 +80,14 @@ public class EndGame : MonoBehaviour
 			StartCoroutine("CloseParty", "Nexus has been destroyed");
 	}
 	[RPC]
-	private void PlayerLeft(int id)
+	private void PlayerLeft(bool server, int id)
 	{
 		LevelStart.instance.netPlayers[id].SetActive(false);
 		NetworkPlayer player = Network.player;
-		if (int.Parse(player.ToString()) == id)
+
+		if(server)
+			StartCoroutine("PopupMessage", "You died");
+		else if (int.Parse(player.ToString()) == id)
 			StartCoroutine("CloseParty", "You died");
 		else
 			StartCoroutine("PopupMessage", "Player has left");
@@ -141,7 +140,6 @@ public class EndGame : MonoBehaviour
 			LevelLoader._instance = null;
 			Application.LoadLevel("MenuScene");
 		}
-
 	}
 
 	private void OnDisconnectedFromServer(NetworkDisconnection msg)
@@ -156,14 +154,13 @@ public class EndGame : MonoBehaviour
 	private void OnPlayerDisconnected(NetworkPlayer player) //Server
 	{
 		Network.RemoveRPCs(player);
-		//Time.timeScale = 1;
 		_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
 	}
 
 	public void QuitGame()
 	{
 		Time.timeScale = 1;
-		if(!LevelStart.instance.modeMulti)
+		if (!LevelStart.instance.modeMulti)
 		{
 			Destroy(GuiManager._instance.gameObject);
 			GuiManager._instance = null;
@@ -171,7 +168,15 @@ public class EndGame : MonoBehaviour
 			LevelLoader._instance = null;
 			Application.LoadLevel("MenuScene");
 		}
+		else if (LevelStart.instance.modeMulti && Network.isServer)
+			_networkView.RPC("ServerDeco", RPCMode.All);
 		else
 			Network.Disconnect();
+	}
+
+	[RPC]
+	public void ServerDeco()
+	{
+		Network.Disconnect();
 	}
 }

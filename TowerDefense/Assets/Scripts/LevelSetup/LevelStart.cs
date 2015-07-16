@@ -44,6 +44,8 @@ public class LevelStart : MonoBehaviour
 	private EndGame _endGame;
 	private ShopManager _shop;
 
+	private PauseGame _pause;
+
 	void Start()
 	{
 		instance = this;
@@ -52,6 +54,7 @@ public class LevelStart : MonoBehaviour
 		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
 		_manaBar = guiManager.GetComponent<ManaBarManager>();
 		_openShop = guiManager.GetComponent<OpenShop>();
+		_pause = guiManager.GetComponent<PauseGame>();
 		_networkView = GetComponent<NetworkView>();
 		_camera = Camera.main.gameObject.GetComponent<CameraController>();
 		_enemiesManager = GetComponent<EnnemyManager>();
@@ -69,7 +72,7 @@ public class LevelStart : MonoBehaviour
 			player.GetComponent<CharacController>().isMine = true;
 			var viewID1 = Network.AllocateViewID();
 			var viewID2 = Network.AllocateViewID();
-			GetComponent<PauseGame>().isMine = true;
+			_pause.isMine = true;
 			_networkView.RPC("SetPlayerActive", RPCMode.All, id, viewID1, viewID2);
 			modeMulti = true;
 			/*Enemies Set*/
