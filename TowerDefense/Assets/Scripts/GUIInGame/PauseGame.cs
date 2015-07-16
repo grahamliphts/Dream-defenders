@@ -6,24 +6,50 @@ public class PauseGame : MonoBehaviour
 {
 	public RawImage ImagePause;
 	public Text InfoText;
-
-	private bool _pause = false;
 	private CameraController _camera;
 	private NetworkView _networkView;
+	private OpenShop _shop;
 
-	public bool isMine;
+	private bool _pause;
+	public bool pause
+	{
+		get
+		{
+			return _pause;
+		}
+		set
+		{
+			_pause = value;
+		}
+	}
+
+	private bool _isMine;
+	public bool isMine
+	{
+		get
+		{
+			return _isMine;
+		}
+		set
+		{
+			_isMine = value;
+		}
+	}
+
 	void Start()
 	{
 		_camera = Camera.main.gameObject.GetComponent<CameraController>();
 		_networkView = GetComponent<NetworkView>();
 		ImagePause.gameObject.SetActive(false);
+		_pause = false;
+		_shop = GetComponent<OpenShop>();
 	}
 
 	void Update () 
 	{
-		if(!LevelStart.instance.modeMulti || isMine)
+		if (!LevelStart.instance.modeMulti || _isMine)
 		{
-			if (Input.GetKeyDown(KeyCode.Escape) && !_pause)
+			if (Input.GetKeyDown(KeyCode.Escape) && !_pause && !_shop.shopOpen)
 			{
 				if (LevelStart.instance.modeMulti)
 					_networkView.RPC("SyncPause", RPCMode.All, true);

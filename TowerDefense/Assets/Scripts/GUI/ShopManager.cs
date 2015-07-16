@@ -65,21 +65,23 @@ public class ShopManager : MonoBehaviour {
 	public void SetStatsShop()
 	{
 		//esprit
-		spirit.text = "Esprit : " + _stats.esprit;
-		regen.text = "Regen : " + _stats.regen;
+		spirit.text = _stats.esprit.ToString();
+		regen.text = _stats.regen.ToString();
 		upSpirit.text = spiritCost + "$";
 
 		//endurance
-		endurance.text = "Endurance : " + _stats.endurance;
-		life.text = "Vie : " + _stats.lifeMax;
+		endurance.text = _stats.endurance.ToString();
+		life.text = _stats.lifeMax.ToString();
 		upEndu.text = enduCost + "$";
 
 		//robustesse
-		robustesse.text = "Robustesse : " + _stats.robustesse;
+		robustesse.text = _stats.robustesse.ToString();
+		damageReduc.text = _stats.damageReduction.ToString();
 		upRobu.text = robuCost + "$";
 
 		//intelligence
-		intelligence.text = "Robustesse : " + _stats.intelligence;
+		intelligence.text = _stats.intelligence.ToString();
+		degats.text = _stats.degatsAdd.ToString();
 		upIntel.text = intelCost + "$";
 
 		//money 
@@ -91,29 +93,29 @@ public class ShopManager : MonoBehaviour {
 		//spirit
 		if (toRefresh == 0) 
 		{
-			spirit.text = "Esprit : " + _stats.esprit;
-			regen.text = "Regen : " + _stats.regen;
+			spirit.text = _stats.esprit.ToString();
+			regen.text = _stats.regen.ToString();
 			upSpirit.text = spiritCost + "$";
 		} 
 		//endurance
 		else if (toRefresh == 1) 
 		{
-			endurance.text = "Endurance : " + _stats.endurance;
-			life.text = "Vie : " + _stats.lifeMax;
+			endurance.text = _stats.endurance.ToString();
+			life.text = _stats.lifeMax.ToString();
 			upEndu.text = enduCost + "$";
 		} 
 		//robustesse
 		else if (toRefresh == 2)
 		{
-			robustesse.text = "Robustesse : " + _stats.robustesse;
-			damageReduc.text = "Reduction dommages : " + _stats.damageReduction;
+			robustesse.text = _stats.robustesse.ToString();
+			damageReduc.text = _stats.damageReduction.ToString();
 			upRobu.text = robuCost + "$";
 		}
 		//intelligence
 		else if (toRefresh == 3)
 		{
-			intelligence.text = "Intelligence : " + _stats.intelligence;
-			degats.text = "Degats en plus : " + _stats.degatsAdd;
+			intelligence.text = _stats.intelligence.ToString();
+			degats.text = _stats.degatsAdd.ToString();
 			upIntel.text = intelCost + "$";
 		}
 		money.text = levelManager.money.ToString();
@@ -123,8 +125,8 @@ public class ShopManager : MonoBehaviour {
 	{
 		if (spiritCost <= levelManager.money)
 		{
-			levelManager.money -= spiritCost;
 			_stats.esprit += 1;
+			levelManager.money -= spiritCost;
 			spiritCost = (int)(spiritCost * costIncrement);
 			refresh(0);
 		}
@@ -132,10 +134,10 @@ public class ShopManager : MonoBehaviour {
 
 	public void UpEndu(int amount)
 	{
-		levelManager.money -= enduCost;
 		if (enduCost <= levelManager.money)
 		{
 			_stats.endurance += 1;
+			levelManager.money -= enduCost;
 			enduCost = (int)(enduCost * costIncrement);
 			refresh(1);
 		}
@@ -143,10 +145,10 @@ public class ShopManager : MonoBehaviour {
 
 	public void UpRobu(int amount)
 	{
-		levelManager.money -= robuCost;
 		if (robuCost <= levelManager.money)
 		{
 			_stats.robustesse += 1;
+			levelManager.money -= robuCost;
 			robuCost = (int)(robuCost * costIncrement);
 			refresh(2);
 		}
@@ -154,10 +156,10 @@ public class ShopManager : MonoBehaviour {
 
 	public void UpIntel(int amount)
 	{
-		levelManager.money -= intelCost;
 		if (intelCost <= levelManager.money)
 		{
 			_stats.intelligence += 1;
+			levelManager.money -= intelCost;
 			intelCost = (int)(intelCost * costIncrement);
 			refresh(3);
 		}

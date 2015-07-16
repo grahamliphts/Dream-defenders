@@ -116,8 +116,6 @@ public class EndGame : MonoBehaviour
 
 	IEnumerator CloseParty(string text)
 	{
-		_loopManager.gameInfo.text = "";
-
 		imageClose.gameObject.SetActive(true);
 		closeInfo.text = text;
 		_loopManager.lose = true;

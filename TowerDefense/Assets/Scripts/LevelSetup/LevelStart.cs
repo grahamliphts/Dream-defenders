@@ -24,9 +24,8 @@ public class LevelStart : MonoBehaviour
 	//LifeBarSet
 	public GameObject guiManager;
 	private LifeBarManager _lifeBarPlayer;
-
-	//ManaBar
 	private ManaBarManager _manaBar;
+	private OpenShop _openShop;
 
 	[SerializeField]
 	private Transform _spawnPosition;
@@ -52,6 +51,7 @@ public class LevelStart : MonoBehaviour
 		currentSpellPool = spellPool[0];
 		_lifeBarPlayer = guiManager.GetComponent<LifeBarManager>();
 		_manaBar = guiManager.GetComponent<ManaBarManager>();
+		_openShop = guiManager.GetComponent<OpenShop>();
 		_networkView = GetComponent<NetworkView>();
 		_camera = Camera.main.gameObject.GetComponent<CameraController>();
 		_enemiesManager = GetComponent<EnnemyManager>();
@@ -114,10 +114,16 @@ public class LevelStart : MonoBehaviour
 		_endGame.player = player;
 		_endGame.stats = stats;
 
-		_shop.stats = stats;
+
+
 
 		if (mode != "Tuto")
+		{
+			_openShop.player = player;
+			_shop.stats = stats;
 			_loopManager.Init();
+		}
+			
     }
 
 	[RPC]

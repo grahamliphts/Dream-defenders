@@ -45,10 +45,7 @@ public class EnemyPoolManager : MonoBehaviour {
 			var damages = enemies[i].monsterLifeManager.damages;
 			var damagesBase = enemies[i].monsterLifeManager.damagesBase;
 			for(int j = 0; j < enemies[i].monsterLifeManager.damagesBase.Length; j++)
-			{
 				damages[j].damage = damagesBase[j] + value;
-				Debug.Log("newDamage" + damages[j].damage);
-			}
 		}
 	}
 }

@@ -153,6 +153,7 @@ public class Stats : MonoBehaviour
 		_life = lifeMax;
 		_mana = manaMax;
 		_regen = 3;
+		_damageReduction = 0;
 		StartCoroutine("RegenMana");
 		_power = levelManager.power;
 		_growFactors = levelManager.growFactors;
