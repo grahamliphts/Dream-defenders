@@ -186,7 +186,6 @@ public class LoopManager : MonoBehaviour
 					else
 						StartCoroutine("PopupMessage", "Temps mort");
 					_inter = true;
-					_interTimer = Time.time;
 					_continue = true;
 				}
 
@@ -226,6 +225,8 @@ public class LoopManager : MonoBehaviour
 	}
 	IEnumerator PopupMessage(string text)
 	{
+		if(text == "Temps mort")
+			_interTimer = Time.time;
 		feedBack.text = text;
 		yield return new WaitForSeconds(2);
 		feedBack.text = "";
@@ -270,7 +271,7 @@ public class LoopManager : MonoBehaviour
 
 	public void SetConstruction(bool construction)
 	{
-		if(construction)
+		if (construction)
 			_startTime = Time.time;
 		else
 			_interTimer = Time.time;

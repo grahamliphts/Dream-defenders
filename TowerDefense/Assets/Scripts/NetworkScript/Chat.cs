@@ -42,15 +42,9 @@ public class Chat : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Tab))
 			{
 				if (_focus == true)
-				{
-					Debug.Log("Unfocus");
 					SetInput(false);
-				}
 				else
-				{
-					Debug.Log("Focus");
 					SetInput(true);
-				}
 			}
 			if (Input.GetMouseButtonDown(0) && _focus == true)
 				SetInput(false);

@@ -1,0 +1,93 @@
+Initialize engine version: 5.0.0f4 (5b98b70ebeb9)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 860M   (ID=0x1392)
+    Vendor:   NVIDIA
+    VRAM:     1991 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.043 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\System.dll (this message is harmless)
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1ed8 -> priority: 1 
+Server initialized and ready
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Initialize engine version: 5.0.0f4 (5b98b70ebeb9)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 860M   (ID=0x1392)
+    Vendor:   NVIDIA
+    VRAM:     1991 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.045 seconds
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Dream-defenders\Version Finale\DreamDefenders_Data\Managed\System.dll (this message is harmless)
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1b14 -> priority: 1 
+Connected to server
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.399027 ms
+UnloadTime: 4.410442 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 4745.
+Total: 1.645118 ms (FindLiveObjects: 0.263556 ms CreateObjectMapping: 0.108135 ms MarkObjects: 1.254366 ms  DeleteObjects: 0.018327 ms)
+
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 4745.
+Total: 2.626397 ms (FindLiveObjects: 0.398816 ms CreateObjectMapping: 0.130495 ms MarkObjects: 1.964025 ms  DeleteObjects: 0.132327 ms)
+
+Focus
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unfocus
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+The server has disconnected from the client. Most likely the server has shut down.
+ 
+(Filename:  Line: 754)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.873092 ms
+UnloadTime: 3.954809 ms
+
+Unloading 137 unused Assets to reduce memory usage. Loaded Objects now: 901.
+Total: 1.382661 ms (FindLiveObjects: 0.125363 ms CreateObjectMapping: 0.053884 ms MarkObjects: 0.828790 ms  DeleteObjects: 0.372424 ms)
+
