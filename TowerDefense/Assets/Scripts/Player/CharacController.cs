@@ -65,7 +65,6 @@ public class CharacController : MonoBehaviour
 			Vector3 groundDir = -Vector3.up;
 			float groundDist = 0.2f;
 			RaycastHit hit;
-			Debug.DrawRay(transform.position + new Vector3(0, 0.2f, 0), groundDir * groundDist, Color.red);
 			if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), groundDir, out hit, groundDist))
 			{
 				if (_wantToJump)

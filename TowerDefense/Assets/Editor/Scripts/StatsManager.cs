@@ -152,10 +152,6 @@ public class StatsManager : EditorWindow
 		GameObject gameManager = GameObject.Find("GameManager");
 		levelManager = gameManager.GetComponent<LevelManager>();
 		levelManager.growFactors = growFactors;
-		Debug.Log(growFactors[0]);
-		Debug.Log(growFactors[1]);
-		Debug.Log(growFactors[2]);
-		Debug.Log(growFactors[3]);
 		EditorUtility.SetDirty(levelManager);
     }
 

@@ -60,12 +60,8 @@ public class Chat : MonoBehaviour
 				if (Input.GetKeyDown(KeyCode.Return))
 				{
 					_lastMsg = input.text;
-					//Debug Chat Solo
-					//if (LevelStart.instance.modeMulti)
 					NetworkPlayer player = Network.player;
 					_networkView.RPC("PrintText", RPCMode.All, input.text, player.ToString());
-					//else
-						//PrintText(input.text);
 					input.text = "";
 					input.ActivateInputField();
 				}
