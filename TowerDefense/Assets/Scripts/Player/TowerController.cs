@@ -15,7 +15,6 @@ public class TowerController : MonoBehaviour
 	private ModelTowerPoolManager _modelTowerManager;
 
 	private int _type;
-	private bool _reset;
 	private bool _isMine;
 	[SerializeField]
 	private int _nbtowerAvailables;
@@ -85,7 +84,6 @@ public class TowerController : MonoBehaviour
 
 	public void Reset()
 	{
-		_reset = true;
 		_towerPool = LevelStart.instance.towerPool;
 		_modelTowerManager = LevelStart.instance.modelTowerManager;
 
@@ -106,7 +104,6 @@ public class TowerController : MonoBehaviour
 			SetTower(_target, _newTarget);
 			_target = _newTarget;
 		}
-		_reset = false;
 	}
 
 	[RPC]

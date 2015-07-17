@@ -139,8 +139,6 @@ public class LoopManager : MonoBehaviour
 				else
 					LevelStart.instance.towerUsed[i] -= rand;
 			}
-				
-
 		}
 
 		if ((!LevelStart.instance.modeMulti || Network.isServer) && _init == true)
@@ -158,7 +156,10 @@ public class LoopManager : MonoBehaviour
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction && !_inter)
 				{
 					_towerUp = true;
-					StartCoroutine("PopupMessage", "Temps mort");
+					if (LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncFeedbackMsg", RPCMode.All, "Temps Mort");
+					else
+						StartCoroutine("PopupMessage", "Temps mort");
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
@@ -170,7 +171,10 @@ public class LoopManager : MonoBehaviour
 
 				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && !_continue)
 				{
-					StartCoroutine("PopupMessage", "Tuez les ennemis");
+					if (LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncFeedbackMsg", RPCMode.All, "Tuez les ennemis");
+					else
+						StartCoroutine("PopupMessage", "Tuez les ennemis");
 					_ennemyManager.Spawn();
 					_inter = false;
 					inter.text = "None";
@@ -179,7 +183,10 @@ public class LoopManager : MonoBehaviour
 				//Ennemis morts / wave actuelle < waves totale
 				if (_ennemyManager.AllDied() == true && _actualWave < waveNumber && !modeConstruction && !_inter)
 				{
-					StartCoroutine("PopupMessage", "Temps mort");
+					if (LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncFeedbackMsg", RPCMode.All, "Temps mort");
+					else
+						StartCoroutine("PopupMessage", "Temps mort");
 					_inter = true;
 					_interTimer = Time.time;
 					_continue = true;
@@ -188,7 +195,10 @@ public class LoopManager : MonoBehaviour
 				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && _continue)
 				{
 					_continue = false;
-					StartCoroutine("PopupMessage", "Posez des tours");
+					if (LevelStart.instance.modeMulti)
+						_networkView.RPC("SyncFeedbackMsg", RPCMode.All, "Posez des tours");
+					else
+						StartCoroutine("PopupMessage", "Posez des tours");
 					_actualWave++;
 					//Ajout d'ennemis a spawn
 					int nbMax = actualWave;
@@ -212,6 +222,11 @@ public class LoopManager : MonoBehaviour
 		}
     }
 
+	[RPC]
+	private void SyncFeedbackMsg(string text)
+	{
+		StartCoroutine("PopupMessage", text);
+	}
 	IEnumerator PopupMessage(string text)
 	{
 		feedBack.text = text;

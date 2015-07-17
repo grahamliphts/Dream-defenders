@@ -72,12 +72,7 @@ public class MonsterLifeManager : MonoBehaviour
 			{
 				_networkView.RPC("SyncLifeEnemy", RPCMode.All, _life);
 				if (_life <= 0)
-				{
-					levelManager.xpGained += Random.Range(_xpMin, _xpMax);
-					levelManager.money += 20;
-					_died = true;	
-				}
-					
+					_died = true;		
 			}
 			else
 			{
@@ -103,7 +98,12 @@ public class MonsterLifeManager : MonoBehaviour
 		SetColorLife(_life);
 
 		if (_life <= 0)
+		{
+			levelManager.xpGained += Random.Range(_xpMin, _xpMax);
+			levelManager.money += 20;
 			DestroyEnemy();
+		}
+			
 	}
 
 	private void DestroyEnemy()
@@ -121,6 +121,28 @@ public class MonsterLifeManager : MonoBehaviour
 		else if (life < _lifeMax/4)
 			_matHeathBar.SetColor("_Color", Color.red);
 	}
+
+	/*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		Debug.Log(levelManager.money);
+		Debug.Log(levelManager.xpGained);
+		int money = levelManager.money;
+		int xp = levelManager.xpGained;
+		if (stream.isWriting)
+		{
+			money = levelManager.money;
+			xp = levelManager.xpGained;
+			stream.Serialize(ref money);
+			stream.Serialize(ref xp);
+		}
+		else
+		{
+			stream.Serialize(ref money);
+			stream.Serialize(ref xp);
+			levelManager.money = money;
+			levelManager.xpGained = xp;
+		}
+	}*/
 
 	void OnEnable ()
 	{

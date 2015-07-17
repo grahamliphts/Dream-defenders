@@ -31,8 +31,8 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	private double _xpGained;
-	public double xpGained
+	private int _xpGained;
+	public int xpGained
 	{
 		set
 		{
@@ -84,6 +84,7 @@ public class LevelManager : MonoBehaviour
 	void Start () 
 	{
 		_money = 0;
+		_xpGained = 0;
 		_level = 1;
 		CalculateXpNeed(_level);
 		CalculatePower(_level);
