@@ -45,10 +45,16 @@ public class TowerController : MonoBehaviour
 		if ((!LevelStart.instance.modeMulti || _isMine) && LoopManager.modeConstruction)
 		{
 			_hitCounter = _target.constructionController.hitCounter;
+			_nbtowerAvailables = _towerAvailables[(int)_type];
+			Debug.Log(_nbtowerAvailables);
 			if (Input.GetMouseButtonDown(0) && _hitCounter == 0 && _nbtowerAvailables > 0)
 			{
+				
 				if (!LevelStart.instance.modeMulti)
+				{
+					_nbtowerAvailables--;
 					PlaceTower(_constructionController.transform.position, _type);
+				}
 				else
 					_networkView.RPC("SyncTowerPosition", RPCMode.All, _constructionController.transform.position, _type);
 			}
@@ -93,6 +99,7 @@ public class TowerController : MonoBehaviour
 
 		_type = 0;
 		_nbtowerAvailables = LevelStart.instance.towerAvailables[0];
+		Debug.Log("Reset");
 	}
 
 	public void ChangeTower(int type)
@@ -126,8 +133,7 @@ public class TowerController : MonoBehaviour
 			//add box collider to tower
 			tower.OwnCollider.enabled = true;
 		}
-		_nbtowerAvailables--;
-		_towerAvailables[(int)_type]--;
+		_towerAvailables[(int)type]--;
 	}
 
 	void SetTower(TowerConstructionScript previousTower, TowerConstructionScript tower)

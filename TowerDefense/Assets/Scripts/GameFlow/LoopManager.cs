@@ -15,7 +15,6 @@ public class LoopManager : MonoBehaviour
 	public GuiInGameManager guiInGame;
 
 	//Infos du jeu
-	[SerializeField]
 	private int _constructionTime;
 	public int waveNumber;
 	[SerializeField]
@@ -103,6 +102,7 @@ public class LoopManager : MonoBehaviour
 		inter.text = "None";
 		construction.text = "None";
 		_towerUp = false;
+		_constructionTime = 45;
 	}
 	
 	void Update () 
@@ -132,7 +132,7 @@ public class LoopManager : MonoBehaviour
 			_towerUp = false;
 			for (int i = 0; i < 4; i++)
 			{
-				int rand = Random.Range(0, 1);
+				int rand = Random.Range(1, 2);
 				LevelStart.instance.towerUsed[i] += rand;
 				if(LevelStart.instance.towerUsed[i] <= LevelStart.instance.towerAvailableMax[i])
 					LevelStart.instance.towerAvailables[i] += rand;
@@ -146,10 +146,7 @@ public class LoopManager : MonoBehaviour
 			if (_lose == false)
 			{
 				if (_actualWave % 3 == 0)
-				{
 					_constructionTime = 45;
-				}
-					
 				else
 					_constructionTime = 30;
 				//Temps de construction fini
@@ -166,7 +163,6 @@ public class LoopManager : MonoBehaviour
 						SetConstruction(false);
 					modeConstruction = false;
 					_inter = true;
-					_interTimer = Time.time;
 				}
 
 				if (_inter && (int)(Time.time - _interTimer) % 60 >= 3 && !_continue)
@@ -215,7 +211,6 @@ public class LoopManager : MonoBehaviour
 					else
 						SetConstruction(true);
 
-					_startTime = Time.time;
 					_inter = false;
 				}
 			}
@@ -239,43 +234,28 @@ public class LoopManager : MonoBehaviour
 	{
 		bool modeConstructionS = modeConstruction;
 		bool interS = _inter;
-		int constructionTimeS = _constructionTime;
-		float interTimerS = _interTimer;
 		bool towerUp = _towerUp;
 
 		if (stream.isWriting)
 		{
 			modeConstructionS = modeConstruction;
 			interS = _inter;
-			constructionTimeS = _constructionTime;
-			interTimerS = _interTimer;
 			towerUp = _towerUp;
 			stream.Serialize(ref modeConstructionS);
 			stream.Serialize(ref interS);
-			stream.Serialize(ref constructionTimeS);
-			stream.Serialize(ref interTimerS);
 			stream.Serialize(ref towerUp);
 		}
 		else
 		{
 			stream.Serialize(ref modeConstructionS);
 			stream.Serialize(ref interS);
-			stream.Serialize(ref constructionTimeS);
-			stream.Serialize(ref interTimerS);
 			stream.Serialize(ref towerUp);
 			modeConstruction = modeConstructionS;
 			_inter = interS;
-			_constructionTime = constructionTimeS;
-			_interTimer = interTimerS;
 			_towerUp = towerUp;
 		}
 	}
 
-	[RPC] 
-	private void SyncTime()
-	{
-
-	}
 	[RPC]
 	private void SyncConstruction(bool construction)
 	{
@@ -284,6 +264,10 @@ public class LoopManager : MonoBehaviour
 
 	public void SetConstruction(bool construction)
 	{
+		if(construction)
+			_startTime = Time.time;
+		else
+			_interTimer = Time.time;
 		guiInGame.Reset();
 		ModelTower.SetConstruction(construction);
 	}
