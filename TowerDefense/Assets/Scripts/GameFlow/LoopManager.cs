@@ -73,6 +73,7 @@ public class LoopManager : MonoBehaviour
 	private float _interTimer;
 	private bool _continue;
 
+	private bool _towerUp;
 	private NetworkView _networkView;
 
 	void Start()
@@ -101,34 +102,63 @@ public class LoopManager : MonoBehaviour
 
 		inter.text = "None";
 		construction.text = "None";
+		_towerUp = false;
 	}
 	
 	void Update () 
     {
+		//GUI
+		if (modeConstruction && !_inter)
+		{
+			int constructionTime = _constructionTime - (int)(Time.time - _startTime) % 60;
+			construction.text = constructionTime.ToString() + "/" + _constructionTime;
+			inter.text = "None";
+		}
+		else if (_inter)
+		{
+			construction.text = "None";
+			int interTime = 3 - (int)(Time.time - _interTimer) % 60;
+			inter.text = interTime.ToString() + "/" + 3;
+		}
+	
+		else
+		{
+			construction.text = "None";
+			inter.text = "None";
+		}
+
+		if (_towerUp)
+		{
+			_towerUp = false;
+			for (int i = 0; i < 4; i++)
+			{
+				int rand = Random.Range(0, 1);
+				LevelStart.instance.towerUsed[i] += rand;
+				if(LevelStart.instance.towerUsed[i] <= LevelStart.instance.towerAvailableMax[i])
+					LevelStart.instance.towerAvailables[i] += rand;
+				else
+					LevelStart.instance.towerUsed[i] -= rand;
+			}
+				
+
+		}
+
 		if ((!LevelStart.instance.modeMulti || Network.isServer) && _init == true)
 		{
 			if (_lose == false)
 			{
-				//GUI
-				if (modeConstruction && !_inter)
-				{
-					int constructionTime = _constructionTime - (int)(Time.time - _startTime) % 60;
-					construction.text = constructionTime.ToString() + "/" + _constructionTime;
-				}
-				else if(_inter)
-				{
-					int interTime = 3 - (int)(Time.time - _interTimer) % 60;
-					inter.text = interTime.ToString() + "/" + 3;
-				}
 				if (_actualWave % 3 == 0)
+				{
 					_constructionTime = 45;
+				}
+					
 				else
 					_constructionTime = 30;
 				//Temps de construction fini
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction && !_inter)
 				{
+					_towerUp = true;
 					StartCoroutine("PopupMessage", "Temps mort");
-					construction.text = "None";
 					if (LevelStart.instance.modeMulti)
 						_networkView.RPC("SyncConstruction", RPCMode.All, false);
 					else
@@ -177,7 +207,6 @@ public class LoopManager : MonoBehaviour
 
 					_startTime = Time.time;
 					_inter = false;
-					inter.text = "None";
 				}
 			}
 		}
@@ -194,18 +223,44 @@ public class LoopManager : MonoBehaviour
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
 	{
 		bool modeConstructionS = modeConstruction;
+		bool interS = _inter;
+		int constructionTimeS = _constructionTime;
+		float interTimerS = _interTimer;
+		bool towerUp = _towerUp;
+
 		if (stream.isWriting)
 		{
 			modeConstructionS = modeConstruction;
+			interS = _inter;
+			constructionTimeS = _constructionTime;
+			interTimerS = _interTimer;
+			towerUp = _towerUp;
 			stream.Serialize(ref modeConstructionS);
+			stream.Serialize(ref interS);
+			stream.Serialize(ref constructionTimeS);
+			stream.Serialize(ref interTimerS);
+			stream.Serialize(ref towerUp);
 		}
 		else
 		{
 			stream.Serialize(ref modeConstructionS);
+			stream.Serialize(ref interS);
+			stream.Serialize(ref constructionTimeS);
+			stream.Serialize(ref interTimerS);
+			stream.Serialize(ref towerUp);
 			modeConstruction = modeConstructionS;
+			_inter = interS;
+			_constructionTime = constructionTimeS;
+			_interTimer = interTimerS;
+			_towerUp = towerUp;
 		}
 	}
 
+	[RPC] 
+	private void SyncTime()
+	{
+
+	}
 	[RPC]
 	private void SyncConstruction(bool construction)
 	{

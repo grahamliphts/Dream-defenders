@@ -20,6 +20,8 @@ public class LevelStart : MonoBehaviour
 
 	//Availables Towers
 	public int[] towerAvailables;
+	public int[] towerUsed;
+	public int[] towerAvailableMax;
 
 	//LifeBarSet
 	public GameObject guiManager;
@@ -61,6 +63,15 @@ public class LevelStart : MonoBehaviour
 		_loopManager = GetComponent<LoopManager>();
 		_endGame = GetComponent<EndGame>();
 		_shop = GetComponent<ShopManager>();
+		
+		towerUsed = new int[4];
+		towerAvailableMax = new int[4];
+
+		for(int i = 0; i < towerPool.Length; i++)
+		{
+			towerAvailableMax[i] = towerPool[i].GetNbMax();
+			towerUsed[i] = towerAvailables[i];
+		}
 	}
 
     public void OnLoadedLevel(string mode, int id)
@@ -116,9 +127,6 @@ public class LevelStart : MonoBehaviour
 
 		_endGame.player = player;
 		_endGame.stats = stats;
-
-
-
 
 		if (mode != "Tuto")
 		{

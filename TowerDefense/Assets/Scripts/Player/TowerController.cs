@@ -37,7 +37,6 @@ public class TowerController : MonoBehaviour
 		_isMine = GetComponent<CharacController>().isMine;
 		_networkView = GetComponent<NetworkView>();
 		_towerAvailables = LevelStart.instance.towerAvailables;
-		_nbtowerAvailables = _towerAvailables[0];
 
 		Reset();
 	}
@@ -80,8 +79,8 @@ public class TowerController : MonoBehaviour
 				
 			_constructionController = _target.constructionController;
 		}
-		else if (LoopManager.modeConstruction == false && _reset == false)
-			Reset();
+		else if (LoopManager.modeConstruction == false)
+			Reset();	
 	}
 
 	public void Reset()
@@ -95,6 +94,7 @@ public class TowerController : MonoBehaviour
 		_target.constructionController.enabled = true;
 
 		_type = 0;
+		_nbtowerAvailables = LevelStart.instance.towerAvailables[0];
 	}
 
 	public void ChangeTower(int type)
