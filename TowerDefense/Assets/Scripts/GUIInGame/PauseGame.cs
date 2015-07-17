@@ -73,7 +73,7 @@ public class PauseGame : MonoBehaviour
 		Pause(value);
 	}
 
-	void Pause(bool value)
+	public void Pause(bool value)
 	{
 		_pause = value;
 		ImagePause.gameObject.SetActive(value);

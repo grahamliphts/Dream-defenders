@@ -38,6 +38,9 @@ public class EndGame : MonoBehaviour
 		}
 	}
 
+	[SerializeField]
+	private PauseGame _pauseGame;
+
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView>();
@@ -48,46 +51,34 @@ public class EndGame : MonoBehaviour
 	{
 		if (_stats == null)
 			return;
-
-		/*if (!LevelStart.instance.modeMulti || Network.isServer)
-		{
-			if (_loopManager.actualWave == _loopManager.waveNumber && _loopManager.ennemyManager.AllDied() == true && _loopManager.win == false)
-			{
-				if (LevelStart.instance.modeMulti)
-					_networkView.RPC("SyncEndGame", RPCMode.All, "You win");
-				else
-				{
-					StartCoroutine("CloseParty", "You Win");
-					_loopManager.win = true;
-				}
-			}
-		}*/
-
 		if (_stats.life <= 0)
 		{
 			if (LevelStart.instance.modeMulti)
 			{
 				NetworkPlayer player = Network.player;
-				_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()), Network.isServer);
+				if(Network.isServer)
+				{
+					_networkView.RPC("SyncEndGame", RPCMode.Others, "Le serveur est mort");
+					StartCoroutine("CloseParty", "Fin de la partie");
+				}
+				else if(Network.isClient)
+					_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
 			}
 			else
 				StartCoroutine("CloseParty", "You died");
 		}
-
 		if (lifeNexus.GetLife() <= 0 && Network.isServer)
 			_networkView.RPC("SyncEndGame", RPCMode.All, "Nexus has been destroyed");
 		else if (lifeNexus.GetLife() <= 0)
 			StartCoroutine("CloseParty", "Nexus has been destroyed");
 	}
+
 	[RPC]
-	private void PlayerLeft(bool server, int id)
+	private void PlayerLeft(int id)
 	{
 		LevelStart.instance.netPlayers[id].SetActive(false);
 		NetworkPlayer player = Network.player;
-
-		if(server)
-			StartCoroutine("PopupMessage", "You died");
-		else if (int.Parse(player.ToString()) == id)
+		if (int.Parse(player.ToString()) == id)
 			StartCoroutine("CloseParty", "You died");
 		else
 			StartCoroutine("PopupMessage", "Player has left");
@@ -101,6 +92,7 @@ public class EndGame : MonoBehaviour
 
 	IEnumerator PopupMessage(string text)
 	{
+		_pauseGame.Pause(false);
 		imageClose.gameObject.SetActive(true);
 		closeInfo.text = text;
 		yield return new WaitForSeconds(3);
@@ -115,12 +107,14 @@ public class EndGame : MonoBehaviour
 
 	IEnumerator CloseParty(string text)
 	{
+		_pauseGame.Pause(false);
 		imageClose.gameObject.SetActive(true);
 		closeInfo.text = text;
 		_loopManager.lose = true;
 
-		player.SetActive(false);
 		yield return new WaitForSeconds(3);
+		player.SetActive(false);
+
 		if (LevelStart.instance.modeMulti)
 		{
 			if (Network.isServer)
@@ -128,7 +122,6 @@ public class EndGame : MonoBehaviour
 				MasterServer.UnregisterHost();
 				Network.Disconnect();
 			}
-
 			else
 				Network.Disconnect();
 		}
@@ -157,6 +150,7 @@ public class EndGame : MonoBehaviour
 		_networkView.RPC("PlayerLeft", RPCMode.All, int.Parse(player.ToString()));
 	}
 
+	//GUI onclick
 	public void QuitGame()
 	{
 		Time.timeScale = 1;
@@ -169,14 +163,12 @@ public class EndGame : MonoBehaviour
 			Application.LoadLevel("MenuScene");
 		}
 		else if (LevelStart.instance.modeMulti && Network.isServer)
-			_networkView.RPC("ServerDeco", RPCMode.All);
+		{
+			_networkView.RPC("SyncEndGame", RPCMode.Others, "Le serveur a quitté le jeu");
+			StartCoroutine("CloseParty", "Fin de la partie");
+		}
+			
 		else
 			Network.Disconnect();
-	}
-
-	[RPC]
-	public void ServerDeco()
-	{
-		Network.Disconnect();
 	}
 }
