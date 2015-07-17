@@ -122,28 +122,6 @@ public class MonsterLifeManager : MonoBehaviour
 			_matHeathBar.SetColor("_Color", Color.red);
 	}
 
-	/*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
-	{
-		Debug.Log(levelManager.money);
-		Debug.Log(levelManager.xpGained);
-		int money = levelManager.money;
-		int xp = levelManager.xpGained;
-		if (stream.isWriting)
-		{
-			money = levelManager.money;
-			xp = levelManager.xpGained;
-			stream.Serialize(ref money);
-			stream.Serialize(ref xp);
-		}
-		else
-		{
-			stream.Serialize(ref money);
-			stream.Serialize(ref xp);
-			levelManager.money = money;
-			levelManager.xpGained = xp;
-		}
-	}*/
-
 	void OnEnable ()
 	{
 		_matHeathBar.SetFloat("_HP", _lifeMax);

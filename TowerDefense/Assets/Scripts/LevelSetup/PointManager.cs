@@ -7,6 +7,7 @@ public class PointManager : MonoBehaviour
     public List<GameObject> point_list;
     public GameObject TpParticle;
 	private Teleport _teleport;
+
     void Start()
     {
         for(int i = 0; i < point_list.Count; i++)

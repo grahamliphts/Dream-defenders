@@ -46,10 +46,8 @@ public class TowerController : MonoBehaviour
 		{
 			_hitCounter = _target.constructionController.hitCounter;
 			_nbtowerAvailables = _towerAvailables[(int)_type];
-			Debug.Log(_nbtowerAvailables);
 			if (Input.GetMouseButtonDown(0) && _hitCounter == 0 && _nbtowerAvailables > 0)
 			{
-				
 				if (!LevelStart.instance.modeMulti)
 				{
 					_nbtowerAvailables--;
@@ -99,7 +97,6 @@ public class TowerController : MonoBehaviour
 
 		_type = 0;
 		_nbtowerAvailables = LevelStart.instance.towerAvailables[0];
-		Debug.Log("Reset");
 	}
 
 	public void ChangeTower(int type)

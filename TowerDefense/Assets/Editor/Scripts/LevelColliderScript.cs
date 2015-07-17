@@ -11,7 +11,7 @@ public class LevelColliderScript : EditorWindow
 	string nameLevel;
 
     // Add menu item named "My Window" to the Window menu
-	[MenuItem("Window/LevelCollider")]
+	[MenuItem("Window/LevelSetup")]
     public static void ShowWindow()
     {
         //Show existing window instance. If one doesn't exist, make one.

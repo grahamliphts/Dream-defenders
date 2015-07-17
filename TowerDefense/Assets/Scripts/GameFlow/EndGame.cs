@@ -107,7 +107,8 @@ public class EndGame : MonoBehaviour
 
 	IEnumerator CloseParty(string text)
 	{
-		_pauseGame.Pause(false);
+		if(_pauseGame)
+			_pauseGame.Pause(false);
 		imageClose.gameObject.SetActive(true);
 		closeInfo.text = text;
 		_loopManager.lose = true;

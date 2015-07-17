@@ -1,4 +1,0 @@
-ArgumentOutOfRangeException: Argument is out of range.
-Parameter name: index
-System.Collections.Generic.List`1[UnityEngine.Transform].get_Item (Int32 index) (at /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System.Collections.Generic/List.cs:633)
-TowerShoot+<TryToShoot>c__Iterator7.MoveNext () (at Assets/Scripts/Tower/TowerShoot.cs:83)

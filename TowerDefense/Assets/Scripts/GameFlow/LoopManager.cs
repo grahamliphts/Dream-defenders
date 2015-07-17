@@ -74,6 +74,7 @@ public class LoopManager : MonoBehaviour
 
 	private bool _towerUp;
 	private NetworkView _networkView;
+	public SoundManager soundManager;
 
 	void Start()
 	{
@@ -172,6 +173,7 @@ public class LoopManager : MonoBehaviour
 					else
 						StartCoroutine("PopupMessage", "Tuez les ennemis");
 					_ennemyManager.Spawn();
+					soundManager.PlaySpawn();
 					_inter = false;
 					inter.text = "None";
 				}
