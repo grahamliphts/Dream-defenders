@@ -28,11 +28,9 @@ public class NetworkManager : MonoBehaviour
 	private int _nbPlayersMax;
 	public MenuManager MenuManager;
 	public LevelLoader LevelLoader;
-	private bool _register;
 
     void Start()
     {
-		_register = false;
 		StartCoroutine("RefreshHostList");
     }
 
@@ -87,10 +85,8 @@ public class NetworkManager : MonoBehaviour
 			nbPlayersConnected.text = LevelLoader.nbPlayerCount+ "/" + LevelLoader.nbPlayerMax;
 			for (int i = 0; i < serverList.transform.childCount; i++)
 				Destroy(serverList.transform.GetChild(i).gameObject);
-			if(!_register)
-				MasterServer.RequestHostList(_typeName);
-				
-			if (_hostList != null)
+			MasterServer.RequestHostList(_typeName);
+			if (_hostList != null && _hostList.Length > 0)
 			{
 				for (int i = 0; i < _hostList.Length; i++)
 				{
@@ -174,13 +170,7 @@ public class NetworkManager : MonoBehaviour
 	private void OnMasterServerEvent(MasterServerEvent msEvent)
 	{
 		if (msEvent == MasterServerEvent.HostListReceived)
-		{
 			_hostList = MasterServer.PollHostList();
-			if (_hostList.Length == 0)
-				_hostList = null;
-		}
-		if (msEvent == MasterServerEvent.RegistrationSucceeded)
-			_register = true;
 	}
 
 	//Debug

@@ -47,6 +47,7 @@ public class LevelStart : MonoBehaviour
 	private ShopManager _shop;
 
 	private PauseGame _pause;
+	public SoundManager soundManager;
 
 	void Start()
 	{
@@ -106,6 +107,7 @@ public class LevelStart : MonoBehaviour
 			modeMulti = false;
 		}
 		
+
 		Transform targetCamera = null;
 		for (int i = 0; i < player.transform.childCount; i++)
 		{
@@ -133,8 +135,8 @@ public class LevelStart : MonoBehaviour
 			_openShop.player = player;
 			_shop.stats = stats;
 			_loopManager.Init();
+			soundManager.source = player.GetComponent<AudioSource>();
 		}
-			
     }
 
 	[RPC]

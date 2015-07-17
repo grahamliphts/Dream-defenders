@@ -11,7 +11,10 @@ public class NbFloorScript : MonoBehaviour
 	void Update () 
 	{
 		int value = _pointManager.GetTeleport().GetNbFloor();
-		nbFloorValue.text = "Etage " + (value+1).ToString();
+		if(LevelStart.instance.modeMulti)
+			nbFloorValue.text = "";
+		else
+			nbFloorValue.text = "Etage " + (value+1).ToString();
 	}
 
 	public void SetPointManager(PointManager pointManager)

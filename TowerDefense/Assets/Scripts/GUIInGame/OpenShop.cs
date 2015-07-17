@@ -20,6 +20,7 @@ public class OpenShop : MonoBehaviour
 	}
 	private CameraController _camera;
 	private PauseGame _pauseGame;
+	private Chat _chat;
 
 	//player objects
 	public GameObject player;
@@ -33,6 +34,7 @@ public class OpenShop : MonoBehaviour
 		_shopOpen = false;
 		_camera = Camera.main.gameObject.GetComponent<CameraController>();
 		_pauseGame = GetComponent<PauseGame>();
+		_chat = GetComponent<Chat>();
 		_init = false;
 	}
 
@@ -45,7 +47,7 @@ public class OpenShop : MonoBehaviour
 			_characController = player.GetComponent<CharacController>();
 			_init = true; 
 		}
-		if (Input.GetKeyDown(KeyCode.E) && !_pauseGame.pause)
+		if (Input.GetKeyDown(KeyCode.E) && !_pauseGame.pause && !_chat.focus)
 		{
 			if (_shopOpen == true)
 				Shop(false);

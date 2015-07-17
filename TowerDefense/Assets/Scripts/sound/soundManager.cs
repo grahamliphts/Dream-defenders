@@ -4,7 +4,7 @@ using System.Collections;
 public class SoundManager : MonoBehaviour 
 {
 	public static SoundManager instance = null;
-	public AudioSource _source;
+	public AudioSource source;
 	
 
 	public AudioClip _tpCrossing;
@@ -17,13 +17,13 @@ public class SoundManager : MonoBehaviour
 
 	public void PlayTpCrossing()
 	{
-		_source.clip = _tpCrossing;
-		_source.Play();	
+		source.clip = _tpCrossing;
+		source.Play();	
 	}
 	public void PlaySpawn()
 	{
-		_source.clip = _spawn;
-		_source.Play();
+		source.clip = _spawn;
+		source.Play();
 	}
 
 }

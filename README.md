@@ -1,10 +1,14 @@
 Dream-defenders
 ===============
 
+MasterServer :
+-Desactiver skype
+-Si erreur du master : onfailedtoconnect ou toomanyconnectedpeers => relancer le jeu
+-Si persistance de l'erreur => checkbox local 
+
 Tools :
 
 GD:
-
 Ouvrir le fichier stats.xlsx
 Renseigner/Modifier les champs grow factor
 Exporter sous stats.ods
@@ -15,7 +19,6 @@ Renseigner le champ avec le fichier Editor/XML/content.xml
 Cliquer sur ok
 
 LevelGenerator:
-
 Ouvrir le fichier.blend
 Executer le script
 Générer le type de niveau que vous souhaitez 

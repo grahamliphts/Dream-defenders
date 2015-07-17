@@ -141,15 +141,15 @@ public class LoopManager : MonoBehaviour
 					LevelStart.instance.towerUsed[i] -= rand;
 			}
 		}
+		if (_actualWave % 3 == 0)
+			_constructionTime = 45;
+		else
+			_constructionTime = 30;
 
 		if ((!LevelStart.instance.modeMulti || Network.isServer) && _init == true)
 		{
 			if (_lose == false)
 			{
-				if (_actualWave % 3 == 0)
-					_constructionTime = 45;
-				else
-					_constructionTime = 30;
 				//Temps de construction fini
 				if (((int)(Time.time - _startTime) % 60) >= _constructionTime && modeConstruction && !_inter)
 				{
@@ -237,24 +237,28 @@ public class LoopManager : MonoBehaviour
 		bool modeConstructionS = modeConstruction;
 		bool interS = _inter;
 		bool towerUp = _towerUp;
-
+		int actualWave = _actualWave;
 		if (stream.isWriting)
 		{
 			modeConstructionS = modeConstruction;
 			interS = _inter;
 			towerUp = _towerUp;
+			actualWave = _actualWave;
 			stream.Serialize(ref modeConstructionS);
 			stream.Serialize(ref interS);
 			stream.Serialize(ref towerUp);
+			stream.Serialize(ref actualWave);
 		}
 		else
 		{
 			stream.Serialize(ref modeConstructionS);
 			stream.Serialize(ref interS);
 			stream.Serialize(ref towerUp);
+			stream.Serialize(ref actualWave);
 			modeConstruction = modeConstructionS;
 			_inter = interS;
 			_towerUp = towerUp;
+			_actualWave = actualWave;
 		}
 	}
 
